@@ -1,6 +1,6 @@
 # Meeting 02 – Client Feedback Session
 
-**Date:**  03/04/2026
+**Date:**  02/04/2026
 
 ## Agenda
 - Review initial website pages (Home & About)
