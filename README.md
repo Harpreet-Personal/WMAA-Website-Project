@@ -51,33 +51,44 @@ WMAA-Website-Project/
 
 1. Clone the repository:
 
-git clone <https://github.com/Harpreet-Personal/WMAA-Website-Project/>
+```bash
+git clone https://github.com/Harpreet-Personal/WMAA-Website-Project/
 cd WMAA-Website-Project
+```
 
 2. Create virtual environment:
 
+```bash
 python3 -m venv venv
+```
 
+3. Activate environment:
 
-3. Activate environment:  
-Mac/Linux : source venv/bin/activate
-Windows : venv\Scripts\activate
+```bash
+# Mac/Linux
+source venv/bin/activate
 
+# Windows
+venv\Scripts\activate
+```
 
 4. Install dependencies:
 
+```bash
 pip install -r requirements.txt
-
+```
 
 5. Run the application:
 
+```bash
 python3 app.py
-
+```
 
 6. Open in browser:
 
+```bash
 http://127.0.0.1:5000
-
+```
 
 ## Git Workflow
 - Do not work directly on `main`  
