@@ -21,6 +21,10 @@ This project focuses on the redevelopment of the WMAA charity website to provide
 - Version Control: Git & GitHub  
 
 
+
+## Project Structure
+
+```text
 WMAA-Website-Project/
 ├── app.py
 ├── requirements.txt
@@ -38,6 +42,7 @@ WMAA-Website-Project/
 ├── client-meetings/
 ├── facilitator-meetings/
 └── deliverable-1/
+```
 
 
 ---
