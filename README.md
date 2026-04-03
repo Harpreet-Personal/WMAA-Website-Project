@@ -21,23 +21,23 @@ This project focuses on the redevelopment of the WMAA charity website to provide
 - Version Control: Git & GitHub  
 
 
-## Project Structure
 WMAA-Website-Project/
-│── app.py
-│── requirements.txt
-│── .gitignore
-│── templates/
-│ ├── base.html
-│ ├── navbar.html
-│ ├── index.html,(all html files),  
-│── static/
-│ ├── css/
-│ ├── js/
-│ └── images/
-│── client-meetings/
-│── facilitator-meetings/
-│── deliverable-1/
-│── README.md
+├── app.py
+├── requirements.txt
+├── .gitignore
+├── README.md
+├── templates/
+│   ├── base.html
+│   ├── navbar.html
+│   ├── index.html
+│   └── ... other HTML templates
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── client-meetings/
+├── facilitator-meetings/
+└── deliverable-1/
 
 
 ---
