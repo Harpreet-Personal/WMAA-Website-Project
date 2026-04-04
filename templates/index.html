@@ -1,18 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home | WA Multicultural Assistance Alliance</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-</head>
-<body data-page="home">
+<div data-page="home">
 
  
 
@@ -59,17 +48,16 @@
     <div class="container hero-content">
       <div class="row align-items-center min-vh-100">
         <div class="col-lg-7 hero-text" data-animate="fade-up">
-          <p class="hero-eyebrow">WA Multicultural Assistance Alliance</p>
-          <h1 class="hero-heading">Responding With Compassion,<br />Leading With Purpose</h1>
-          <p class="hero-sub">Partner with WMAA to expand our reach and impact. Together, we can create a stronger, more connected community across Western Australia.</p>
-          <div class="d-flex flex-wrap gap-3 mt-4">
-            <a href="{{ url_for('about') }}" class="btn btn-hero-primary">Learn More</a>
-            <a href="donate.html" class="btn btn-hero-outline">Donate Now</a>
+          <p class="hero-eyebrow">{{ _('WA Multicultural Assistance Alliance') }}</p>
+          <h1 class="hero-heading">{{ _('Responding With Compassion, Leading With Purpose') }}</h1>
+          <p class="hero-sub">{{ _('Partner with WMAA to expand our reach and impact. Together, we can create a stronger, more connected community across Western Australia.') }}</p>
+          <a href="{{ url_for('about') }}" class="btn btn-hero-primary">{{ _('Learn More') }}</a>
+          <a href="{{ url_for('donate') }}" class="btn btn-hero-outline">{{ _('Donate Now') }}</a>
           </div>
         </div>
       </div>
     </div>
-    <div class="hero-scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+    <div class="hero-scroll-hint"><span>{{ _('Scroll') }}</span><div class="scroll-line"></div></div>
   </section>
 
   <!-- ── ABOUT SUMMARY ── -->
@@ -80,19 +68,19 @@
           <div class="about-img-wrap">
             <img src="https://static.wixstatic.com/media/848b67_d540f8e980384168a24f6b16f7da61e2~mv2.png/v1/fill/w_311,h_375,al_c,q_85,enc_avif,quality_auto/image_2025-10-06_150729000.png" alt="WMAA Community" class="about-img img-fluid" />
             <div class="about-badge">
-              <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="ACNC" width="70" /><span>ACNC<br/>Registered</span>
+              <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="ACNC" width="70" /><span>{{ _('ACNC') }}<br/>{{ _('Registered') }}</span>
             </div>
           </div>
         </div>
         <div class="col-lg-7" data-animate="fade-left">
-          <p class="section-eyebrow">Who We Are</p>
-          <h2 class="section-heading">About WMAA</h2>
-          <p class="section-body">WMAA is an ACNC-registered charity dedicated to supporting culturally and linguistically diverse (CALD) communities across Western Australia. We provide practical help, cultural understanding, and support for migrants, students, visitors, and families in need.</p>
+          <p class="section-eyebrow">{{ _('Who We Are') }}</p>
+          <h2 class="section-heading">{{ _('About WMAA') }}</h2>
+          <p class="section-body">{{ _('WMAA is an ACNC-registered charity dedicated to supporting culturally and linguistically diverse (CALD) communities across Western Australia. We provide practical help, cultural understanding, and support for migrants, students, visitors, and families in need.') }}</p>
           <div class="vision-box mt-4 mb-4">
-            <h5>Our Vision</h5>
-            <p class="mb-0">To build a resilient, connected, and empowered multicultural community in Western Australia where everyone has access to support in their time of need.</p>
+            <h5>{{ _('Our Vision') }}</h5>
+            <p class="mb-0">{{ _('To build a resilient, connected, and empowered multicultural community in Western Australia where everyone has access to support in their time of need.') }}</p>
           </div>
-          <a href="{{ url_for('about') }}" class="btn btn-primary-green">Read More <i class="bi bi-arrow-right ms-1"></i></a>
+          <a href="{{ url_for('about') }}" class="btn btn-primary-green">{{ _('Read More') }} <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
       </div>
     </div>
@@ -103,62 +91,62 @@
     <div class="container">
       <div class="row justify-content-center text-center mb-5">
         <div class="col-lg-7" data-animate="fade-up">
-          <p class="section-eyebrow">What We Do</p>
-          <h2 class="section-heading">Our Core Services</h2>
+          <p class="section-eyebrow">{{ _('What We Do') }}</p>
+          <h2 class="section-heading">{{ _('Our Core Services') }}</h2>
         </div>
       </div>
       <div class="row g-4">
         <div class="col-md-6 col-lg-4" data-animate="fade-up" data-delay="0">
           <div class="service-card h-100">
             <div class="service-icon"><i class="bi bi-alarm"></i></div>
-            <h5>Crisis Response &amp; Emergency Support</h5>
-            <p>Immediate assistance for individuals and families in crisis situations.</p>
-            <a href="services.html#crisis" class="story-link d-inline-block mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+            <h5>{{ _('Crisis Response & Emergency Support') }}</h5>
+            <p>{{ _('Immediate assistance for individuals and families in crisis situations.') }}</p>
+            <a href="{{ url_for('services') }}#crisis" class="story-link d-inline-block mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-4" data-animate="fade-up" data-delay="100">
           <div class="service-card h-100">
             <div class="service-icon"><i class="bi bi-chat-dots"></i></div>
-            <h5>Cultural Mediation &amp; Family Liaison</h5>
-            <p>Bridging cultural and language gaps between families and service providers.</p>
-            <a href="services.html#mediation" class="story-link d-inline-block mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+            <h5>{{ _('Cultural Mediation & Family Liaison') }}</h5>
+            <p>{{ _('Bridging cultural and language gaps between families and service providers.') }}</p>
+            <a href="{{ url_for('services') }}#mediation" class="story-link d-inline-block mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-4" data-animate="fade-up" data-delay="200">
           <div class="service-card h-100">
             <div class="service-icon"><i class="bi bi-house-heart"></i></div>
-            <h5>Temporary Accommodation Referrals</h5>
-            <p>Connecting people in hardship with safe short-term housing options.</p>
-            <a href="services.html#housing" class="story-link d-inline-block mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+            <h5>{{ _('Temporary Accommodation Referrals') }}</h5>
+            <p>{{ _('Connecting people in hardship with safe short-term housing options.') }}</p>
+            <a href="{{ url_for('services') }}#housing" class="story-link d-inline-block mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-4" data-animate="fade-up" data-delay="0">
           <div class="service-card h-100">
             <div class="service-icon"><i class="bi bi-shield-check"></i></div>
-            <h5>Anti-Fraud &amp; Safety Awareness</h5>
-            <p>Educating community members to protect themselves from scams.</p>
-            <a href="services.html#fraud" class="story-link d-inline-block mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+            <h5>{{ _('Anti-Fraud & Safety Awareness') }}</h5>
+            <p>{{ _('Educating community members to protect themselves from scams.') }}</p>
+            <a href="{{ url_for('services') }}#fraud" class="story-link d-inline-block mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-4" data-animate="fade-up" data-delay="100">
           <div class="service-card h-100">
             <div class="service-icon"><i class="bi bi-heart-pulse"></i></div>
-            <h5>Health &amp; Welfare Advocacy</h5>
-            <p>Helping individuals navigate healthcare and social services fairly.</p>
-            <a href="services.html#health" class="story-link d-inline-block mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+            <h5>{{ _('Health & Welfare Advocacy') }}</h5>
+            <p>{{ _('Helping individuals navigate healthcare and social services fairly.') }}</p>
+            <a href="{{ url_for('services') }}#health" class="story-link d-inline-block mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
         <div class="col-md-6 col-lg-4" data-animate="fade-up" data-delay="200">
           <div class="service-card h-100">
             <div class="service-icon"><i class="bi bi-tree"></i></div>
-            <h5>Sustainability</h5>
-            <p>Ensuring lasting benefits for communities through long-term programs.</p>
-            <a href="services.html" class="story-link d-inline-block mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+            <h5>{{ _('Sustainability') }}</h5>
+            <p>{{ _('Ensuring lasting benefits for communities through long-term programs.') }}</p>
+            <a href="{{ url_for('services') }}" class="story-link d-inline-block mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right"></i></a>
           </div>
         </div>
       </div>
       <div class="text-center mt-5" data-animate="fade-up">
-        <a href="services.html" class="btn btn-primary-green">View All Services <i class="bi bi-arrow-right ms-1"></i></a>
+        <a href="{{ url_for('services') }}" class="btn btn-primary-green">{{ _('View All Services') }} <i class="bi bi-arrow-right ms-1"></i></a>
       </div>
     </div>
   </section>
@@ -168,11 +156,11 @@
     <div class="container">
       <div class="row align-items-center g-4" data-animate="fade-up">
         <div class="col-lg-8">
-          <h3>Support Our Mission</h3>
-          <p>Your donation helps us provide emergency support, cultural mediation, and essential services to CALD communities across WA.</p>
+          <h3>{{ _('Support Our Mission') }}</h3>
+          <p>{{ _('Your donation helps us provide emergency support, cultural mediation, and essential services to CALD communities across WA.') }}</p>
         </div>
         <div class="col-lg-4 text-lg-end">
-          <a href="donate.html" class="btn btn-donate-strip">Donate Now <i class="bi bi-heart-fill ms-1"></i></a>
+          <a href="{{ url_for('donate') }}" class="btn btn-donate-strip">{{ _('Donate Now') }} <i class="bi bi-heart-fill ms-1"></i></a>
         </div>
       </div>
     </div>
@@ -187,35 +175,35 @@
             <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" />
             <span class="footer-brand">WMAA</span>
           </div>
-          <p class="footer-tagline">Join Us in Our Mission</p>
-          <p class="footer-small">Company Limited by Guarantee<br />ACNC Registered Charity</p>
+          <p class="footer-tagline">{{ _('Join Us in Our Mission') }}</p>
+          <p class="footer-small">{{ _('Company Limited by Guarantee') }}<br />{{ _('ACNC Registered Charity') }}</p>
         </div>
         <div class="col-lg-2 col-6">
-          <h6 class="footer-heading">Navigate</h6>
+          <h6 class="footer-heading">{{ _('Navigate') }}</h6>
           <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About Us</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="stories.html">Our Stories</a></li>
-            <li><a href="events.html">Events</a></li>
-            <li><a href="news.html">News</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li>
+            <li><a href="{{ url_for('about') }}">{{ _('About Us') }}</a></li>
+            <li><a href="{{ url_for('services') }}">{{ _('Services') }}</a></li>
+            <li><a href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a></li>
+            <li><a href="{{ url_for('events') }}">{{ _('Events') }}</a></li>
+            <li><a href="{{ url_for('news') }}">{{ _('News') }}</a></li>
+            <li><a href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a></li>
           </ul>
         </div>
         <div class="col-lg-3 col-6">
-          <h6 class="footer-heading">Services</h6>
+          <h6 class="footer-heading">{{ _('Services') }}</h6>
           <ul class="footer-links">
-            <li><a href="services.html#crisis">Crisis Response</a></li>
-            <li><a href="services.html#mediation">Cultural Mediation</a></li>
-            <li><a href="services.html#housing">Housing Referrals</a></li>
-            <li><a href="services.html#fraud">Fraud Awareness</a></li>
-            <li><a href="services.html#health">Health Advocacy</a></li>
+            <li><a href="{{ url_for('services') }}#crisis">{{ _('Crisis Response') }}</a></li>
+            <li><a href="{{ url_for('services') }}#mediation">{{ _('Cultural Mediation') }}</a></li>
+            <li><a href="{{ url_for('services') }}#housing">{{ _('Housing Referrals') }}</a></li>
+            <li><a href="{{ url_for('services') }}#fraud">{{ _('Fraud Awareness') }}</a></li>
+            <li><a href="{{ url_for('services') }}#health">{{ _('Health Advocacy') }}</a></li>
           </ul>
         </div>
         <div class="col-lg-3">
-          <h6 class="footer-heading">Contact</h6>
+          <h6 class="footer-heading">{{ _('Contact') }}</h6>
           <ul class="footer-links">
-            <li><i class="bi bi-geo-alt"></i> 10 Lake Street, Northbridge, Perth WA</li>
+            <li><i class="bi bi-geo-alt"></i> {{ _('10 Lake Street, Northbridge, Perth WA') }}</li>
             <li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li>
             <li><i class="bi bi-telephone"></i> (61) 86555 7072</li>
           </ul>
@@ -223,15 +211,12 @@
       </div>
       <hr class="footer-divider" />
       <div class="d-flex flex-wrap justify-content-between align-items-center">
-        <p class="footer-copy mb-0">&copy; 2025 WA Multicultural Assistance Alliance. All rights reserved.</p>
-        <p class="footer-copy mb-0">Fundraising License: CC23982</p>
+        <p class="footer-copy mb-0">&copy; 2025 {{ _('WA Multicultural Assistance Alliance. All rights reserved.') }}</p>
+        <p class="footer-copy mb-0">{{ _('Fundraising License: CC23982') }}</p>
       </div>
     </div>
   </footer>
 
-  <button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-</html>
+  <button id="backToTop" class="back-to-top" aria-label="{{ _('Back to top') }}"><i class="bi bi-arrow-up"></i></button>
+</div>
 {% endblock %}
