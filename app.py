@@ -1,6 +1,30 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, request, url_for
+from flask_babel import Babel, gettext as _
 
 app = Flask(__name__)
+app.secret_key = "wmaa_secret_key"
+
+app.config["BABEL_DEFAULT_LOCALE"] = "en"
+app.config["BABEL_TRANSLATION_DIRECTORIES"] = "translations"
+
+supported_languages = ["en", "zh_Hans_CN"]
+
+def get_locale():
+    return session.get("lang", "en")
+
+babel = Babel(app, locale_selector=get_locale)
+
+@app.context_processor
+def inject_language():
+    language_names = {
+        "en": "English",
+        "zh_Hans_CN": "中文"
+    }
+    current_lang = session.get("lang", "en")
+    return {
+        "current_lang": current_lang,
+        "current_language_name": language_names.get(current_lang, "English")
+    }
 
 @app.route("/")
 def home():
@@ -9,6 +33,37 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/services")
+def services():
+    return render_template("services.html")
+
+@app.route("/stories")
+def stories():
+    return render_template("stories.html")
+
+@app.route("/events")
+def events():
+    return render_template("events.html")
+
+@app.route("/news")
+def news():
+    return render_template("news.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@app.route("/donate")
+def donate():
+    return render_template("donate.html")
+
+@app.route("/set-language/<lang>")
+def set_language(lang):
+    if lang in supported_languages:
+        session["lang"] = lang
+    return redirect(request.referrer or url_for("home"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

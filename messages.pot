@@ -1,0 +1,1116 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-04-04 00:11+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: templates/about.html:6
+msgid "Our Organisation"
+msgstr ""
+
+#: templates/about.html:7 templates/about.html:8 templates/about.html:115
+#: templates/contact.html:67 templates/donate.html:76 templates/events.html:89
+#: templates/index.html:185 templates/navbar.html:21 templates/news.html:102
+#: templates/services.html:190 templates/stories.html:105
+msgid "About Us"
+msgstr ""
+
+#: templates/about.html:8 templates/about.html:115 templates/contact.html:8
+#: templates/contact.html:67 templates/donate.html:8 templates/donate.html:76
+#: templates/events.html:8 templates/events.html:89 templates/index.html:184
+#: templates/navbar.html:17 templates/news.html:8 templates/news.html:102
+#: templates/services.html:8 templates/services.html:190
+#: templates/stories.html:8 templates/stories.html:105
+msgid "Home"
+msgstr ""
+
+#: templates/about.html:20 templates/index.html:71
+msgid "ACNC"
+msgstr ""
+
+#: templates/about.html:20 templates/index.html:71
+msgid "Registered"
+msgstr ""
+
+#: templates/about.html:25 templates/index.html:76
+msgid "Who We Are"
+msgstr ""
+
+#: templates/about.html:26 templates/index.html:77
+msgid "About WMAA"
+msgstr ""
+
+#: templates/about.html:27 templates/index.html:78
+msgid ""
+"WMAA is an ACNC-registered charity dedicated to supporting culturally and"
+" linguistically diverse (CALD) communities across Western Australia. We "
+"provide practical help, cultural understanding, and support for migrants,"
+" students, visitors, and families in need."
+msgstr ""
+
+#: templates/about.html:28
+msgid ""
+"We work collaboratively with universities, community organisations, "
+"service providers, and government agencies to build a strong support "
+"network for CALD individuals."
+msgstr ""
+
+#: templates/about.html:30
+msgid "Registered Charity"
+msgstr ""
+
+#: templates/about.html:31
+msgid "Communities Served"
+msgstr ""
+
+#: templates/about.html:43
+msgid "What Drives Us"
+msgstr ""
+
+#: templates/about.html:44
+msgid "Our Vision & Values"
+msgstr ""
+
+#: templates/about.html:50 templates/index.html:80
+msgid "Our Vision"
+msgstr ""
+
+#: templates/about.html:51 templates/index.html:81
+msgid ""
+"To build a resilient, connected, and empowered multicultural community in"
+" Western Australia where everyone has access to support in their time of "
+"need."
+msgstr ""
+
+#: templates/about.html:55
+msgid "Compassion"
+msgstr ""
+
+#: templates/about.html:55
+msgid "Treating every person with dignity and care."
+msgstr ""
+
+#: templates/about.html:58
+msgid "Cultural Respect"
+msgstr ""
+
+#: templates/about.html:58
+msgid "Honouring the diversity of all backgrounds."
+msgstr ""
+
+#: templates/about.html:61 templates/events.html:41 templates/news.html:16
+#: templates/news.html:26 templates/news.html:62 templates/stories.html:81
+msgid "Community"
+msgstr ""
+
+#: templates/about.html:61
+msgid "Stronger together through collaboration."
+msgstr ""
+
+#: templates/about.html:72
+msgid "How We Work"
+msgstr ""
+
+#: templates/about.html:73
+msgid "Our Approach"
+msgstr ""
+
+#: templates/about.html:74
+msgid "Our services are both proactive and responsive."
+msgstr ""
+
+#: templates/about.html:79
+msgid "Providing immediate crisis assistance, housing referrals, and advocacy."
+msgstr ""
+
+#: templates/about.html:82
+msgid ""
+"Delivering education and awareness programs that prevent harm and build "
+"resilience."
+msgstr ""
+
+#: templates/about.html:85
+msgid ""
+"Acting as cultural mediators to bridge communication gaps between "
+"families, services, and authorities."
+msgstr ""
+
+#: templates/about.html:96
+msgid "The Future"
+msgstr ""
+
+#: templates/about.html:97
+msgid "Looking Ahead"
+msgstr ""
+
+#: templates/about.html:98
+msgid ""
+"WMAA will continue to expand its services by building on these four "
+"pillars."
+msgstr ""
+
+#: templates/about.html:102
+msgid "Strengthening Partnerships"
+msgstr ""
+
+#: templates/about.html:102
+msgid ""
+"Collaborating with local and international organisations to expand our "
+"reach and improve support for CALD communities."
+msgstr ""
+
+#: templates/about.html:103
+msgid "Raising Community Awareness"
+msgstr ""
+
+#: templates/about.html:103
+msgid ""
+"Promoting greater understanding of available services so individuals know"
+" where to turn for help."
+msgstr ""
+
+#: templates/about.html:104
+msgid "Building a Skilled Volunteer Network"
+msgstr ""
+
+#: templates/about.html:104
+msgid ""
+"Training volunteers in cultural mediation, emergency response, and "
+"advocacy to deliver compassionate assistance."
+msgstr ""
+
+#: templates/about.html:105
+msgid "Developing Tailored Support Programs"
+msgstr ""
+
+#: templates/about.html:105
+msgid ""
+"Creating specialised initiatives for vulnerable groups, including victims"
+" of family violence, fraud, and housing insecurity."
+msgstr ""
+
+#: templates/about.html:114 templates/contact.html:66 templates/donate.html:75
+#: templates/events.html:88 templates/index.html:178 templates/news.html:101
+#: templates/services.html:189 templates/stories.html:104
+msgid "Join Us in Our Mission"
+msgstr ""
+
+#: templates/about.html:114 templates/contact.html:66 templates/donate.html:75
+#: templates/events.html:88 templates/index.html:179 templates/news.html:101
+#: templates/services.html:189 templates/stories.html:104
+msgid "Company Limited by Guarantee"
+msgstr ""
+
+#: templates/about.html:114 templates/contact.html:66 templates/donate.html:36
+#: templates/donate.html:48 templates/donate.html:75 templates/events.html:88
+#: templates/index.html:179 templates/news.html:101 templates/services.html:189
+#: templates/stories.html:104
+msgid "ACNC Registered Charity"
+msgstr ""
+
+#: templates/about.html:115 templates/contact.html:67 templates/donate.html:76
+#: templates/events.html:89 templates/index.html:182 templates/news.html:102
+#: templates/services.html:190 templates/stories.html:105
+msgid "Navigate"
+msgstr ""
+
+#: templates/about.html:115 templates/about.html:116 templates/contact.html:67
+#: templates/contact.html:68 templates/donate.html:76 templates/donate.html:77
+#: templates/events.html:89 templates/events.html:90 templates/index.html:186
+#: templates/index.html:194 templates/navbar.html:26 templates/news.html:102
+#: templates/news.html:103 templates/services.html:8
+#: templates/services.html:190 templates/services.html:191
+#: templates/stories.html:105 templates/stories.html:106
+msgid "Services"
+msgstr ""
+
+#: templates/about.html:115 templates/contact.html:67 templates/donate.html:76
+#: templates/events.html:89 templates/index.html:187 templates/navbar.html:40
+#: templates/news.html:102 templates/services.html:190 templates/stories.html:7
+#: templates/stories.html:8 templates/stories.html:105
+msgid "Our Stories"
+msgstr ""
+
+#: templates/about.html:115 templates/contact.html:67 templates/donate.html:76
+#: templates/events.html:89 templates/index.html:188 templates/news.html:17
+#: templates/news.html:38 templates/news.html:86 templates/news.html:102
+#: templates/services.html:190 templates/stories.html:105
+msgid "Events"
+msgstr ""
+
+#: templates/about.html:115 templates/contact.html:67 templates/donate.html:76
+#: templates/events.html:89 templates/index.html:189 templates/navbar.html:48
+#: templates/news.html:8 templates/news.html:102 templates/services.html:190
+#: templates/stories.html:105
+msgid "News"
+msgstr ""
+
+#: templates/about.html:115 templates/contact.html:7 templates/contact.html:8
+#: templates/contact.html:67 templates/donate.html:76 templates/events.html:89
+#: templates/index.html:190 templates/navbar.html:52 templates/news.html:102
+#: templates/services.html:181 templates/services.html:190
+#: templates/stories.html:105
+msgid "Contact Us"
+msgstr ""
+
+#: templates/about.html:116 templates/contact.html:68 templates/donate.html:77
+#: templates/events.html:90 templates/index.html:196 templates/navbar.html:29
+#: templates/news.html:103 templates/services.html:16
+#: templates/services.html:191 templates/stories.html:106
+msgid "Crisis Response"
+msgstr ""
+
+#: templates/about.html:116 templates/contact.html:68 templates/donate.html:77
+#: templates/events.html:90 templates/index.html:197 templates/navbar.html:30
+#: templates/news.html:103 templates/services.html:17
+#: templates/services.html:191 templates/stories.html:37
+#: templates/stories.html:106
+msgid "Cultural Mediation"
+msgstr ""
+
+#: templates/about.html:116 templates/contact.html:68 templates/donate.html:77
+#: templates/events.html:90 templates/index.html:198 templates/navbar.html:31
+#: templates/news.html:103 templates/services.html:18
+#: templates/services.html:191 templates/stories.html:106
+msgid "Housing Referrals"
+msgstr ""
+
+#: templates/about.html:116 templates/contact.html:68 templates/donate.html:77
+#: templates/events.html:90 templates/index.html:199 templates/navbar.html:32
+#: templates/news.html:103 templates/services.html:19
+#: templates/services.html:191 templates/stories.html:106
+msgid "Fraud Awareness"
+msgstr ""
+
+#: templates/about.html:116 templates/contact.html:68 templates/donate.html:77
+#: templates/events.html:90 templates/index.html:200 templates/navbar.html:33
+#: templates/news.html:103 templates/services.html:20
+#: templates/services.html:191 templates/stories.html:70
+#: templates/stories.html:106
+msgid "Health Advocacy"
+msgstr ""
+
+#: templates/about.html:117 templates/contact.html:69 templates/donate.html:78
+#: templates/events.html:91 templates/index.html:204 templates/news.html:104
+#: templates/services.html:192 templates/stories.html:107
+msgid "Contact"
+msgstr ""
+
+#: templates/about.html:117 templates/contact.html:20 templates/contact.html:56
+#: templates/contact.html:69 templates/donate.html:78 templates/events.html:91
+#: templates/index.html:206 templates/news.html:104 templates/services.html:192
+#: templates/stories.html:107
+msgid "10 Lake Street, Northbridge, Perth WA"
+msgstr ""
+
+#: templates/about.html:120 templates/contact.html:72 templates/donate.html:81
+#: templates/events.html:94 templates/index.html:214 templates/news.html:107
+#: templates/services.html:195 templates/stories.html:110
+msgid "WA Multicultural Assistance Alliance. All rights reserved."
+msgstr ""
+
+#: templates/about.html:120 templates/contact.html:72 templates/donate.html:81
+#: templates/events.html:94 templates/index.html:215 templates/news.html:107
+#: templates/services.html:195 templates/stories.html:110
+msgid "Fundraising License: CC23982"
+msgstr ""
+
+#: templates/about.html:123 templates/contact.html:75 templates/donate.html:84
+#: templates/events.html:97 templates/index.html:220 templates/news.html:110
+#: templates/services.html:198 templates/stories.html:113
+msgid "Back to top"
+msgstr ""
+
+#: templates/contact.html:6
+msgid "Get In Touch"
+msgstr ""
+
+#: templates/contact.html:16
+msgid "Reach Out"
+msgstr ""
+
+#: templates/contact.html:17
+msgid "We'd Love to Hear From You"
+msgstr ""
+
+#: templates/contact.html:18
+msgid ""
+"Whether you need support, want to volunteer, or have a partnership "
+"enquiry — we're here to help."
+msgstr ""
+
+#: templates/contact.html:20
+msgid "Address"
+msgstr ""
+
+#: templates/contact.html:21
+msgid "Email"
+msgstr ""
+
+#: templates/contact.html:22
+msgid "Phone"
+msgstr ""
+
+#: templates/contact.html:24
+msgid "Office Hours"
+msgstr ""
+
+#: templates/contact.html:24
+msgid "Monday – Friday: 9:00am – 5:00pm"
+msgstr ""
+
+#: templates/contact.html:24
+msgid "Saturday: By appointment"
+msgstr ""
+
+#: templates/contact.html:29
+msgid "Full Name"
+msgstr ""
+
+#: templates/contact.html:29
+msgid "Your name"
+msgstr ""
+
+#: templates/contact.html:30
+msgid "Email Address"
+msgstr ""
+
+#: templates/contact.html:31
+msgid "Phone Number"
+msgstr ""
+
+#: templates/contact.html:32
+msgid "Enquiry Type"
+msgstr ""
+
+#: templates/contact.html:34
+msgid "Select an option"
+msgstr ""
+
+#: templates/contact.html:35
+msgid "General Enquiry"
+msgstr ""
+
+#: templates/contact.html:36
+msgid "Request Support"
+msgstr ""
+
+#: templates/contact.html:37
+msgid "Volunteer"
+msgstr ""
+
+#: templates/contact.html:38
+msgid "Partnership / Sponsorship"
+msgstr ""
+
+#: templates/contact.html:39
+msgid "Media Enquiry"
+msgstr ""
+
+#: templates/contact.html:42
+msgid "Subject"
+msgstr ""
+
+#: templates/contact.html:42
+msgid "How can we help?"
+msgstr ""
+
+#: templates/contact.html:43
+msgid "Message"
+msgstr ""
+
+#: templates/contact.html:43
+msgid "Write your message here..."
+msgstr ""
+
+#: templates/contact.html:44
+msgid "Send Message"
+msgstr ""
+
+#: templates/contact.html:55
+msgid "Find Us"
+msgstr ""
+
+#: templates/donate.html:6
+msgid "Make a Difference"
+msgstr ""
+
+#: templates/donate.html:7 templates/donate.html:8 templates/donate.html:47
+#: templates/navbar.html:68
+msgid "Donate"
+msgstr ""
+
+#: templates/donate.html:16
+msgid "Your Impact"
+msgstr ""
+
+#: templates/donate.html:17
+msgid "Why Your Donation Matters"
+msgstr ""
+
+#: templates/donate.html:18
+msgid ""
+"Every dollar donated directly supports CALD individuals and families in "
+"Western Australia when they need it most."
+msgstr ""
+
+#: templates/donate.html:22
+msgid ""
+"Helps cover transport to a support appointment for a community member in "
+"need."
+msgstr ""
+
+#: templates/donate.html:23
+msgid ""
+"Funds a cultural mediation session to help a family navigate a critical "
+"situation."
+msgstr ""
+
+#: templates/donate.html:24
+msgid "Supports emergency welfare assistance for a family in immediate crisis."
+msgstr ""
+
+#: templates/donate.html:33
+msgid "Online Donation"
+msgstr ""
+
+#: templates/donate.html:34
+msgid "Choose Your Amount"
+msgstr ""
+
+#: templates/donate.html:35
+msgid "Fundraising License:"
+msgstr ""
+
+#: templates/donate.html:45
+msgid "Or enter a custom amount ($)"
+msgstr ""
+
+#: templates/donate.html:47
+msgid "Now"
+msgstr ""
+
+#: templates/donate.html:48
+msgid "Secure payment"
+msgstr ""
+
+#: templates/donate.html:58
+msgid "Bank Transfer"
+msgstr ""
+
+#: templates/donate.html:59
+msgid "Direct Bank Transfer (AU)"
+msgstr ""
+
+#: templates/donate.html:60
+msgid ""
+"Prefer to donate directly? Transfer using the details below and email us "
+"your receipt at"
+msgstr ""
+
+#: templates/donate.html:62
+msgid "BSB"
+msgstr ""
+
+#: templates/donate.html:63
+msgid "Account Number"
+msgstr ""
+
+#: templates/donate.html:64
+msgid "Account Name"
+msgstr ""
+
+#: templates/donate.html:65
+msgid "Reference"
+msgstr ""
+
+#: templates/donate.html:65
+msgid "DONATION – [Your Name]"
+msgstr ""
+
+#: templates/events.html:6 templates/services.html:161
+msgid "Get Involved"
+msgstr ""
+
+#: templates/events.html:7 templates/events.html:8 templates/navbar.html:44
+msgid "Fundraise Events"
+msgstr ""
+
+#: templates/events.html:16 templates/events.html:22
+msgid "Upcoming Events"
+msgstr ""
+
+#: templates/events.html:17
+msgid "Join Us & Make a Difference"
+msgstr ""
+
+#: templates/events.html:18
+msgid ""
+"Attend our fundraising events to support WMAA's mission and connect with "
+"the multicultural community across Western Australia."
+msgstr ""
+
+#: templates/events.html:28
+msgid "Fundraiser"
+msgstr ""
+
+#: templates/events.html:29 templates/events.html:42 templates/events.html:57
+#: templates/events.html:63 templates/events.html:69
+msgid "Event Name Here"
+msgstr ""
+
+#: templates/events.html:30 templates/events.html:43
+msgid "Time TBD"
+msgstr ""
+
+#: templates/events.html:31 templates/events.html:44
+msgid "Venue, Perth WA"
+msgstr ""
+
+#: templates/events.html:32
+msgid "Short description of the event and what attendees can expect."
+msgstr ""
+
+#: templates/events.html:33 templates/events.html:46
+msgid "Register Interest"
+msgstr ""
+
+#: templates/events.html:45
+msgid "Short description of the event."
+msgstr ""
+
+#: templates/events.html:52
+msgid "Past Events"
+msgstr ""
+
+#: templates/events.html:57 templates/events.html:63 templates/events.html:69
+msgid "Past Event"
+msgstr ""
+
+#: templates/events.html:57 templates/events.html:63 templates/events.html:69
+msgid "A short recap of a past fundraising event."
+msgstr ""
+
+#: templates/events.html:79
+msgid "Can't Make It to an Event?"
+msgstr ""
+
+#: templates/events.html:79
+msgid ""
+"You can still support WMAA with a direct donation. Every contribution "
+"makes a difference."
+msgstr ""
+
+#: templates/events.html:80
+msgid "Donate Online"
+msgstr ""
+
+#: templates/index.html:51
+msgid "WA Multicultural Assistance Alliance"
+msgstr ""
+
+#: templates/index.html:52
+msgid "Responding With Compassion, Leading With Purpose"
+msgstr ""
+
+#: templates/index.html:53
+msgid ""
+"Partner with WMAA to expand our reach and impact. Together, we can create"
+" a stronger, more connected community across Western Australia."
+msgstr ""
+
+#: templates/index.html:54 templates/index.html:104 templates/index.html:112
+#: templates/index.html:120 templates/index.html:128 templates/index.html:136
+#: templates/index.html:144 templates/services.html:111
+msgid "Learn More"
+msgstr ""
+
+#: templates/index.html:55 templates/index.html:163 templates/stories.html:96
+msgid "Donate Now"
+msgstr ""
+
+#: templates/index.html:60
+msgid "Scroll"
+msgstr ""
+
+#: templates/index.html:83 templates/news.html:30 templates/news.html:42
+#: templates/news.html:54 templates/news.html:66 templates/news.html:78
+#: templates/news.html:90
+msgid "Read More"
+msgstr ""
+
+#: templates/index.html:94
+msgid "What We Do"
+msgstr ""
+
+#: templates/index.html:95
+msgid "Our Core Services"
+msgstr ""
+
+#: templates/index.html:102 templates/services.html:33
+msgid "Crisis Response & Emergency Support"
+msgstr ""
+
+#: templates/index.html:103
+msgid "Immediate assistance for individuals and families in crisis situations."
+msgstr ""
+
+#: templates/index.html:110 templates/services.html:58
+msgid "Cultural Mediation & Family Liaison"
+msgstr ""
+
+#: templates/index.html:111
+msgid ""
+"Bridging cultural and language gaps between families and service "
+"providers."
+msgstr ""
+
+#: templates/index.html:118 templates/services.html:83
+msgid "Temporary Accommodation Referrals"
+msgstr ""
+
+#: templates/index.html:119
+msgid "Connecting people in hardship with safe short-term housing options."
+msgstr ""
+
+#: templates/index.html:126
+msgid "Anti-Fraud & Safety Awareness"
+msgstr ""
+
+#: templates/index.html:127
+msgid "Educating community members to protect themselves from scams."
+msgstr ""
+
+#: templates/index.html:134 templates/services.html:133
+msgid "Health & Welfare Advocacy"
+msgstr ""
+
+#: templates/index.html:135
+msgid "Helping individuals navigate healthcare and social services fairly."
+msgstr ""
+
+#: templates/index.html:142 templates/services.html:21
+#: templates/services.html:158
+msgid "Sustainability"
+msgstr ""
+
+#: templates/index.html:143
+msgid "Ensuring lasting benefits for communities through long-term programs."
+msgstr ""
+
+#: templates/index.html:149
+msgid "View All Services"
+msgstr ""
+
+#: templates/index.html:159
+msgid "Support Our Mission"
+msgstr ""
+
+#: templates/index.html:160
+msgid ""
+"Your donation helps us provide emergency support, cultural mediation, and"
+" essential services to CALD communities across WA."
+msgstr ""
+
+#: templates/navbar.html:35
+msgid "All Services"
+msgstr ""
+
+#: templates/news.html:6
+msgid "Stay Updated"
+msgstr ""
+
+#: templates/news.html:7
+msgid "Latest News"
+msgstr ""
+
+#: templates/news.html:15
+msgid "All"
+msgstr ""
+
+#: templates/news.html:18
+msgid "Announcements"
+msgstr ""
+
+#: templates/news.html:27 templates/news.html:39 templates/news.html:51
+#: templates/news.html:63 templates/news.html:75 templates/news.html:87
+msgid "Date Here"
+msgstr ""
+
+#: templates/news.html:28 templates/news.html:40 templates/news.html:52
+#: templates/news.html:64 templates/news.html:76 templates/news.html:88
+msgid "News Article Title Here"
+msgstr ""
+
+#: templates/news.html:29 templates/news.html:41 templates/news.html:53
+#: templates/news.html:65 templates/news.html:77 templates/news.html:89
+msgid "Short excerpt from the article."
+msgstr ""
+
+#: templates/news.html:50 templates/news.html:74
+msgid "Announcement"
+msgstr ""
+
+#: templates/services.html:6
+msgid "What We Offer"
+msgstr ""
+
+#: templates/services.html:7
+msgid "Our Services"
+msgstr ""
+
+#: templates/services.html:32
+msgid "Service 01"
+msgstr ""
+
+#: templates/services.html:34
+msgid ""
+"Providing immediate assistance to individuals and families in crisis, "
+"ensuring access to essential resources and urgent care when it's needed "
+"most."
+msgstr ""
+
+#: templates/services.html:35
+msgid ""
+"Our crisis team responds rapidly to situations involving housing "
+"instability, family breakdown, medical emergencies, and other urgent "
+"welfare needs within CALD communities."
+msgstr ""
+
+#: templates/services.html:36
+msgid "Get Support"
+msgstr ""
+
+#: templates/services.html:40
+msgid "24/7 emergency referral support"
+msgstr ""
+
+#: templates/services.html:41
+msgid "Coordination with emergency services"
+msgstr ""
+
+#: templates/services.html:42
+msgid "Access to food, clothing & essentials"
+msgstr ""
+
+#: templates/services.html:43
+msgid "Family crisis counselling referrals"
+msgstr ""
+
+#: templates/services.html:44
+msgid "Safe house and shelter connections"
+msgstr ""
+
+#: templates/services.html:57
+msgid "Service 02"
+msgstr ""
+
+#: templates/services.html:59
+msgid ""
+"Bridging cultural and language gaps to help families communicate "
+"effectively with service providers, schools, and community organisations."
+msgstr ""
+
+#: templates/services.html:60
+msgid ""
+"Our trained cultural mediators work directly with families, schools, "
+"courts, and welfare agencies to ensure every individual is heard and "
+"understood."
+msgstr ""
+
+#: templates/services.html:61
+msgid "Request a Mediator"
+msgstr ""
+
+#: templates/services.html:65
+msgid "Multilingual mediators available"
+msgstr ""
+
+#: templates/services.html:66
+msgid "School and education liaison"
+msgstr ""
+
+#: templates/services.html:67
+msgid "Court and legal support facilitation"
+msgstr ""
+
+#: templates/services.html:68
+msgid "Government agency communication"
+msgstr ""
+
+#: templates/services.html:69
+msgid "Family conflict resolution support"
+msgstr ""
+
+#: templates/services.html:82
+msgid "Service 03"
+msgstr ""
+
+#: templates/services.html:84
+msgid ""
+"Connecting those experiencing hardship with safe and suitable short-term "
+"housing options through our trusted network of partners."
+msgstr ""
+
+#: templates/services.html:85
+msgid ""
+"We work with shelters, faith communities, and housing providers to ensure"
+" no one in our community is left without a safe place to stay."
+msgstr ""
+
+#: templates/services.html:86
+msgid "Find Housing Help"
+msgstr ""
+
+#: templates/services.html:90
+msgid "Emergency accommodation referrals"
+msgstr ""
+
+#: templates/services.html:91
+msgid "Transitional housing connections"
+msgstr ""
+
+#: templates/services.html:92
+msgid "Culturally appropriate placements"
+msgstr ""
+
+#: templates/services.html:93
+msgid "Support for families with children"
+msgstr ""
+
+#: templates/services.html:94
+msgid "Ongoing follow-up and welfare checks"
+msgstr ""
+
+#: templates/services.html:107
+msgid "Service 04"
+msgstr ""
+
+#: templates/services.html:108
+msgid "Anti-Fraud & Safety Awareness Programs"
+msgstr ""
+
+#: templates/services.html:109
+msgid ""
+"Educating community members on protecting themselves from scams, "
+"exploitation, and unsafe situations through targeted awareness "
+"initiatives."
+msgstr ""
+
+#: templates/services.html:110
+msgid ""
+"CALD communities are often targeted by sophisticated scams. Our programs "
+"build awareness and resilience through workshops, resources, and direct "
+"outreach."
+msgstr ""
+
+#: templates/services.html:115
+msgid "Community fraud awareness workshops"
+msgstr ""
+
+#: templates/services.html:116
+msgid "Online safety and scam education"
+msgstr ""
+
+#: templates/services.html:117
+msgid "Financial exploitation prevention"
+msgstr ""
+
+#: templates/services.html:118
+msgid "Multilingual resources and materials"
+msgstr ""
+
+#: templates/services.html:119
+msgid "Referral to police and support services"
+msgstr ""
+
+#: templates/services.html:132
+msgid "Service 05"
+msgstr ""
+
+#: templates/services.html:134
+msgid ""
+"Supporting individuals in navigating healthcare and social services, "
+"ensuring fair access to essential wellbeing and welfare resources."
+msgstr ""
+
+#: templates/services.html:135
+msgid ""
+"We advocate for CALD community members within the healthcare system, "
+"helping them understand their rights and access the services they are "
+"entitled to."
+msgstr ""
+
+#: templates/services.html:136
+msgid "Get Advocacy Support"
+msgstr ""
+
+#: templates/services.html:140
+msgid "Hospital and GP navigation support"
+msgstr ""
+
+#: templates/services.html:141
+msgid "Mental health service referrals"
+msgstr ""
+
+#: templates/services.html:142
+msgid "Centrelink and welfare guidance"
+msgstr ""
+
+#: templates/services.html:143
+msgid "NDIS access support"
+msgstr ""
+
+#: templates/services.html:144
+msgid "Health interpreter coordination"
+msgstr ""
+
+#: templates/services.html:157
+msgid "Service 06"
+msgstr ""
+
+#: templates/services.html:159
+msgid ""
+"Ensuring lasting benefits for communities through programs designed with "
+"long-term impact and resilience in mind."
+msgstr ""
+
+#: templates/services.html:160
+msgid ""
+"Our sustainability initiatives focus on empowering communities to support"
+" themselves, reducing dependency and building long-term capacity within "
+"CALD groups."
+msgstr ""
+
+#: templates/services.html:165
+msgid "Community capacity building programs"
+msgstr ""
+
+#: templates/services.html:166
+msgid "Volunteer recruitment and training"
+msgstr ""
+
+#: templates/services.html:167
+msgid "Peer support network development"
+msgstr ""
+
+#: templates/services.html:168
+msgid "Partnership and funding programs"
+msgstr ""
+
+#: templates/services.html:169
+msgid "Leadership and skills development"
+msgstr ""
+
+#: templates/services.html:180
+msgid "Need Support?"
+msgstr ""
+
+#: templates/services.html:180
+msgid ""
+"Contact us today and our team will connect you with the right service for"
+" your situation."
+msgstr ""
+
+#: templates/stories.html:6
+msgid "Real Impact"
+msgstr ""
+
+#: templates/stories.html:16
+msgid "Community Voices"
+msgstr ""
+
+#: templates/stories.html:17
+msgid "Stories of Lives Changed"
+msgstr ""
+
+#: templates/stories.html:18
+msgid ""
+"Every story here represents a real person whose life was touched by the "
+"support of WMAA and our community partners. These are stories of "
+"resilience, courage, and hope."
+msgstr ""
+
+#: templates/stories.html:26
+msgid "Crisis Support"
+msgstr ""
+
+#: templates/stories.html:27 templates/stories.html:38
+#: templates/stories.html:49 templates/stories.html:60
+#: templates/stories.html:71 templates/stories.html:82
+msgid "Story Title Here"
+msgstr ""
+
+#: templates/stories.html:28
+msgid ""
+"A brief description of how WMAA provided support to a community member "
+"during a difficult time."
+msgstr ""
+
+#: templates/stories.html:29 templates/stories.html:40
+#: templates/stories.html:51 templates/stories.html:62
+#: templates/stories.html:73 templates/stories.html:84
+msgid "Read Full Story"
+msgstr ""
+
+#: templates/stories.html:39
+msgid ""
+"A brief description of how cultural mediation helped a family navigate "
+"challenges."
+msgstr ""
+
+#: templates/stories.html:48
+msgid "Housing Support"
+msgstr ""
+
+#: templates/stories.html:50
+msgid ""
+"A brief description of how WMAA connected a family with safe "
+"accommodation."
+msgstr ""
+
+#: templates/stories.html:59
+msgid "Fraud Prevention"
+msgstr ""
+
+#: templates/stories.html:61
+msgid ""
+"How a community member avoided a serious scam thanks to WMAA's awareness "
+"programs."
+msgstr ""
+
+#: templates/stories.html:72
+msgid ""
+"How WMAA helped a community member navigate the healthcare system and "
+"access vital treatment."
+msgstr ""
+
+#: templates/stories.html:83
+msgid ""
+"A story of community resilience and how WMAA's network came together to "
+"support a family in need."
+msgstr ""
+
+#: templates/stories.html:95
+msgid "Help Us Create More Stories Like These"
+msgstr ""
+
+#: templates/stories.html:95
+msgid ""
+"Your support enables us to reach more people and make a real difference "
+"in our community."
+msgstr ""
+
