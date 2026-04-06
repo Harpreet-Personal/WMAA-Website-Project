@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-banner">
+  <div class="container">
+    <p class="section-eyebrow light">{{ _('Get In Touch') }}</p>
+    <h1 class="page-banner-title">{{ _('Contact Us') }}</h1>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li class="breadcrumb-item active">{{ _('Contact Us') }}</li></ol></nav>
+  </div>
+</div>
+
+<section class="section-padding bg-light">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4" data-animate="fade-right">
+        <p class="section-eyebrow">{{ _('Reach Out') }}</p>
+        <h2 class="section-heading">{{ _("We'd Love to Hear From You") }}</h2>
+        <p class="section-body">{{ _('Whether you need support, want to volunteer, or have a partnership enquiry — we\'re here to help.') }}</p>
+        <div class="contact-details mt-4">
+          <div class="contact-item"><i class="bi bi-geo-alt-fill"></i><div><strong>{{ _('Address') }}</strong><p>{{ _('10 Lake Street, Northbridge, Perth WA') }}</p></div></div>
+          <div class="contact-item"><i class="bi bi-envelope-fill"></i><div><strong>{{ _('Email') }}</strong><p><a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></p></div></div>
+          <div class="contact-item"><i class="bi bi-telephone-fill"></i><div><strong>{{ _('Phone') }}</strong><p>(61) 86555 7072</p></div></div>
+        </div>
+        <div class="contact-item mt-4"><i class="bi bi-clock-fill"></i><div><strong>{{ _('Office Hours') }}</strong><p>{{ _('Monday – Friday: 9:00am – 5:00pm') }}<br />{{ _('Saturday: By appointment') }}</p></div></div>
+      </div>
+      <div class="col-lg-8" data-animate="fade-left">
+        <form id="contactForm" class="contact-form" novalidate>
+          <div class="row g-3">
+            <div class="col-md-6"><label for="contactName" class="form-label">{{ _('Full Name') }} *</label><input type="text" class="form-control" id="contactName" placeholder="{{ _('Your name') }}" required /></div>
+            <div class="col-md-6"><label for="contactEmail" class="form-label">{{ _('Email Address') }} *</label><input type="email" class="form-control" id="contactEmail" placeholder="your@email.com" required /></div>
+            <div class="col-md-6"><label for="contactPhone" class="form-label">{{ _('Phone Number') }}</label><input type="tel" class="form-control" id="contactPhone" placeholder="04xx xxx xxx" /></div>
+            <div class="col-md-6"><label for="contactType" class="form-label">{{ _('Enquiry Type') }}</label>
+              <select class="form-control" id="contactType">
+                <option value="">{{ _('Select an option') }}</option>
+                <option>{{ _('General Enquiry') }}</option>
+                <option>{{ _('Request Support') }}</option>
+                <option>{{ _('Volunteer') }}</option>
+                <option>{{ _('Partnership / Sponsorship') }}</option>
+                <option>{{ _('Media Enquiry') }}</option>
+              </select>
+            </div>
+            <div class="col-12"><label for="contactSubject" class="form-label">{{ _('Subject') }}</label><input type="text" class="form-control" id="contactSubject" placeholder="{{ _('How can we help?') }}" /></div>
+            <div class="col-12"><label for="contactMessage" class="form-label">{{ _('Message') }} *</label><textarea class="form-control" id="contactMessage" rows="6" placeholder="{{ _('Write your message here...') }}" required></textarea></div>
+            <div class="col-12"><button type="submit" class="btn btn-contact-submit w-100">{{ _('Send Message') }} <i class="bi bi-send ms-1"></i></button></div>
+            <div class="col-12" id="formFeedback" style="display:none;"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="map-placeholder">
+  <div class="container text-center py-4">
+    <p class="section-eyebrow">{{ _('Find Us') }}</p>
+    <h4 class="section-heading mb-3">{{ _('10 Lake Street, Northbridge, Perth WA') }}</h4>
+    <div class="ratio ratio-21x9">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3385.3!2d115.8594!3d-31.9467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32bad4e1d5c5f1%3A0x0!2sLake+St%2C+Northbridge+WA+6003!5e0!3m2!1sen!2sau!4v1700000000000!5m2!1sen!2sau" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">{{ _('Join Us in Our Mission') }}</p><p class="footer-small">{{ _('Company Limited by Guarantee') }}<br />{{ _('ACNC Registered Charity') }}</p></div>
+      <div class="col-lg-2 col-6"><h6 class="footer-heading">{{ _('Navigate') }}</h6><ul class="footer-links"><li><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li><a href="{{ url_for('about') }}">{{ _('About Us') }}</a></li><li><a href="{{ url_for('services') }}">{{ _('Services') }}</a></li><li><a href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a></li><li><a href="{{ url_for('events') }}">{{ _('Events') }}</a></li><li><a href="{{ url_for('news') }}">{{ _('News') }}</a></li><li><a href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a></li></ul></div>
+      <div class="col-lg-3 col-6"><h6 class="footer-heading">{{ _('Services') }}</h6><ul class="footer-links"><li><a href="{{ url_for('services') }}#crisis">{{ _('Crisis Response') }}</a></li><li><a href="{{ url_for('services') }}#mediation">{{ _('Cultural Mediation') }}</a></li><li><a href="{{ url_for('services') }}#housing">{{ _('Housing Referrals') }}</a></li><li><a href="{{ url_for('services') }}#fraud">{{ _('Fraud Awareness') }}</a></li><li><a href="{{ url_for('services') }}#health">{{ _('Health Advocacy') }}</a></li></ul></div>
+      <div class="col-lg-3"><h6 class="footer-heading">{{ _('Contact') }}</h6><ul class="footer-links"><li><i class="bi bi-geo-alt"></i> {{ _('10 Lake Street, Northbridge, Perth WA') }}</li><li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li><li><i class="bi bi-telephone"></i> (61) 86555 7072</li></ul></div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="d-flex flex-wrap justify-content-between align-items-center"><p class="footer-copy mb-0">&copy; 2025 {{ _('WA Multicultural Assistance Alliance. All rights reserved.') }}</p><p class="footer-copy mb-0">{{ _('Fundraising License: CC23982') }}</p></div>
+  </div>
+</footer>
+<button id="backToTop" class="back-to-top" aria-label="{{ _('Back to top') }}"><i class="bi bi-arrow-up"></i></button>
+{% endblock %}

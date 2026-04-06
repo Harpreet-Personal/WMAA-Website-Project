@@ -1,0 +1,707 @@
+# Chinese (Simplified) translations for WMAA.
+msgid ""
+msgstr ""
+"Project-Id-Version: WMAA\n"
+"POT-Creation-Date: 2026-04-04 00:00+0800\n"
+"PO-Revision-Date: 2026-04-04 00:00+0800\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Home"
+msgstr "首页"
+
+msgid "About Us"
+msgstr "关于我们"
+
+msgid "Services"
+msgstr "服务"
+
+msgid "Our Stories"
+msgstr "我们的故事"
+
+msgid "Events"
+msgstr "活动"
+
+msgid "News"
+msgstr "新闻"
+
+msgid "Contact Us"
+msgstr "联系我们"
+
+msgid "Donate"
+msgstr "捐款"
+
+msgid "All Services"
+msgstr "所有服务"
+
+msgid "Crisis Response"
+msgstr "危机响应"
+
+msgid "Cultural Mediation"
+msgstr "文化调解"
+
+msgid "Housing Referrals"
+msgstr "住房转介"
+
+msgid "Fraud Awareness"
+msgstr "反诈骗意识"
+
+msgid "Health Advocacy"
+msgstr "健康倡导"
+
+msgid "Fundraise Events"
+msgstr "筹款活动"
+
+msgid "Navigate"
+msgstr "导航"
+
+msgid "Contact"
+msgstr "联系方式"
+
+msgid "10 Lake Street, Northbridge, Perth WA"
+msgstr "西澳珀斯诺斯布里奇湖街10号"
+
+msgid "Join Us in Our Mission"
+msgstr "加入我们的使命"
+
+msgid "Company Limited by Guarantee"
+msgstr "担保有限公司"
+
+msgid "ACNC Registered Charity"
+msgstr "ACNC注册慈善机构"
+
+msgid "WA Multicultural Assistance Alliance. All rights reserved."
+msgstr "西澳多元文化援助联盟。保留所有权利。"
+
+msgid "Fundraising License: CC23982"
+msgstr "募款许可证：CC23982"
+
+msgid "Back to top"
+msgstr "返回顶部"
+
+msgid "ACNC"
+msgstr "ACNC"
+
+msgid "Registered"
+msgstr "注册慈善机构"
+
+msgid "Who We Are"
+msgstr "关于我们"
+
+msgid "About WMAA"
+msgstr "关于西澳多元文化援助联盟"
+
+msgid "WMAA is an ACNC-registered charity dedicated to supporting culturally and linguistically diverse (CALD) communities across Western Australia. We provide practical help, cultural understanding, and support for migrants, students, visitors, and families in need."
+msgstr "WMAA是一家经ACNC注册的慈善机构，致力于支持西澳大利亚各地文化和语言多元化（CALD）社区。我们为有需要的移民、学生、访客和家庭提供实际帮助、文化理解和支持。"
+
+msgid "We work collaboratively with universities, community organisations, service providers, and government agencies to build a strong support network for CALD individuals."
+msgstr "我们与大学、社区组织、服务提供商和政府机构合作，为CALD个人建立强大的支持网络。"
+
+msgid "Registered Charity"
+msgstr "注册慈善机构"
+
+msgid "Communities Served"
+msgstr "服务社区"
+
+msgid "Our Vision"
+msgstr "我们的愿景"
+
+msgid "To build a resilient, connected, and empowered multicultural community in Western Australia where everyone has access to support in their time of need."
+msgstr "在西澳大利亚建立一个具有韧性、紧密联系且充满活力的多元文化社区，让每个人在需要时都能获得支持。"
+
+msgid "What Drives Us"
+msgstr "我们的驱动力"
+
+msgid "Our Vision & Values"
+msgstr "我们的愿景与价值观"
+
+msgid "Compassion"
+msgstr "同理心"
+
+msgid "Treating every person with dignity and care."
+msgstr "以尊重和关怀对待每一个人。"
+
+msgid "Cultural Respect"
+msgstr "文化尊重"
+
+msgid "Honouring the diversity of all backgrounds."
+msgstr "尊重所有背景的多样性。"
+
+msgid "Community"
+msgstr "社区"
+
+msgid "Stronger together through collaboration."
+msgstr "通过合作共同变得更强大。"
+
+msgid "How We Work"
+msgstr "我们的工作方式"
+
+msgid "Our Approach"
+msgstr "我们的方法"
+
+msgid "Our services are both proactive and responsive."
+msgstr "我们的服务既主动出击，又快速响应。"
+
+msgid "Providing immediate crisis assistance, housing referrals, and advocacy."
+msgstr "提供即时危机援助、住房转介和权益倡导。"
+
+msgid "Delivering education and awareness programs that prevent harm and build resilience."
+msgstr "提供预防伤害和增强韧性的教育和意识提升项目。"
+
+msgid "Acting as cultural mediators to bridge communication gaps between families, services, and authorities."
+msgstr "作为文化调解员，弥合家庭、服务机构和当局之间的沟通鸿沟。"
+
+msgid "The Future"
+msgstr "展望未来"
+
+msgid "Looking Ahead"
+msgstr "展望前景"
+
+msgid "WMAA will continue to expand its services by building on these four pillars."
+msgstr "WMAA将继续在以下四大支柱的基础上扩展其服务。"
+
+msgid "Strengthening Partnerships"
+msgstr "加强合作伙伴关系"
+
+msgid "Collaborating with local and international organisations to expand our reach and improve support for CALD communities."
+msgstr "与本地和国际组织合作，扩大覆盖范围，改善对CALD社区的支持。"
+
+msgid "Raising Community Awareness"
+msgstr "提升社区意识"
+
+msgid "Promoting greater understanding of available services so individuals know where to turn for help."
+msgstr "推广对现有服务的了解，让个人知道在哪里寻求帮助。"
+
+msgid "Building a Skilled Volunteer Network"
+msgstr "建立专业志愿者网络"
+
+msgid "Training volunteers in cultural mediation, emergency response, and advocacy to deliver compassionate assistance."
+msgstr "培训志愿者掌握文化调解、紧急响应和权益倡导技能，提供富有同情心的援助。"
+
+msgid "Developing Tailored Support Programs"
+msgstr "开发定制支持项目"
+
+msgid "Creating specialised initiatives for vulnerable groups, including victims of family violence, fraud, and housing insecurity."
+msgstr "为弱势群体创建专项计划，包括家庭暴力受害者、欺诈受害者和住房不稳定人群。"
+
+msgid "Our Organisation"
+msgstr "我们的机构"
+
+msgid "Read More"
+msgstr "阅读更多"
+
+msgid "WA Multicultural Assistance Alliance"
+msgstr "西澳多元文化援助联盟"
+
+msgid "Responding With Compassion, Leading With Purpose"
+msgstr "以同理心回应，以使命感引领"
+
+msgid "Partner with WMAA to expand our reach and impact. Together, we can create a stronger, more connected community across Western Australia."
+msgstr "与WMAA合作，扩大我们的覆盖范围和影响力。携手共建更强大、更紧密联系的西澳大利亚社区。"
+
+msgid "Learn More"
+msgstr "了解更多"
+
+msgid "Donate Now"
+msgstr "立即捐款"
+
+msgid "Scroll"
+msgstr "滚动"
+
+msgid "What We Do"
+msgstr "我们的工作"
+
+msgid "Our Core Services"
+msgstr "我们的核心服务"
+
+msgid "Crisis Response & Emergency Support"
+msgstr "危机响应与紧急援助"
+
+msgid "Immediate assistance for individuals and families in crisis situations."
+msgstr "为处于危机中的个人和家庭提供即时援助。"
+
+msgid "Cultural Mediation & Family Liaison"
+msgstr "文化调解与家庭联络"
+
+msgid "Bridging cultural and language gaps between families and service providers."
+msgstr "弥合家庭与服务提供者之间的文化和语言障碍。"
+
+msgid "Temporary Accommodation Referrals"
+msgstr "临时住宿转介"
+
+msgid "Connecting people in hardship with safe short-term housing options."
+msgstr "为有困难的人提供安全短期住房选择。"
+
+msgid "Anti-Fraud & Safety Awareness"
+msgstr "反诈骗与安全意识"
+
+msgid "Educating community members to protect themselves from scams."
+msgstr "教育社区成员保护自己免受诈骗。"
+
+msgid "Health & Welfare Advocacy"
+msgstr "健康与福利倡导"
+
+msgid "Helping individuals navigate healthcare and social services fairly."
+msgstr "帮助个人公平地获取医疗保健和社会服务。"
+
+msgid "Sustainability"
+msgstr "可持续发展"
+
+msgid "Ensuring lasting benefits for communities through long-term programs."
+msgstr "通过长期项目确保社区获得持久利益。"
+
+msgid "View All Services"
+msgstr "查看所有服务"
+
+msgid "Support Our Mission"
+msgstr "支持我们的使命"
+
+msgid "Your donation helps us provide emergency support, cultural mediation, and essential services to CALD communities across WA."
+msgstr "您的捐款帮助我们为西澳各地的CALD社区提供紧急支援、文化调解和基本服务。"
+
+msgid "What We Offer"
+msgstr "我们提供的服务"
+
+msgid "Our Services"
+msgstr "我们的服务"
+
+msgid "Service 01"
+msgstr "服务 01"
+
+msgid "Providing immediate assistance to individuals and families in crisis, ensuring access to essential resources and urgent care when it's needed most."
+msgstr "为处于危机中的个人和家庭提供即时援助，确保在最需要时获得基本资源和紧急救护。"
+
+msgid "Our crisis team responds rapidly to situations involving housing instability, family breakdown, medical emergencies, and other urgent welfare needs within CALD communities."
+msgstr "我们的危机团队快速响应CALD社区中涉及住房不稳定、家庭破裂、医疗紧急情况和其他紧迫福利需求的情况。"
+
+msgid "Get Support"
+msgstr "获取支持"
+
+msgid "24/7 emergency referral support"
+msgstr "24/7紧急转介支持"
+
+msgid "Coordination with emergency services"
+msgstr "与紧急服务机构协调"
+
+msgid "Access to food, clothing & essentials"
+msgstr "获取食物、衣物和生活必需品"
+
+msgid "Family crisis counselling referrals"
+msgstr "家庭危机辅导转介"
+
+msgid "Safe house and shelter connections"
+msgstr "庇护所和避难所连接"
+
+msgid "Service 02"
+msgstr "服务 02"
+
+msgid "Bridging cultural and language gaps to help families communicate effectively with service providers, schools, and community organisations."
+msgstr "弥合文化和语言障碍，帮助家庭与服务提供商、学校和社区组织有效沟通。"
+
+msgid "Our trained cultural mediators work directly with families, schools, courts, and welfare agencies to ensure every individual is heard and understood."
+msgstr "我们训练有素的文化调解员直接与家庭、学校、法院和福利机构合作，确保每个人都能被倾听和理解。"
+
+msgid "Request a Mediator"
+msgstr "申请调解员"
+
+msgid "Multilingual mediators available"
+msgstr "提供多语言调解员"
+
+msgid "School and education liaison"
+msgstr "学校和教育联络"
+
+msgid "Court and legal support facilitation"
+msgstr "法庭和法律支持协助"
+
+msgid "Government agency communication"
+msgstr "政府机构沟通"
+
+msgid "Family conflict resolution support"
+msgstr "家庭冲突解决支持"
+
+msgid "Service 03"
+msgstr "服务 03"
+
+msgid "Connecting those experiencing hardship with safe and suitable short-term housing options through our trusted network of partners."
+msgstr "通过我们可信赖的合作伙伴网络，为有困难的人提供安全、合适的短期住房选择。"
+
+msgid "We work with shelters, faith communities, and housing providers to ensure no one in our community is left without a safe place to stay."
+msgstr "我们与庇护所、宗教社区和住房提供商合作，确保社区中没有人因无处可住而流离失所。"
+
+msgid "Find Housing Help"
+msgstr "寻找住房帮助"
+
+msgid "Emergency accommodation referrals"
+msgstr "紧急住宿转介"
+
+msgid "Transitional housing connections"
+msgstr "过渡性住房联系"
+
+msgid "Culturally appropriate placements"
+msgstr "文化适宜的安置"
+
+msgid "Support for families with children"
+msgstr "为有孩子的家庭提供支持"
+
+msgid "Ongoing follow-up and welfare checks"
+msgstr "持续跟进和福利检查"
+
+msgid "Service 04"
+msgstr "服务 04"
+
+msgid "Anti-Fraud & Safety Awareness Programs"
+msgstr "反诈骗与安全意识项目"
+
+msgid "Educating community members on protecting themselves from scams, exploitation, and unsafe situations through targeted awareness initiatives."
+msgstr "通过有针对性的意识提升活动，教育社区成员如何保护自己免受诈骗、剥削和不安全情况的侵害。"
+
+msgid "CALD communities are often targeted by sophisticated scams. Our programs build awareness and resilience through workshops, resources, and direct outreach."
+msgstr "CALD社区经常成为复杂诈骗的目标。我们的项目通过研讨会、资源和直接宣传来提高意识和增强抵御能力。"
+
+msgid "Community fraud awareness workshops"
+msgstr "社区反诈骗意识研讨会"
+
+msgid "Online safety and scam education"
+msgstr "网络安全和反诈骗教育"
+
+msgid "Financial exploitation prevention"
+msgstr "金融诈骗预防"
+
+msgid "Multilingual resources and materials"
+msgstr "多语言资源和材料"
+
+msgid "Referral to police and support services"
+msgstr "转介至警方和支持服务"
+
+msgid "Service 05"
+msgstr "服务 05"
+
+msgid "Supporting individuals in navigating healthcare and social services, ensuring fair access to essential wellbeing and welfare resources."
+msgstr "支持个人在医疗保健和社会服务中找到方向，确保公平获取基本健康和福利资源。"
+
+msgid "We advocate for CALD community members within the healthcare system, helping them understand their rights and access the services they are entitled to."
+msgstr "我们在医疗保健系统内为CALD社区成员倡导权益，帮助他们了解自己的权利并获得应有的服务。"
+
+msgid "Get Advocacy Support"
+msgstr "获取权益支持"
+
+msgid "Hospital and GP navigation support"
+msgstr "医院和全科医生导诊支持"
+
+msgid "Mental health service referrals"
+msgstr "心理健康服务转介"
+
+msgid "Centrelink and welfare guidance"
+msgstr "Centrelink和福利指导"
+
+msgid "NDIS access support"
+msgstr "NDIS申请支持"
+
+msgid "Health interpreter coordination"
+msgstr "医疗口译员协调"
+
+msgid "Service 06"
+msgstr "服务 06"
+
+msgid "Ensuring lasting benefits for communities through programs designed with long-term impact and resilience in mind."
+msgstr "通过以长期影响和可持续性为核心设计的项目，确保社区获得持久利益。"
+
+msgid "Our sustainability initiatives focus on empowering communities to support themselves, reducing dependency and building long-term capacity within CALD groups."
+msgstr "我们的可持续发展计划专注于赋权社区自我支持，减少依赖性，在CALD群体中建立长期能力。"
+
+msgid "Get Involved"
+msgstr "参与其中"
+
+msgid "Community capacity building programs"
+msgstr "社区能力建设项目"
+
+msgid "Volunteer recruitment and training"
+msgstr "志愿者招募和培训"
+
+msgid "Peer support network development"
+msgstr "同伴支持网络发展"
+
+msgid "Partnership and funding programs"
+msgstr "合作伙伴关系和资助项目"
+
+msgid "Leadership and skills development"
+msgstr "领导力和技能发展"
+
+msgid "Need Support?"
+msgstr "需要支持？"
+
+msgid "Contact us today and our team will connect you with the right service for your situation."
+msgstr "立即联系我们，我们的团队将为您的情况匹配合适的服务。"
+
+msgid "Real Impact"
+msgstr "真实影响"
+
+msgid "Community Voices"
+msgstr "社区之声"
+
+msgid "Stories of Lives Changed"
+msgstr "改变生命的故事"
+
+msgid "Every story here represents a real person whose life was touched by the support of WMAA and our community partners. These are stories of resilience, courage, and hope."
+msgstr "这里的每个故事都代表一个真实的人，他们的生活因WMAA和我们社区合作伙伴的支持而改变。这些是关于坚韧、勇气和希望的故事。"
+
+msgid "Crisis Support"
+msgstr "危机支持"
+
+msgid "Story Title Here"
+msgstr "故事标题"
+
+msgid "A brief description of how WMAA provided support to a community member during a difficult time."
+msgstr "简述WMAA如何在困难时期为社区成员提供支持。"
+
+msgid "Read Full Story"
+msgstr "阅读完整故事"
+
+msgid "A brief description of how cultural mediation helped a family navigate challenges."
+msgstr "简述文化调解如何帮助家庭克服挑战。"
+
+msgid "Housing Support"
+msgstr "住房支持"
+
+msgid "A brief description of how WMAA connected a family with safe accommodation."
+msgstr "简述WMAA如何帮助家庭找到安全住所。"
+
+msgid "Fraud Prevention"
+msgstr "防诈骗"
+
+msgid "How a community member avoided a serious scam thanks to WMAA's awareness programs."
+msgstr "一名社区成员如何借助WMAA的意识提升项目避免了严重诈骗。"
+
+msgid "How WMAA helped a community member navigate the healthcare system and access vital treatment."
+msgstr "WMAA如何帮助社区成员了解医疗系统并获得重要治疗。"
+
+msgid "A story of community resilience and how WMAA's network came together to support a family in need."
+msgstr "一个关于社区韧性的故事，讲述WMAA的网络如何共同支持一个有需要的家庭。"
+
+msgid "Help Us Create More Stories Like These"
+msgstr "帮助我们创造更多这样的故事"
+
+msgid "Your support enables us to reach more people and make a real difference in our community."
+msgstr "您的支持使我们能够帮助更多人，在社区中产生真实的改变。"
+
+msgid "Get In Touch"
+msgstr "联系我们"
+
+msgid "Reach Out"
+msgstr "伸出援手"
+
+msgid "We'd Love to Hear From You"
+msgstr "我们很乐意听取您的意见"
+
+msgid "Whether you need support, want to volunteer, or have a partnership enquiry — we're here to help."
+msgstr "无论您是需要支持、想要志愿服务，还是有合作咨询——我们都在这里为您提供帮助。"
+
+msgid "Address"
+msgstr "地址"
+
+msgid "Email"
+msgstr "电子邮件"
+
+msgid "Phone"
+msgstr "电话"
+
+msgid "Office Hours"
+msgstr "办公时间"
+
+msgid "Monday – Friday: 9:00am – 5:00pm"
+msgstr "周一至周五：上午9:00 – 下午5:00"
+
+msgid "Saturday: By appointment"
+msgstr "周六：预约制"
+
+msgid "Full Name"
+msgstr "全名"
+
+msgid "Your name"
+msgstr "您的姓名"
+
+msgid "Email Address"
+msgstr "电子邮件地址"
+
+msgid "Phone Number"
+msgstr "电话号码"
+
+msgid "Enquiry Type"
+msgstr "咨询类型"
+
+msgid "Select an option"
+msgstr "请选择"
+
+msgid "General Enquiry"
+msgstr "一般咨询"
+
+msgid "Request Support"
+msgstr "申请支持"
+
+msgid "Volunteer"
+msgstr "志愿服务"
+
+msgid "Partnership / Sponsorship"
+msgstr "合作/赞助"
+
+msgid "Media Enquiry"
+msgstr "媒体咨询"
+
+msgid "Subject"
+msgstr "主题"
+
+msgid "How can we help?"
+msgstr "我们能为您提供什么帮助？"
+
+msgid "Message"
+msgstr "留言内容"
+
+msgid "Write your message here..."
+msgstr "请在此写下您的留言……"
+
+msgid "Send Message"
+msgstr "发送留言"
+
+msgid "Find Us"
+msgstr "找到我们"
+
+msgid "Make a Difference"
+msgstr "做出改变"
+
+msgid "Your Impact"
+msgstr "您的影响"
+
+msgid "Why Your Donation Matters"
+msgstr "为什么您的捐款很重要"
+
+msgid "Every dollar donated directly supports CALD individuals and families in Western Australia when they need it most."
+msgstr "每一分捐款都直接支持西澳大利亚的CALD个人和家庭在最需要时获得帮助。"
+
+msgid "Helps cover transport to a support appointment for a community member in need."
+msgstr "帮助支付有需要的社区成员前往支持预约的交通费用。"
+
+msgid "Funds a cultural mediation session to help a family navigate a critical situation."
+msgstr "资助一次文化调解会议，帮助家庭应对关键情况。"
+
+msgid "Supports emergency welfare assistance for a family in immediate crisis."
+msgstr "为处于紧急危机中的家庭提供紧急福利援助。"
+
+msgid "Online Donation"
+msgstr "在线捐款"
+
+msgid "Choose Your Amount"
+msgstr "选择捐款金额"
+
+msgid "Fundraising License:"
+msgstr "募款许可证："
+
+msgid "Or enter a custom amount ($)"
+msgstr "或输入自定义金额（$）"
+
+msgid "Now"
+msgstr "立即"
+
+msgid "Secure payment"
+msgstr "安全支付"
+
+msgid "Bank Transfer"
+msgstr "银行转账"
+
+msgid "Direct Bank Transfer (AU)"
+msgstr "直接银行转账（澳大利亚）"
+
+msgid "Prefer to donate directly? Transfer using the details below and email us your receipt at"
+msgstr "希望直接捐款？请使用以下信息转账，并将收据通过电子邮件发送至"
+
+msgid "BSB"
+msgstr "BSB"
+
+msgid "Account Number"
+msgstr "账号"
+
+msgid "Account Name"
+msgstr "账户名称"
+
+msgid "Reference"
+msgstr "汇款说明"
+
+msgid "DONATION – [Your Name]"
+msgstr "捐款 – [您的姓名]"
+
+msgid "Upcoming Events"
+msgstr "即将举办的活动"
+
+msgid "Join Us & Make a Difference"
+msgstr "加入我们，共创改变"
+
+msgid "Attend our fundraising events to support WMAA's mission and connect with the multicultural community across Western Australia."
+msgstr "参加我们的筹款活动，支持WMAA的使命，并与整个西澳大利亚的多元文化社区建立联系。"
+
+msgid "Fundraiser"
+msgstr "筹款活动"
+
+msgid "Event Name Here"
+msgstr "活动名称"
+
+msgid "Time TBD"
+msgstr "时间待定"
+
+msgid "Venue, Perth WA"
+msgstr "地点，西澳珀斯"
+
+msgid "Short description of the event and what attendees can expect."
+msgstr "活动简介及参与者可期待的内容。"
+
+msgid "Register Interest"
+msgstr "登记兴趣"
+
+msgid "Short description of the event."
+msgstr "活动简介。"
+
+msgid "Past Events"
+msgstr "往期活动"
+
+msgid "Past Event"
+msgstr "往期活动"
+
+msgid "A short recap of a past fundraising event."
+msgstr "往期筹款活动简述。"
+
+msgid "Can't Make It to an Event?"
+msgstr "无法参加活动？"
+
+msgid "You can still support WMAA with a direct donation. Every contribution makes a difference."
+msgstr "您仍然可以通过直接捐款支持WMAA。每一份贡献都意义非凡。"
+
+msgid "Donate Online"
+msgstr "在线捐款"
+
+msgid "Stay Updated"
+msgstr "保持关注"
+
+msgid "Latest News"
+msgstr "最新资讯"
+
+msgid "All"
+msgstr "全部"
+
+msgid "Announcements"
+msgstr "公告"
+
+msgid "Date Here"
+msgstr "日期"
+
+msgid "News Article Title Here"
+msgstr "新闻标题"
+
+msgid "Short excerpt from the article."
+msgstr "文章摘要。"
+
+msgid "Announcement"
+msgstr "公告"
+

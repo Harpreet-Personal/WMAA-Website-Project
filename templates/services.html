@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-banner">
+  <div class="container">
+    <p class="section-eyebrow light">{{ _('What We Offer') }}</p>
+    <h1 class="page-banner-title">{{ _('Our Services') }}</h1>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li class="breadcrumb-item active">{{ _('Services') }}</li></ol></nav>
+  </div>
+</div>
+
+<!-- SERVICES JUMP NAV -->
+<div class="services-jumpnav">
+  <div class="container">
+    <div class="d-flex flex-wrap gap-2 justify-content-center">
+      <a href="#crisis" class="jump-link">{{ _('Crisis Response') }}</a>
+      <a href="#mediation" class="jump-link">{{ _('Cultural Mediation') }}</a>
+      <a href="#housing" class="jump-link">{{ _('Housing Referrals') }}</a>
+      <a href="#fraud" class="jump-link">{{ _('Fraud Awareness') }}</a>
+      <a href="#health" class="jump-link">{{ _('Health Advocacy') }}</a>
+      <a href="#sustainability" class="jump-link">{{ _('Sustainability') }}</a>
+    </div>
+  </div>
+</div>
+
+<!-- CRISIS RESPONSE -->
+<section id="crisis" class="service-detail-section section-padding bg-light">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-animate="fade-right">
+        <div class="service-detail-icon-wrap"><i class="bi bi-alarm"></i></div>
+        <p class="section-eyebrow mt-4">{{ _('Service 01') }}</p>
+        <h2 class="section-heading">{{ _('Crisis Response & Emergency Support') }}</h2>
+        <p class="section-body">{{ _('Providing immediate assistance to individuals and families in crisis, ensuring access to essential resources and urgent care when it\'s needed most.') }}</p>
+        <p class="section-body">{{ _('Our crisis team responds rapidly to situations involving housing instability, family breakdown, medical emergencies, and other urgent welfare needs within CALD communities.') }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary-green mt-2">{{ _('Get Support') }} <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-6" data-animate="fade-left">
+        <div class="service-detail-list">
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('24/7 emergency referral support') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Coordination with emergency services') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Access to food, clothing & essentials') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Family crisis counselling referrals') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Safe house and shelter connections') }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CULTURAL MEDIATION -->
+<section id="mediation" class="service-detail-section section-padding">
+  <div class="container">
+    <div class="row g-5 align-items-center flex-lg-row-reverse">
+      <div class="col-lg-6" data-animate="fade-left">
+        <div class="service-detail-icon-wrap accent"><i class="bi bi-chat-dots"></i></div>
+        <p class="section-eyebrow mt-4">{{ _('Service 02') }}</p>
+        <h2 class="section-heading">{{ _('Cultural Mediation & Family Liaison') }}</h2>
+        <p class="section-body">{{ _('Bridging cultural and language gaps to help families communicate effectively with service providers, schools, and community organisations.') }}</p>
+        <p class="section-body">{{ _('Our trained cultural mediators work directly with families, schools, courts, and welfare agencies to ensure every individual is heard and understood.') }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary-green mt-2">{{ _('Request a Mediator') }} <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-6" data-animate="fade-right">
+        <div class="service-detail-list">
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Multilingual mediators available') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('School and education liaison') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Court and legal support facilitation') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Government agency communication') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Family conflict resolution support') }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOUSING REFERRALS -->
+<section id="housing" class="service-detail-section section-padding bg-light">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-animate="fade-right">
+        <div class="service-detail-icon-wrap"><i class="bi bi-house-heart"></i></div>
+        <p class="section-eyebrow mt-4">{{ _('Service 03') }}</p>
+        <h2 class="section-heading">{{ _('Temporary Accommodation Referrals') }}</h2>
+        <p class="section-body">{{ _('Connecting those experiencing hardship with safe and suitable short-term housing options through our trusted network of partners.') }}</p>
+        <p class="section-body">{{ _('We work with shelters, faith communities, and housing providers to ensure no one in our community is left without a safe place to stay.') }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary-green mt-2">{{ _('Find Housing Help') }} <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-6" data-animate="fade-left">
+        <div class="service-detail-list">
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Emergency accommodation referrals') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Transitional housing connections') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Culturally appropriate placements') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Support for families with children') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Ongoing follow-up and welfare checks') }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAUD AWARENESS -->
+<section id="fraud" class="service-detail-section section-padding">
+  <div class="container">
+    <div class="row g-5 align-items-center flex-lg-row-reverse">
+      <div class="col-lg-6" data-animate="fade-left">
+        <div class="service-detail-icon-wrap accent"><i class="bi bi-shield-check"></i></div>
+        <p class="section-eyebrow mt-4">{{ _('Service 04') }}</p>
+        <h2 class="section-heading">{{ _('Anti-Fraud & Safety Awareness Programs') }}</h2>
+        <p class="section-body">{{ _('Educating community members on protecting themselves from scams, exploitation, and unsafe situations through targeted awareness initiatives.') }}</p>
+        <p class="section-body">{{ _('CALD communities are often targeted by sophisticated scams. Our programs build awareness and resilience through workshops, resources, and direct outreach.') }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary-green mt-2">{{ _('Learn More') }} <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-6" data-animate="fade-right">
+        <div class="service-detail-list">
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Community fraud awareness workshops') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Online safety and scam education') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Financial exploitation prevention') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Multilingual resources and materials') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Referral to police and support services') }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HEALTH ADVOCACY -->
+<section id="health" class="service-detail-section section-padding bg-light">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-animate="fade-right">
+        <div class="service-detail-icon-wrap"><i class="bi bi-heart-pulse"></i></div>
+        <p class="section-eyebrow mt-4">{{ _('Service 05') }}</p>
+        <h2 class="section-heading">{{ _('Health & Welfare Advocacy') }}</h2>
+        <p class="section-body">{{ _('Supporting individuals in navigating healthcare and social services, ensuring fair access to essential wellbeing and welfare resources.') }}</p>
+        <p class="section-body">{{ _('We advocate for CALD community members within the healthcare system, helping them understand their rights and access the services they are entitled to.') }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary-green mt-2">{{ _('Get Advocacy Support') }} <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-6" data-animate="fade-left">
+        <div class="service-detail-list">
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Hospital and GP navigation support') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Mental health service referrals') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Centrelink and welfare guidance') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('NDIS access support') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Health interpreter coordination') }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUSTAINABILITY -->
+<section id="sustainability" class="service-detail-section section-padding">
+  <div class="container">
+    <div class="row g-5 align-items-center flex-lg-row-reverse">
+      <div class="col-lg-6" data-animate="fade-left">
+        <div class="service-detail-icon-wrap accent"><i class="bi bi-tree"></i></div>
+        <p class="section-eyebrow mt-4">{{ _('Service 06') }}</p>
+        <h2 class="section-heading">{{ _('Sustainability') }}</h2>
+        <p class="section-body">{{ _('Ensuring lasting benefits for communities through programs designed with long-term impact and resilience in mind.') }}</p>
+        <p class="section-body">{{ _('Our sustainability initiatives focus on empowering communities to support themselves, reducing dependency and building long-term capacity within CALD groups.') }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary-green mt-2">{{ _('Get Involved') }} <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+      <div class="col-lg-6" data-animate="fade-right">
+        <div class="service-detail-list">
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Community capacity building programs') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Volunteer recruitment and training') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Peer support network development') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Partnership and funding programs') }}</span></div>
+          <div class="sdl-item"><i class="bi bi-check-circle-fill"></i><span>{{ _('Leadership and skills development') }}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="donate-strip">
+  <div class="container">
+    <div class="row align-items-center g-4" data-animate="fade-up">
+      <div class="col-lg-8"><h3>{{ _('Need Support?') }}</h3><p>{{ _('Contact us today and our team will connect you with the right service for your situation.') }}</p></div>
+      <div class="col-lg-4 text-lg-end"><a href="{{ url_for('contact') }}" class="btn btn-donate-strip">{{ _('Contact Us') }} <i class="bi bi-arrow-right ms-1"></i></a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">{{ _('Join Us in Our Mission') }}</p><p class="footer-small">{{ _('Company Limited by Guarantee') }}<br />{{ _('ACNC Registered Charity') }}</p></div>
+      <div class="col-lg-2 col-6"><h6 class="footer-heading">{{ _('Navigate') }}</h6><ul class="footer-links"><li><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li><a href="{{ url_for('about') }}">{{ _('About Us') }}</a></li><li><a href="{{ url_for('services') }}">{{ _('Services') }}</a></li><li><a href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a></li><li><a href="{{ url_for('events') }}">{{ _('Events') }}</a></li><li><a href="{{ url_for('news') }}">{{ _('News') }}</a></li><li><a href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a></li></ul></div>
+      <div class="col-lg-3 col-6"><h6 class="footer-heading">{{ _('Services') }}</h6><ul class="footer-links"><li><a href="#crisis">{{ _('Crisis Response') }}</a></li><li><a href="#mediation">{{ _('Cultural Mediation') }}</a></li><li><a href="#housing">{{ _('Housing Referrals') }}</a></li><li><a href="#fraud">{{ _('Fraud Awareness') }}</a></li><li><a href="#health">{{ _('Health Advocacy') }}</a></li></ul></div>
+      <div class="col-lg-3"><h6 class="footer-heading">{{ _('Contact') }}</h6><ul class="footer-links"><li><i class="bi bi-geo-alt"></i> {{ _('10 Lake Street, Northbridge, Perth WA') }}</li><li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li><li><i class="bi bi-telephone"></i> (61) 86555 7072</li></ul></div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="d-flex flex-wrap justify-content-between align-items-center"><p class="footer-copy mb-0">&copy; 2025 {{ _('WA Multicultural Assistance Alliance. All rights reserved.') }}</p><p class="footer-copy mb-0">{{ _('Fundraising License: CC23982') }}</p></div>
+  </div>
+</footer>
+<button id="backToTop" class="back-to-top" aria-label="{{ _('Back to top') }}"><i class="bi bi-arrow-up"></i></button>
+{% endblock %}

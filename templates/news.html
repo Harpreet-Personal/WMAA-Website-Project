@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-banner">
+  <div class="container">
+    <p class="section-eyebrow light">{{ _('Stay Updated') }}</p>
+    <h1 class="page-banner-title">{{ _('Latest News') }}</h1>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li class="breadcrumb-item active">{{ _('News') }}</li></ol></nav>
+  </div>
+</div>
+
+<section class="section-padding bg-light">
+  <div class="container">
+    <div class="d-flex flex-wrap gap-2 mb-5 justify-content-center" data-animate="fade-up">
+      <button class="jump-link active-filter" onclick="filterNews('all', this)">{{ _('All') }}</button>
+      <button class="jump-link" onclick="filterNews('community', this)">{{ _('Community') }}</button>
+      <button class="jump-link" onclick="filterNews('events', this)">{{ _('Events') }}</button>
+      <button class="jump-link" onclick="filterNews('announcement', this)">{{ _('Announcements') }}</button>
+    </div>
+
+    <div class="row g-4" id="newsGrid">
+      <div class="col-md-6 col-lg-4 news-item" data-category="community" data-animate="fade-up" data-delay="0">
+        <div class="news-card">
+          <div class="news-img-placeholder"></div>
+          <div class="news-body">
+            <span class="news-tag">{{ _('Community') }}</span>
+            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
+            <h6>{{ _('News Article Title Here') }}</h6>
+            <p>{{ _('Short excerpt from the article.') }}</p>
+            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 news-item" data-category="events" data-animate="fade-up" data-delay="100">
+        <div class="news-card">
+          <div class="news-img-placeholder"></div>
+          <div class="news-body">
+            <span class="news-tag">{{ _('Events') }}</span>
+            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
+            <h6>{{ _('News Article Title Here') }}</h6>
+            <p>{{ _('Short excerpt from the article.') }}</p>
+            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 news-item" data-category="announcement" data-animate="fade-up" data-delay="200">
+        <div class="news-card">
+          <div class="news-img-placeholder"></div>
+          <div class="news-body">
+            <span class="news-tag">{{ _('Announcement') }}</span>
+            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
+            <h6>{{ _('News Article Title Here') }}</h6>
+            <p>{{ _('Short excerpt from the article.') }}</p>
+            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 news-item" data-category="community" data-animate="fade-up" data-delay="0">
+        <div class="news-card">
+          <div class="news-img-placeholder"></div>
+          <div class="news-body">
+            <span class="news-tag">{{ _('Community') }}</span>
+            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
+            <h6>{{ _('News Article Title Here') }}</h6>
+            <p>{{ _('Short excerpt from the article.') }}</p>
+            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 news-item" data-category="announcement" data-animate="fade-up" data-delay="100">
+        <div class="news-card">
+          <div class="news-img-placeholder"></div>
+          <div class="news-body">
+            <span class="news-tag">{{ _('Announcement') }}</span>
+            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
+            <h6>{{ _('News Article Title Here') }}</h6>
+            <p>{{ _('Short excerpt from the article.') }}</p>
+            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 news-item" data-category="events" data-animate="fade-up" data-delay="200">
+        <div class="news-card">
+          <div class="news-img-placeholder"></div>
+          <div class="news-body">
+            <span class="news-tag">{{ _('Events') }}</span>
+            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
+            <h6>{{ _('News Article Title Here') }}</h6>
+            <p>{{ _('Short excerpt from the article.') }}</p>
+            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">{{ _('Join Us in Our Mission') }}</p><p class="footer-small">{{ _('Company Limited by Guarantee') }}<br />{{ _('ACNC Registered Charity') }}</p></div>
+      <div class="col-lg-2 col-6"><h6 class="footer-heading">{{ _('Navigate') }}</h6><ul class="footer-links"><li><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li><a href="{{ url_for('about') }}">{{ _('About Us') }}</a></li><li><a href="{{ url_for('services') }}">{{ _('Services') }}</a></li><li><a href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a></li><li><a href="{{ url_for('events') }}">{{ _('Events') }}</a></li><li><a href="{{ url_for('news') }}">{{ _('News') }}</a></li><li><a href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a></li></ul></div>
+      <div class="col-lg-3 col-6"><h6 class="footer-heading">{{ _('Services') }}</h6><ul class="footer-links"><li><a href="{{ url_for('services') }}#crisis">{{ _('Crisis Response') }}</a></li><li><a href="{{ url_for('services') }}#mediation">{{ _('Cultural Mediation') }}</a></li><li><a href="{{ url_for('services') }}#housing">{{ _('Housing Referrals') }}</a></li><li><a href="{{ url_for('services') }}#fraud">{{ _('Fraud Awareness') }}</a></li><li><a href="{{ url_for('services') }}#health">{{ _('Health Advocacy') }}</a></li></ul></div>
+      <div class="col-lg-3"><h6 class="footer-heading">{{ _('Contact') }}</h6><ul class="footer-links"><li><i class="bi bi-geo-alt"></i> {{ _('10 Lake Street, Northbridge, Perth WA') }}</li><li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li><li><i class="bi bi-telephone"></i> (61) 86555 7072</li></ul></div>
+    </div>
+    <hr class="footer-divider" />
+    <div class="d-flex flex-wrap justify-content-between align-items-center"><p class="footer-copy mb-0">&copy; 2025 {{ _('WA Multicultural Assistance Alliance. All rights reserved.') }}</p><p class="footer-copy mb-0">{{ _('Fundraising License: CC23982') }}</p></div>
+  </div>
+</footer>
+<button id="backToTop" class="back-to-top" aria-label="{{ _('Back to top') }}"><i class="bi bi-arrow-up"></i></button>
+{% endblock %}
