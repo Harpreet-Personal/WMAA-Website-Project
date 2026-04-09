@@ -73,41 +73,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ── 6. Donate: amount selector ───────────────────────── */
-  const donateBtns  = document.querySelectorAll('.donate-btn');
+  const donateBtns = document.querySelectorAll('.donate-btn');
   const donateLabel = document.getElementById('donateLabel');
   const customInput = document.getElementById('customAmount');
-  const donateBtn   = document.getElementById('donateSubmit');
+  const donationAmountInput = document.getElementById('donationAmountInput');
 
-  if (donateBtns.length && donateLabel) {
+  if (donateBtns.length && donateLabel && donationAmountInput) {
     let selectedAmount = 50;
+    donationAmountInput.value = selectedAmount;
 
     donateBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         donateBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        selectedAmount = parseInt(btn.dataset.amount);
+        selectedAmount = btn.dataset.amount;
         donateLabel.textContent = `$${selectedAmount}`;
+        donationAmountInput.value = selectedAmount;
         if (customInput) customInput.value = '';
       });
     });
 
     if (customInput) {
       customInput.addEventListener('input', () => {
-        const val = parseInt(customInput.value);
-        if (val > 0) {
+        const val = customInput.value.trim();
+        if (val && Number(val) > 0) {
           donateBtns.forEach(b => b.classList.remove('active'));
           selectedAmount = val;
-          donateLabel.textContent = `$${val}`;
+          donateLabel.textContent = `$${selectedAmount}`;
+          donationAmountInput.value = selectedAmount;
         }
-      });
-    }
-
-    if (donateBtn) {
-      donateBtn.addEventListener('click', () => {
-        const amount = (customInput && parseInt(customInput.value)) || selectedAmount;
-        if (!amount || amount < 1) { alert('Please select or enter a donation amount.'); return; }
-        // TODO: Replace with real payment gateway integration (e.g. Stripe, PayPal)
-        alert(`Thank you for your generous donation of $${amount}!\n\nYou will be redirected to the secure payment gateway.`);
       });
     }
   }
