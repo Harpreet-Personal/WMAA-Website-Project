@@ -34,18 +34,36 @@
         <h2 class="section-heading light">{{ _('Choose Your Amount') }}</h2>
         <p class="section-body light mb-1">{{ _('Fundraising License:') }} <strong>CC23982</strong></p>
         <p class="section-body light mb-4">{{ _('ACNC Registered Charity') }} &nbsp;|&nbsp; ABN: [Insert ABN]</p>
-        <div class="donate-amounts d-flex flex-wrap justify-content-center gap-3 mb-4">
-          <button class="donate-btn" data-amount="10">$10</button>
-          <button class="donate-btn" data-amount="20">$20</button>
-          <button class="donate-btn active" data-amount="50">$50</button>
-          <button class="donate-btn" data-amount="100">$100</button>
-          <button class="donate-btn" data-amount="200">$200</button>
-        </div>
-        <div class="donate-custom mb-4">
-          <input type="number" id="customAmount" class="form-control donate-input" placeholder="{{ _('Or enter a custom amount ($)') }}" min="1" />
-        </div>
-        <button class="btn btn-donate-main" id="donateSubmit">{{ _('Donate') }} <span id="donateLabel">$50</span> {{ _('Now') }}</button>
-        <p class="mt-3 donate-note"><i class="bi bi-lock"></i> {{ _('Secure payment') }} &nbsp;|&nbsp; <i class="bi bi-check-circle"></i> {{ _('ACNC Registered Charity') }}</p>
+
+        <form method="POST" action="{{ url_for('donate') }}" id="donationForm">
+          <div class="donate-amounts d-flex flex-wrap justify-content-center gap-3 mb-4">
+            <button type="button" class="donate-btn" data-amount="10">$10</button>
+            <button type="button" class="donate-btn" data-amount="20">$20</button>
+            <button type="button" class="donate-btn active" data-amount="50">$50</button>
+            <button type="button" class="donate-btn" data-amount="100">$100</button>
+            <button type="button" class="donate-btn" data-amount="200">$200</button>
+          </div>
+
+          <div class="donate-custom mb-4">
+            <input type="number" id="customAmount" class="form-control donate-input" placeholder="{{ _('Or enter a custom amount ($)') }}" min="1" />
+          </div>
+
+          <div class="row g-3 text-start mb-4">
+            <div class="col-md-6">
+              <label for="donor_name" class="form-label text-white">{{ _('Full Name') }} *</label>
+              <input type="text" id="donor_name" name="donor_name" class="form-control donate-input" placeholder="{{ _('Your full name') }}" required>
+            </div>
+            <div class="col-md-6">
+              <label for="donor_email" class="form-label text-white">{{ _('Email Address') }} *</label>
+              <input type="email" id="donor_email" name="donor_email" class="form-control donate-input" placeholder="{{ _('your@email.com') }}" required>
+            </div>
+          </div>
+
+          <input type="hidden" name="amount" id="donationAmountInput" value="50">
+
+          <button type="submit" class="btn btn-donate-main" id="donateSubmit">{{ _('Donate') }} <span id="donateLabel">$50</span> {{ _('Now') }}</button>
+          <p class="mt-3 donate-note"><i class="bi bi-lock"></i> {{ _('Secure payment') }} &nbsp;|&nbsp; <i class="bi bi-check-circle"></i> {{ _('ACNC Registered Charity') }}</p>
+        </form>
       </div>
     </div>
   </div>
