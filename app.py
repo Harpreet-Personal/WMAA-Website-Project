@@ -127,6 +127,72 @@ def signup():
 
     return redirect(url_for("volunteer") + "?tab=signup")
 
+@app.route("/signin", methods=["GET", "POST"])
+def signin():
+    if request.method == "POST":
+        email    = request.form.get("email", "").strip().lower()
+        password = request.form.get("password", "")
+
+        if not email or not password:
+            flash("Please enter your email and password.", "error")
+            return redirect(url_for("volunteer"))
+
+        user = User.query.filter_by(email=email).first()
+
+        if not user or not check_password_hash(user.password_hash, password):
+            flash("Invalid email or password. Please try again.", "error")
+            return redirect(url_for("volunteer"))
+
+        # Credentials valid — store in session, go to MFA
+        session["pre_mfa_user_id"] = user.id
+        return redirect(url_for("verify_mfa"))
+
+    return redirect(url_for("volunteer"))
+
+@app.route("/verify-mfa", methods=["GET", "POST"])
+def verify_mfa():
+    user_id = session.get("pre_mfa_user_id")
+    if not user_id:
+        flash("Please sign in first.", "error")
+        return redirect(url_for("volunteer"))
+
+    user = User.query.get(user_id)
+
+    if request.method == "GET":
+        # Generate PIN and print it for testing (no email yet)
+        import random
+        from datetime import datetime, timedelta
+        pin = str(random.randint(1000, 9999))
+        user.mfa_pin    = pin
+        user.mfa_expiry = datetime.utcnow() + timedelta(minutes=10)
+        db.session.commit()
+        print(f"DEBUG PIN for {user.email}: {pin}")
+        return render_template("verify_mfa.html")
+
+    if request.method == "POST":
+        from datetime import datetime
+        entered_pin = request.form.get("pin", "").strip()
+        now = datetime.utcnow()
+
+        if not user.mfa_expiry or now > user.mfa_expiry:
+            flash("Your PIN has expired. Please sign in again.", "error")
+            return redirect(url_for("volunteer"))
+
+        if entered_pin != user.mfa_pin:
+            flash("Incorrect PIN. Please try again.", "error")
+            return redirect(url_for("verify_mfa"))
+
+        # PIN correct — log the user in
+        user.mfa_pin     = None
+        user.mfa_expiry  = None
+        user.is_verified = True
+        db.session.commit()
+
+        login_user(user)
+        session.pop("pre_mfa_user_id", None)
+        flash(f"Welcome, {user.first_name}!", "success")
+        return redirect(url_for("dashboard"))
+
 @app.route("/forgot-password")
 def forgot_password():
     return render_template("forgot-password.html")
