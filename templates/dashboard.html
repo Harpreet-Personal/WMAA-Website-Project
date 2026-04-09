@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-banner">
+  <div class="container">
+    <p class="section-eyebrow light">Volunteer Area</p>
+    <h1 class="page-banner-title">Dashboard</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="section-padding bg-light">
+  <div class="container">
+    <div class="vision-box large mb-4">
+      <h5>Welcome, {{ user.name }}</h5>
+      <p class="mb-0" style="color:var(--clr-muted);">
+        Here you can view your volunteer updates and upcoming events.
+      </p>
+    </div>
+
+    {% if user.role == "volunteer" %}
+    <div class="mb-4">
+      <p class="section-eyebrow">Upcoming Events</p>
+      <h2 class="section-heading">Events Relevant to Volunteers</h2>
+      <p class="section-body">Stay updated with the next activities where your support is needed.</p>
+    </div>
+
+    <div class="row g-4">
+      {% if upcoming_events %}
+        {% for event in upcoming_events %}
+        <div class="col-md-6">
+          <div class="event-dashboard-card h-100">
+            <h5>{{ event.title }}</h5>
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p>{{ event.description }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12">
+          <div class="empty-state-box">
+            <i class="bi bi-calendar-x"></i>
+            <h5>No upcoming events available</h5>
+            <p>Please check back later for new volunteer opportunities.</p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="empty-state-box">
+      <i class="bi bi-shield-lock"></i>
+      <h5>Access Restricted</h5>
+      <p>This section is available to volunteers only.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

@@ -73,7 +73,31 @@ def forgot_password():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    user = {
+        "name": "Neha",
+        "role": "volunteer"
+    }
+
+    upcoming_events = [
+        {
+            "title": "Community Food Drive",
+            "date": "12 April 2026",
+            "location": "Perth Community Centre",
+            "description": "Help distribute food packs to families in need."
+        },
+        {
+            "title": "Cultural Support Workshop",
+            "date": "18 April 2026",
+            "location": "Northbridge Hall",
+            "description": "Assist with workshop coordination and attendee support."
+        }
+    ]
+
+    return render_template(
+        "dashboard.html",
+        user=user,
+        upcoming_events=upcoming_events
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
