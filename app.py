@@ -82,6 +82,51 @@ def set_language(lang):
 def volunteer():
     return render_template("volunteer.html")
 
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        first_name = request.form.get("first_name", "").strip()
+        last_name  = request.form.get("last_name", "").strip()
+        email      = request.form.get("email", "").strip().lower()
+        password   = request.form.get("password", "")
+        confirm_pw = request.form.get("confirm_password", "")
+        phone      = request.form.get("phone", "").strip() or None
+        area       = request.form.get("area_of_interest", "") or None
+        languages  = request.form.get("languages", "").strip() or None
+
+        if not first_name or not last_name:
+            flash("Please enter your full name.", "error")
+            return redirect(url_for("volunteer") + "?tab=signup")
+
+        if len(password) < 8:
+            flash("Password must be at least 8 characters.", "error")
+            return redirect(url_for("volunteer") + "?tab=signup")
+
+        if password != confirm_pw:
+            flash("Passwords do not match.", "error")
+            return redirect(url_for("volunteer") + "?tab=signup")
+
+        if User.query.filter_by(email=email).first():
+            flash("An account with that email already exists.", "error")
+            return redirect(url_for("volunteer") + "?tab=signup")
+
+        new_user = User(
+            first_name       = first_name,
+            last_name        = last_name,
+            email            = email,
+            password_hash    = generate_password_hash(password),
+            phone            = phone,
+            area_of_interest = area,
+            languages        = languages
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("Account created successfully! Please sign in.", "success")
+        return redirect(url_for("volunteer"))
+
+    return redirect(url_for("volunteer") + "?tab=signup")
+
 @app.route("/forgot-password")
 def forgot_password():
     return render_template("forgot-password.html")

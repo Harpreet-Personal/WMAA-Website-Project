@@ -7,9 +7,24 @@
     <div class="container">
       <p class="section-eyebrow light">Get Involved</p>
       <h1 class="page-banner-title">Volunteer Portal</h1>
-      <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="index.html">Home</a></li><li class="breadcrumb-item active">Volunteer</li></ol></nav>
+      <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li><li class="breadcrumb-item active">Volunteer</li></ol></nav>
     </div>
   </div>
+
+  <!-- FLASH MESSAGES -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container mt-3">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+            <i class="bi bi-{{ 'exclamation-circle' if category == 'error' else 'check-circle' }} me-2"></i>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 
   <!-- AUTH SECTION -->
   <section class="section-padding bg-light">
@@ -23,15 +38,15 @@
               <h5><i class="bi bi-box-arrow-in-right me-2"></i>Volunteer Login</h5>
               <p class="mb-0" style="color:var(--clr-muted); font-size:.9rem;">Welcome back! Log in to access your volunteer dashboard.</p>
             </div>
-            <form novalidate>
+            <form method="POST" action="/signin" novalidate>
               <div class="row g-3">
                 <div class="col-12">
                   <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-control" placeholder="your@email.com" required />
+                  <input type="email" name="email" class="form-control" placeholder="your@email.com" required />
                 </div>
                 <div class="col-12">
                   <label class="form-label">Password *</label>
-                  <input type="password" class="form-control" placeholder="Enter your password" required />
+                  <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
                 </div>
                 <div class="col-12 d-flex justify-content-between align-items-center">
                   <div class="form-check">
@@ -41,7 +56,7 @@
                   <a href="{{ url_for('forgot_password') }}" style="font-size:.85rem; color:var(--clr-primary);">Forgot password?</a>
                 </div>
                 <div class="col-12">
-                  <a href="{{ url_for('dashboard') }}" class="btn btn-primary-green w-100">Login <i class="bi bi-arrow-right ms-1"></i></a>
+                  <button type="submit" class="btn btn-primary-green w-100">Login <i class="bi bi-arrow-right ms-1"></i></button>
                 </div>
                 <div class="col-12 text-center" style="font-size:.85rem; color:var(--clr-muted);">
                   Don't have an account? <a href="#" onclick="showTab('signup')" style="color:var(--clr-primary); font-weight:600;">Sign up here</a>
@@ -56,35 +71,35 @@
               <h5><i class="bi bi-person-plus me-2"></i>Volunteer Registration</h5>
               <p class="mb-0" style="color:var(--clr-muted); font-size:.9rem;">Join our volunteer community and make a difference across Western Australia.</p>
             </div>
-            <form novalidate>
+            <form method="POST" action="/signup" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
                   <label class="form-label">First Name *</label>
-                  <input type="text" class="form-control" placeholder="First name" required />
+                  <input type="text" name="first_name" class="form-control" placeholder="First name" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Last Name *</label>
-                  <input type="text" class="form-control" placeholder="Last name" required />
+                  <input type="text" name="last_name" class="form-control" placeholder="Last name" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-control" placeholder="your@email.com" required />
+                  <input type="email" name="email" class="form-control" placeholder="your@email.com" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Phone Number</label>
-                  <input type="tel" class="form-control" placeholder="04xx xxx xxx" />
+                  <input type="tel" name="phone" class="form-control" placeholder="04xx xxx xxx" />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Password *</label>
-                  <input type="password" class="form-control" placeholder="Create a password" required />
+                  <input type="password" name="password" class="form-control" placeholder="Create a password" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Confirm Password *</label>
-                  <input type="password" class="form-control" placeholder="Confirm your password" required />
+                  <input type="password" name="confirm_password" class="form-control" placeholder="Confirm your password" required />
                 </div>
                 <div class="col-12">
                   <label class="form-label">Area of Interest</label>
-                  <select class="form-control">
+                  <select name="area_of_interest" class="form-control">
                     <option value="">Select an area</option>
                     <option>Crisis Response Support</option>
                     <option>Cultural Mediation</option>
@@ -97,7 +112,7 @@
                 </div>
                 <div class="col-12">
                   <label class="form-label">Languages Spoken</label>
-                  <input type="text" class="form-control" placeholder="e.g. English, Mandarin, Arabic" />
+                  <input type="text" name="languages" class="form-control" placeholder="e.g. English, Mandarin, Arabic" />
                 </div>
                 <div class="col-12">
                   <div class="form-check">
@@ -126,23 +141,64 @@
   <footer class="site-footer">
     <div class="container">
       <div class="row g-4 align-items-start">
-        <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">Join Us in Our Mission</p><p class="footer-small">Company Limited by Guarantee<br />ACNC Registered Charity</p></div>
-        <div class="col-lg-2 col-6"><h6 class="footer-heading">Navigate</h6><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="stories.html">Our Stories</a></li><li><a href="events.html">Events</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
-        <div class="col-lg-3 col-6"><h6 class="footer-heading">Services</h6><ul class="footer-links"><li><a href="services.html#crisis">Crisis Response</a></li><li><a href="services.html#mediation">Cultural Mediation</a></li><li><a href="services.html#housing">Housing Referrals</a></li><li><a href="services.html#fraud">Fraud Awareness</a></li><li><a href="services.html#health">Health Advocacy</a></li></ul></div>
-        <div class="col-lg-3"><h6 class="footer-heading">Contact</h6><ul class="footer-links"><li><i class="bi bi-geo-alt"></i> 10 Lake Street, Northbridge, Perth WA</li><li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li><li><i class="bi bi-telephone"></i> (61) 86555 7072</li></ul></div>
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" />
+            <span class="footer-brand">WMAA</span>
+          </div>
+          <p class="footer-tagline">Join Us in Our Mission</p>
+          <p class="footer-small">Company Limited by Guarantee<br />ACNC Registered Charity</p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6 class="footer-heading">Navigate</h6>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('stories') }}">Our Stories</a></li>
+            <li><a href="{{ url_for('events') }}">Events</a></li>
+            <li><a href="{{ url_for('news') }}">News</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6 class="footer-heading">Services</h6>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('services') }}#crisis">Crisis Response</a></li>
+            <li><a href="{{ url_for('services') }}#mediation">Cultural Mediation</a></li>
+            <li><a href="{{ url_for('services') }}#housing">Housing Referrals</a></li>
+            <li><a href="{{ url_for('services') }}#fraud">Fraud Awareness</a></li>
+            <li><a href="{{ url_for('services') }}#health">Health Advocacy</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="footer-heading">Contact</h6>
+          <ul class="footer-links">
+            <li><i class="bi bi-geo-alt"></i> 10 Lake Street, Northbridge, Perth WA</li>
+            <li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li>
+            <li><i class="bi bi-telephone"></i> (61) 86555 7072</li>
+          </ul>
+        </div>
       </div>
       <hr class="footer-divider" />
-      <div class="d-flex flex-wrap justify-content-between align-items-center"><p class="footer-copy mb-0">&copy; 2025 WA Multicultural Assistance Alliance. All rights reserved.</p><p class="footer-copy mb-0">Fundraising License: CC23982</p></div>
+      <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <p class="footer-copy mb-0">&copy; 2025 WA Multicultural Assistance Alliance. All rights reserved.</p>
+        <p class="footer-copy mb-0">Fundraising License: CC23982</p>
+      </div>
     </div>
   </footer>
 
   <button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
-<script>
+
+  <script>
     function showTab(tab) {
       document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
       document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
     }
+
+    if (window.location.search.includes('tab=signup')) {
+      showTab('signup');
+    }
   </script>
 
 {% endblock %}
-  
