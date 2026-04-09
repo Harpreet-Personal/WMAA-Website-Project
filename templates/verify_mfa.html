@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <div class="page-banner">
+    <div class="container">
+      <p class="section-eyebrow light">Security</p>
+      <h1 class="page-banner-title">Verify Your Identity</h1>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('volunteer') }}">Sign In</a></li>
+          <li class="breadcrumb-item active">Verify</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5 col-xl-4">
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show mb-3" role="alert">
+                  <i class="bi bi-{{ 'exclamation-circle' if category == 'error' else 'check-circle' }} me-2"></i>
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <div class="mfa-card">
+            <div class="mfa-icon-ring">
+              <div class="mfa-icon-inner">
+                <i class="bi bi-envelope-check"></i>
+              </div>
+            </div>
+
+            <h2 class="mfa-title">Check Your Email</h2>
+            <p class="mfa-desc">
+              We've sent a <strong>4-digit PIN</strong> to your email address.
+              Enter it below to complete sign in.
+            </p>
+
+            <form method="POST" action="/verify-mfa" id="mfaForm">
+              <div class="pin-input-row mb-4">
+                <input type="text" class="pin-box" maxlength="1" inputmode="numeric" id="pin1" autofocus />
+                <input type="text" class="pin-box" maxlength="1" inputmode="numeric" id="pin2" />
+                <input type="text" class="pin-box" maxlength="1" inputmode="numeric" id="pin3" />
+                <input type="text" class="pin-box" maxlength="1" inputmode="numeric" id="pin4" />
+                <input type="hidden" name="pin" id="pin-combined" />
+              </div>
+
+              <div class="mfa-timer mb-4">
+                <i class="bi bi-clock me-1"></i>
+                PIN expires in <span id="countdown" class="mfa-timer-val">10:00</span>
+              </div>
+
+              <button type="submit" class="btn btn-primary-green w-100 mfa-submit" id="mfa-submit-btn" disabled>
+                Verify PIN <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </form>
+
+            <div class="mfa-resend-row">
+              <span>Didn't receive it?</span>
+              <a href="/resend-mfa" class="mfa-resend-link">Resend PIN</a>
+            </div>
+
+            <a href="{{ url_for('volunteer') }}" class="mfa-back-link">
+              <i class="bi bi-arrow-left me-1"></i>Back to sign in
+            </a>
+          </div>
+
+          <p class="mfa-security-note">
+            <i class="bi bi-shield-lock me-1"></i>
+            Never share your PIN with anyone. WMAA will never ask for it.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" />
+            <span class="footer-brand">WMAA</span>
+          </div>
+          <p class="footer-tagline">Join Us in Our Mission</p>
+          <p class="footer-small">Company Limited by Guarantee<br />ACNC Registered Charity</p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6 class="footer-heading">Navigate</h6>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6 class="footer-heading">Services</h6>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('services') }}#crisis">Crisis Response</a></li>
+            <li><a href="{{ url_for('services') }}#mediation">Cultural Mediation</a></li>
+            <li><a href="{{ url_for('services') }}#housing">Housing Referrals</a></li>
+            <li><a href="{{ url_for('services') }}#fraud">Fraud Awareness</a></li>
+            <li><a href="{{ url_for('services') }}#health">Health Advocacy</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6 class="footer-heading">Contact</h6>
+          <ul class="footer-links">
+            <li><i class="bi bi-geo-alt"></i> 10 Lake Street, Northbridge, Perth WA</li>
+            <li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li>
+            <li><i class="bi bi-telephone"></i> (61) 86555 7072</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <p class="footer-copy mb-0">&copy; 2025 WA Multicultural Assistance Alliance. All rights reserved.</p>
+        <p class="footer-copy mb-0">Fundraising License: CC23982</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <style>
+    .mfa-card {
+      background: var(--clr-white);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px 32px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid #e8ece8;
+      text-align: center;
+    }
+    .mfa-icon-ring {
+      width: 80px; height: 80px;
+      background: rgba(27,94,79,.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      animation: mfaPulse 2s ease-in-out infinite;
+    }
+    @keyframes mfaPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(27,94,79,.15); }
+      50%       { box-shadow: 0 0 0 12px rgba(27,94,79,.0); }
+    }
+    .mfa-icon-inner {
+      width: 56px; height: 56px;
+      background: var(--clr-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mfa-icon-inner i { font-size: 1.5rem; color: var(--clr-white); }
+    .mfa-title {
+      font-family: var(--ff-heading);
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--clr-dark); margin-bottom: 10px;
+    }
+    .mfa-desc { color: var(--clr-muted); font-size: .9rem; line-height: 1.7; margin-bottom: 28px; }
+    .pin-input-row { display: flex; justify-content: center; gap: 12px; }
+    .pin-box {
+      width: 58px; height: 64px;
+      border: 2px solid #d8ddd8;
+      border-radius: var(--radius-md);
+      font-size: 1.8rem; font-weight: 700;
+      text-align: center; color: var(--clr-dark);
+      background: #fafbfa;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      font-family: var(--ff-heading);
+    }
+    .pin-box:focus {
+      outline: none;
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 3px rgba(27,94,79,.12);
+      background: var(--clr-white);
+      transform: scale(1.05);
+    }
+    .pin-box.filled { border-color: var(--clr-primary); background: rgba(27,94,79,.04); }
+    .mfa-timer { font-size: .83rem; color: var(--clr-muted); }
+    .mfa-timer-val { font-weight: 700; color: var(--clr-primary); }
+    .mfa-timer-val.expiring { color: #dc3545; }
+    .mfa-submit { padding: 13px; font-size: .95rem; border-radius: var(--radius-sm); }
+    .mfa-submit:disabled { opacity: .45; cursor: not-allowed; }
+    .mfa-resend-row {
+      margin-top: 20px; font-size: .85rem; color: var(--clr-muted);
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .mfa-resend-link { color: var(--clr-primary); font-weight: 600; text-decoration: none; }
+    .mfa-resend-link:hover { text-decoration: underline; }
+    .mfa-back-link {
+      display: block; margin-top: 14px;
+      font-size: .82rem; color: var(--clr-muted); text-decoration: none;
+    }
+    .mfa-back-link:hover { color: var(--clr-primary); }
+    .mfa-security-note { text-align: center; margin-top: 16px; font-size: .78rem; color: var(--clr-muted); }
+    .mfa-security-note i { color: var(--clr-primary); }
+  </style>
+
+  <script>
+    const pinBoxes    = document.querySelectorAll('.pin-box');
+    const pinCombined = document.getElementById('pin-combined');
+    const submitBtn   = document.getElementById('mfa-submit-btn');
+
+    function updateCombined() {
+      const val = Array.from(pinBoxes).map(b => b.value).join('');
+      pinCombined.value = val;
+      submitBtn.disabled = val.length < 4;
+      pinBoxes.forEach(b => b.classList.toggle('filled', b.value.length > 0));
+    }
+
+    pinBoxes.forEach((box, i) => {
+      box.addEventListener('input', () => {
+        box.value = box.value.replace(/\D/g, '').slice(-1);
+        updateCombined();
+        if (box.value && i < pinBoxes.length - 1) pinBoxes[i + 1].focus();
+      });
+      box.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !box.value && i > 0) {
+          pinBoxes[i - 1].focus();
+          pinBoxes[i - 1].value = '';
+          updateCombined();
+        }
+      });
+      box.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+        text.split('').slice(0, 4).forEach((ch, j) => { if (pinBoxes[j]) pinBoxes[j].value = ch; });
+        updateCombined();
+        pinBoxes[Math.min(text.length, 3)].focus();
+      });
+    });
+
+    document.getElementById('mfaForm').addEventListener('submit', (e) => {
+      updateCombined();
+      if (pinCombined.value.length < 4) { e.preventDefault(); }
+    });
+
+    let seconds = 10 * 60;
+    const countdownEl = document.getElementById('countdown');
+    function updateCountdown() {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      countdownEl.textContent = `${m}:${String(s).padStart(2, '0')}`;
+      if (seconds <= 60) countdownEl.classList.add('expiring');
+      if (seconds <= 0) {
+        clearInterval(timer);
+        countdownEl.textContent = 'Expired';
+        submitBtn.disabled = true;
+        pinBoxes.forEach(b => b.disabled = true);
+      }
+      seconds--;
+    }
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+  </script>
+
+{% endblock %}
