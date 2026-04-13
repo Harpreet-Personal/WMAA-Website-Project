@@ -51,7 +51,7 @@ class Payment(db.Model):
     amount = db.Column(db.Numeric(10, 2), nullable=False)
     payment_status = db.Column(db.String(20), nullable=False)
     payment_method = db.Column(db.String(30), nullable=False)
-    payment_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    payment_date = db.Column(db.DateTime, server_default=func.now(), nullable=False)
     invoice_reference = db.Column(db.String(100), unique=True, nullable=True)
 
     @validates("payment_status")
