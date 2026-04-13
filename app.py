@@ -36,7 +36,7 @@ def inject_language():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", page_name='home')
 
 @app.route("/about")
 def about():
@@ -71,7 +71,17 @@ def set_language(lang):
     if lang in supported_languages:
         session["lang"] = lang
     return redirect(request.referrer or url_for("home"))
+@app.route("/volunteer")
+def volunteer():
+    return render_template("volunteer.html")
 
+@app.route("/forgot-password")
+def forgot_password():
+    return render_template("forgot-password.html")
+
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
 
 if __name__ == "__main__":
     with app.app_context():
