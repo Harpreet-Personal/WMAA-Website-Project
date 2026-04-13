@@ -1,15 +1,15 @@
+import os
 from flask import Flask, render_template, session, redirect, request, url_for
 from flask_babel import Babel, gettext as _
 from models import db
 
 app = Flask(__name__)
-app.secret_key = "wmaa_secret_key"
+app.secret_key = os.environ.get("SECRET_KEY", "fallback_only_for_dev")
 
 app.config["BABEL_DEFAULT_LOCALE"] = "en"
 app.config["BABEL_TRANSLATION_DIRECTORIES"] = "translations"
 
-# Added for Flask-SQLAlchemy
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///wmaa_db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///wmaa.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 supported_languages = ["en", "zh_Hans_CN"]
@@ -18,9 +18,10 @@ def get_locale():
     return session.get("lang", "en")
 
 babel = Babel(app, locale_selector=get_locale)
-
-# Added for Flask-SQLAlchemy
 db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 @app.context_processor
 def inject_language():
@@ -36,7 +37,7 @@ def inject_language():
 
 @app.route("/")
 def home():
-    return render_template("index.html", page_name='home')
+    return render_template("index.html", page_name="home")
 
 @app.route("/about")
 def about():
@@ -71,6 +72,7 @@ def set_language(lang):
     if lang in supported_languages:
         session["lang"] = lang
     return redirect(request.referrer or url_for("home"))
+
 @app.route("/volunteer")
 def volunteer():
     return render_template("volunteer.html")
@@ -84,6 +86,4 @@ def dashboard():
     return render_template("dashboard.html")
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
