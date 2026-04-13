@@ -2,8 +2,11 @@
     <div class="container">
       
       <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home') }}">
-        <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="48" />
-        <span class="brand-text">WMAA</span>
+        <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="72" />
+<div class="brand-wrap">
+  <span class="brand-text">WMAA</span>
+  <span class="brand-fullname">WA Multicultural Assistance Alliance</span>
+</div>
       </a>
   
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -63,7 +66,7 @@
               <li><a class="dropdown-item" href="{{ url_for('set_language', lang='zh_Hans_CN') }}">中文</a></li>
             </ul>
           </li>
-  
+          <li class="nav-item ms-lg-2"><a class="btn btn-volunteer" href="{{ url_for('volunteer') }}">{{ _('Login / Signup') }}</a></li>
           <li class="nav-item ms-lg-2">
             <a class="btn btn-donate" href="{{ url_for('donate') }}">{{ _('Donate') }}</a>
           </li>
