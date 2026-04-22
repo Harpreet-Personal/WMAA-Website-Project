@@ -1,0 +1,59 @@
+import pytest
+from app import app
+
+@pytest.fixture
+def client():
+    app.config["TESTING"] = True
+    app.config["WTF_CSRF_ENABLED"] = False
+    with app.test_client() as client:
+        yield client
+
+# ── Route Tests ───────────────────────────────────────────
+
+def test_home_page(client):
+    response = client.get("/")
+    assert response.status_code == 200
+
+def test_about_page(client):
+    response = client.get("/about")
+    assert response.status_code == 200
+
+def test_services_page(client):
+    response = client.get("/services")
+    assert response.status_code == 200
+
+def test_stories_page(client):
+    response = client.get("/stories")
+    assert response.status_code == 200
+
+def test_events_page(client):
+    response = client.get("/events")
+    assert response.status_code == 200
+
+def test_news_page(client):
+    response = client.get("/news")
+    assert response.status_code == 200
+
+def test_contact_page(client):
+    response = client.get("/contact")
+    assert response.status_code == 200
+
+def test_donate_page(client):
+    response = client.get("/donate")
+    assert response.status_code == 200
+
+def test_volunteer_page(client):
+    response = client.get("/volunteer")
+    assert response.status_code == 200
+
+def test_invalid_route(client):
+    response = client.get("/this-does-not-exist")
+    assert response.status_code == 404
+
+def test_language_switch_english(client):
+    response = client.get("/set-language/en")
+    assert response.status_code == 302
+
+def test_language_switch_chinese(client):
+    response = client.get("/set-language/zh_Hans_CN")
+    assert response.status_code == 302
