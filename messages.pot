@@ -546,7 +546,7 @@ msgid "Get Involved"
 msgstr ""
 
 #: templates/events.html:7 templates/events.html:8 templates/navbar.html:44
-msgid "Fundraise Events"
+msgid "Events"
 msgstr ""
 
 #: templates/events.html:16 templates/events.html:22

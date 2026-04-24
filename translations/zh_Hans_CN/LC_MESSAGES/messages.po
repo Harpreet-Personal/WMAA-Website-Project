@@ -54,7 +54,7 @@ msgstr "反诈骗意识"
 msgid "Health Advocacy"
 msgstr "健康倡导"
 
-msgid "Fundraise Events"
+msgid "Events"
 msgstr "筹款活动"
 
 msgid "Navigate"
