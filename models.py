@@ -22,6 +22,8 @@ class User(db.Model):
     date_of_birth = db.Column(db.Date, nullable=True)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
 
+    payments = db.relationship("Payment", backref="user", lazy=True, cascade="all, delete-orphan")
+
     @validates("role")
     def validate_role(self, key, value):
         if value not in self.VALID_ROLES:
@@ -36,3 +38,39 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.email}>"
+
+
+class Payment(db.Model):
+    __tablename__ = "payments"
+
+    VALID_STATUSES = {"pending", "completed", "failed", "refunded"}
+    VALID_METHODS = {"card", "bank_transfer", "cash", "paypal", "stripe"}
+
+    payment_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    amount = db.Column(db.Numeric(10, 2), nullable=False)
+    payment_status = db.Column(db.String(20), nullable=False)
+    payment_method = db.Column(db.String(30), nullable=False)
+    payment_date = db.Column(db.DateTime, server_default=func.now(), nullable=False)
+    invoice_reference = db.Column(db.String(100), unique=True, nullable=True)
+
+    @validates("payment_status")
+    def validate_payment_status(self, key, value):
+        if value not in self.VALID_STATUSES:
+            raise ValueError("Invalid payment status")
+        return value
+
+    @validates("payment_method")
+    def validate_payment_method(self, key, value):
+        if value not in self.VALID_METHODS:
+            raise ValueError("Invalid payment method")
+        return value
+
+    @validates("amount")
+    def validate_amount(self, key, value):
+        if value is None or value <= 0:
+            raise ValueError("Amount must be greater than 0")
+        return value
+
+    def __repr__(self):
+        return f"<Payment {self.payment_id} - {self.payment_status}>"
