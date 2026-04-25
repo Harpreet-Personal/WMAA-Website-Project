@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.dashboard-sidebar { background: var(--clr-primary); min-height: 100vh; padding: 30px 0; }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255,255,255,.75); font-size: .9rem; font-weight: 500; text-decoration: none; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--clr-white); }
+.dashboard-card { background: var(--clr-white); border: 1px solid #e8ece8; border-radius: 12px; padding: 24px; height: 100%; }
+.profile-avatar { width: 76px; height: 76px; border-radius: 50%; background: var(--clr-bg-light); display: flex; align-items: center; justify-content: center; color: var(--clr-primary); font-size: 2rem; margin-bottom: 14px; }
+</style>
+
+<div class="d-flex" style="margin-top:80px;">
+  <div class="dashboard-sidebar" style="width:240px;">
+    <div class="px-4 mb-4 text-white">
+      <h5>{{ user.name if user else 'Volunteer' }}</h5>
+      <small>Volunteer</small>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>
+    <a href="/volunteer-schedule" class="sidebar-link"><i class="bi bi-calendar-event"></i> My Schedule</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-events" class="sidebar-link"><i class="bi bi-calendar-check"></i> Events</a>
+    <a href="/volunteer-profile" class="sidebar-link active"><i class="bi bi-person"></i> My Profile</a>
+    <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  </div>
+
+  <div style="flex:1; padding:30px;">
+    <div class="mb-4">
+      <p class="section-eyebrow">Volunteer Portal</p>
+      <h2 class="section-heading" style="margin-bottom:.5rem;">My Profile</h2>
+      <p style="color:var(--clr-muted);">Manage your volunteer details and contact information.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="dashboard-card text-center">
+          <div class="profile-avatar mx-auto">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          <h5>{{ user.name if user else 'Volunteer Name' }}</h5>
+          <p class="text-muted mb-1">{{ user.email if user and user.email else 'volunteer@email.com' }}</p>
+          <span class="badge bg-success">Volunteer</span>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="dashboard-card">
+          <h5 class="mb-3">Basic Details</h5>
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" value="{{ user.name if user else 'Volunteer Name' }}">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-control" value="{{ user.email if user and user.email else 'volunteer@email.com' }}">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" placeholder="04xx xxx xxx">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Role</label>
+                <input type="text" class="form-control" value="Volunteer" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Area of Interest</label>
+                <select class="form-select">
+                  <option>Community Support</option>
+                  <option>Event Support</option>
+                  <option>Donation Sorting</option>
+                  <option>Outreach Support</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Preferred Location</label>
+                <input type="text" class="form-control" placeholder="Perth / Northbridge / Online">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" rows="3" placeholder="Add any accessibility needs, preferred tasks, or availability notes."></textarea>
+              </div>
+              <div class="col-12">
+                <button type="button" class="btn btn-primary-green">Save Profile <i class="bi bi-check ms-1"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
