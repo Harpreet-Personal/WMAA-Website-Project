@@ -1,86 +1,277 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+  .donate-intro-card,
+  .donation-panel,
+  .bank-transfer-card,
+  .impact-card {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+  }
+
+  .donate-intro-card {
+    background: #ffffff;
+    border: 1px solid #e8ece8;
+    border-radius: 28px;
+    padding: 60px 50px;
+  }
+
+  .donation-panel {
+    background: linear-gradient(135deg, var(--clr-primary), #0b4b3f);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 28px;
+    padding: 70px 55px;
+    color: #ffffff;
+  }
+
+  .bank-transfer-card {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #e8ece8;
+    border-radius: 28px;
+    padding: 70px 55px;
+  }
+
+  #donationModal {
+    z-index: 2055 !important;
+  }
+
+  .modal-backdrop {
+    z-index: 2050 !important;
+  }
+
+  .donation-modal {
+    background: #ffffff;
+    border: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  }
+
+  .donation-modal .modal-header {
+    padding: 18px 24px 8px;
+    background: #ffffff;
+  }
+
+  .donation-modal .modal-body {
+    padding: 12px 24px 12px;
+    overflow: visible;
+  }
+
+  .donation-modal .modal-footer {
+    padding: 10px 24px 20px;
+    background: #ffffff;
+  }
+
+  .donation-modal .form-label {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .donation-modal .form-control {
+    min-height: 38px;
+  }
+
+  .secure-note {
+    background: #f4f8f4;
+    border: 1px solid #dce8dc;
+    border-radius: 14px;
+    padding: 10px 12px;
+    color: var(--clr-primary);
+  }
+
+  .donation-combo-section {
+    background: #f7f8f7;
+  }
+
+  .donation-combo-card {
+    height: 100%;
+    min-height: 520px;
+  }
+
+  .donation-combo-card .section-heading {
+    font-size: 2rem;
+  }
+
+  .donation-footer-link {
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .donation-footer-link:hover {
+    color: #ffffff;
+  }
+
+  .donation-panel .donate-btn {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .donation-panel .donate-btn.active,
+  .donation-panel .donate-btn:hover {
+    color: #111827;
+  }
+
+  .donation-panel .donate-note,
+  .donation-panel .section-body.light {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .donation-panel .donate-input {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+  }
+
+  .donation-panel .donate-input::placeholder {
+    color: rgba(255, 255, 255, 0.72);
+  }
+</style>
+
+.impact-card {
+    padding: 28px 18px;
+    border-radius: 16px;
+    border: 1px solid #e8ece8;
+    background: #ffffff;
+}
+
+.impact-card h6 {
+    font-size: 1.4rem;
+    margin-top: 10px;
+}
+
+.impact-card p {
+    font-size: 0.95rem;
+}
+
+.section-heading {
+    font-size: 2.4rem;
+}
+
 <div class="page-banner">
   <div class="container">
     <p class="section-eyebrow light">{{ _('Make a Difference') }}</p>
     <h1 class="page-banner-title">{{ _('Donate') }}</h1>
-    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li class="breadcrumb-item active">{{ _('Donate') }}</li></ol></nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li>
+        <li class="breadcrumb-item active">{{ _('Donate') }}</li>
+      </ol>
+    </nav>
   </div>
 </div>
 
-<section class="section-padding bg-light">
+<!-- ================= DONATION CONTENT ================= -->
+<section class="section-padding donation-combo-section">
   <div class="container">
-    <div class="row justify-content-center text-center mb-5">
-      <div class="col-lg-7" data-animate="fade-up">
-        <p class="section-eyebrow">{{ _('Your Impact') }}</p>
-        <h2 class="section-heading">{{ _('Why Your Donation Matters') }}</h2>
-        <p class="section-body">{{ _('Every dollar donated directly supports CALD individuals and families in Western Australia when they need it most.') }}</p>
+    <div class="row g-4 align-items-stretch mb-4">
+      <div class="col-lg-6">
+        <div class="donate-intro-card donation-combo-card text-center">
+          <p class="section-eyebrow">{{ _('Your Impact') }}</p>
+          <h2 class="section-heading">{{ _('Why Your Donation Matters') }}</h2>
+          <p class="section-body mb-4">
+            {{ _('Every dollar donated directly supports CALD individuals and families in Western Australia when they need it most.') }}
+          </p>
+
+          <!-- ACNC LOGO -->
+          <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png"
+               alt="ACNC Registered Charity"
+               class="img-fluid"
+               style="max-width: 130px;">
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="donate-intro-card donation-combo-card text-center">
+          <p class="section-eyebrow">{{ _('Your Impact') }}</p>
+          <h2 class="section-heading">{{ _('How Your Donation Helps') }}</h2>
+          <p class="section-body mb-4">
+            {{ _('Your contribution supports transport, cultural mediation, emergency welfare, and direct assistance for CALD families in Western Australia.') }}
+          </p>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="impact-card h-100">
+                <div class="impact-icon"><i class="bi bi-house-heart"></i></div>
+                <h6>$10</h6>
+                <p>{{ _('Transport support') }}</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="impact-card h-100">
+                <div class="impact-icon"><i class="bi bi-chat-dots"></i></div>
+                <h6>$50</h6>
+                <p>{{ _('Cultural mediation') }}</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="impact-card h-100">
+                <div class="impact-icon"><i class="bi bi-shield-heart"></i></div>
+                <h6>$100</h6>
+                <p>{{ _('Emergency welfare') }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row g-4 mb-5">
-      <div class="col-md-4" data-animate="fade-up" data-delay="0"><div class="impact-card"><div class="impact-icon"><i class="bi bi-house-heart"></i></div><h6>$10</h6><p>{{ _('Helps cover transport to a support appointment for a community member in need.') }}</p></div></div>
-      <div class="col-md-4" data-animate="fade-up" data-delay="100"><div class="impact-card"><div class="impact-icon"><i class="bi bi-chat-dots"></i></div><h6>$50</h6><p>{{ _('Funds a cultural mediation session to help a family navigate a critical situation.') }}</p></div></div>
-      <div class="col-md-4" data-animate="fade-up" data-delay="200"><div class="impact-card"><div class="impact-icon"><i class="bi bi-shield-heart"></i></div><h6>$100</h6><p>{{ _('Supports emergency welfare assistance for a family in immediate crisis.') }}</p></div></div>
-    </div>
-  </div>
-</section>
 
-<section class="section-padding donate-section">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-7 text-center" data-animate="fade-up">
-        <p class="section-eyebrow light">{{ _('Online Donation') }}</p>
-        <h2 class="section-heading light">{{ _('Choose Your Amount') }}</h2>
-        <p class="section-body light mb-1">{{ _('Fundraising License:') }} <strong>CC23982</strong></p>
-        <p class="section-body light mb-4">{{ _('ACNC Registered Charity') }} &nbsp;|&nbsp; ABN: [Insert ABN]</p>
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-6">
+        <div class="donation-panel donation-combo-card text-center">
+          <p class="section-eyebrow light">{{ _('Online Donation') }}</p>
+          <h2 class="section-heading light">{{ _('Choose Your Amount') }}</h2>
 
-        <form method="POST" action="{{ url_for('donate') }}" id="donationForm">
+          <p class="section-body light mb-1">
+            {{ _('Fundraising License:') }} <strong>CC23982</strong>
+          </p>
+          <p class="section-body light mb-4">
+            {{ _('ACNC Registered Charity') }} | ABN: [Insert ABN]
+          </p>
+
           <div class="donate-amounts d-flex flex-wrap justify-content-center gap-3 mb-4">
-            <button type="button" class="donate-btn" data-amount="10">$10</button>
-            <button type="button" class="donate-btn" data-amount="20">$20</button>
-            <button type="button" class="donate-btn active" data-amount="50">$50</button>
-            <button type="button" class="donate-btn" data-amount="100">$100</button>
-            <button type="button" class="donate-btn" data-amount="200">$200</button>
+            <button class="donate-btn" data-amount="10">$10</button>
+            <button class="donate-btn" data-amount="20">$20</button>
+            <button class="donate-btn active" data-amount="50">$50</button>
+            <button class="donate-btn" data-amount="100">$100</button>
+            
           </div>
 
-          <div class="donate-custom mb-4">
-            <input type="number" id="customAmount" class="form-control donate-input" placeholder="{{ _('Or enter a custom amount ($)') }}" min="1" />
-          </div>
+          <input type="number" id="customAmount" class="form-control donate-input mb-4"
+                 placeholder="{{ _('Or enter a custom amount ($)') }}">
 
-          <div class="row g-3 text-start mb-4">
-            <div class="col-md-6">
-              <label for="donor_name" class="form-label text-white">{{ _('Full Name') }} *</label>
-              <input type="text" id="donor_name" name="donor_name" class="form-control donate-input" placeholder="{{ _('Your full name') }}" required>
-            </div>
-            <div class="col-md-6">
-              <label for="donor_email" class="form-label text-white">{{ _('Email Address') }} *</label>
-              <input type="email" id="donor_email" name="donor_email" class="form-control donate-input" placeholder="{{ _('your@email.com') }}" required>
-            </div>
-          </div>
+          <button class="btn btn-donate-main" id="donateSubmit" type="button" data-bs-toggle="modal" data-bs-target="#donationModal">
+            {{ _('Donate') }} <span id="donateLabel">$50</span> {{ _('Now') }}
+          </button>
 
-          <input type="hidden" name="amount" id="donationAmountInput" value="50">
-
-          <button type="submit" class="btn btn-donate-main" id="donateSubmit">{{ _('Donate') }} <span id="donateLabel">$50</span> {{ _('Now') }}</button>
-          <p class="mt-3 donate-note"><i class="bi bi-lock"></i> {{ _('Secure payment') }} &nbsp;|&nbsp; <i class="bi bi-check-circle"></i> {{ _('ACNC Registered Charity') }}</p>
-        </form>
+          <p class="mt-3 donate-note">
+            <i class="bi bi-lock"></i> {{ _('Secure payment') }}
+            &nbsp;|&nbsp;
+            <i class="bi bi-check-circle"></i> {{ _('ACNC Registered Charity') }}
+          </p>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="section-padding bg-light">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 text-center" data-animate="fade-up">
-        <p class="section-eyebrow">{{ _('Bank Transfer') }}</p>
-        <h2 class="section-heading">{{ _('Direct Bank Transfer (AU)') }}</h2>
-        <p class="section-body">{{ _('Prefer to donate directly? Transfer using the details below and email us your receipt at') }} <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a>.</p>
-        <div class="bank-details-box mt-4">
-          <div class="bank-row"><span>{{ _('BSB') }}</span><strong>036 081</strong></div>
-          <div class="bank-row"><span>{{ _('Account Number') }}</span><strong>009 633</strong></div>
-          <div class="bank-row"><span>{{ _('Account Name') }}</span><strong>WA Multicultural Assistance Alliance</strong></div>
-          <div class="bank-row"><span>{{ _('Reference') }}</span><strong>{{ _('DONATION – [Your Name]') }}</strong></div>
+      <div class="col-lg-6">
+        <div class="bank-transfer-card donation-combo-card text-center">
+          <p class="section-eyebrow">{{ _('Bank Transfer') }}</p>
+          <h2 class="section-heading">{{ _('Direct Bank Transfer (AU)') }}</h2>
+
+          <p class="section-body">
+            {{ _('Prefer to donate directly? Transfer using the details below and email us your receipt at') }}
+            <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a>
+          </p>
+
+          <div class="bank-details-box mt-4">
+            <div class="bank-row"><span>BSB</span><strong>036 081</strong></div>
+            <div class="bank-row"><span>Account Number</span><strong>009 633</strong></div>
+            <div class="bank-row"><span>Account Name</span><strong>WMAA</strong></div>
+            <div class="bank-row"><span>Reference</span><strong>DONATION – Your Name</strong></div>
+          </div>
         </div>
       </div>
     </div>
@@ -89,15 +280,172 @@
 
 <footer class="site-footer">
   <div class="container">
-    <div class="row g-4 align-items-start">
-      <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">{{ _('Join Us in Our Mission') }}</p><p class="footer-small">{{ _('Company Limited by Guarantee') }}<br />{{ _('ACNC Registered Charity') }}</p></div>
-      <div class="col-lg-2 col-6"><h6 class="footer-heading">{{ _('Navigate') }}</h6><ul class="footer-links"><li><a href="{{ url_for('home') }}">{{ _('Home') }}</a></li><li><a href="{{ url_for('about') }}">{{ _('About Us') }}</a></li><li><a href="{{ url_for('services') }}">{{ _('Services') }}</a></li><li><a href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a></li><li><a href="{{ url_for('events') }}">{{ _('Events') }}</a></li><li><a href="{{ url_for('news') }}">{{ _('News') }}</a></li><li><a href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a></li></ul></div>
-      <div class="col-lg-3 col-6"><h6 class="footer-heading">{{ _('Services') }}</h6><ul class="footer-links"><li><a href="{{ url_for('services') }}#crisis">{{ _('Crisis Response') }}</a></li><li><a href="{{ url_for('services') }}#mediation">{{ _('Cultural Mediation') }}</a></li><li><a href="{{ url_for('services') }}#housing">{{ _('Housing Referrals') }}</a></li><li><a href="{{ url_for('services') }}#fraud">{{ _('Fraud Awareness') }}</a></li><li><a href="{{ url_for('services') }}#health">{{ _('Health Advocacy') }}</a></li></ul></div>
-      <div class="col-lg-3"><h6 class="footer-heading">{{ _('Contact') }}</h6><ul class="footer-links"><li><i class="bi bi-geo-alt"></i> {{ _('10 Lake Street, Northbridge, Perth WA') }}</li><li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li><li><i class="bi bi-telephone"></i> (61) 86555 7072</li></ul></div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="44">
+          <h5 class="mb-0 text-white">WMAA</h5>
+        </div>
+        <h6 class="text-warning">{{ _('Join Us in Our Mission') }}</h6>
+        <p class="mb-1">{{ _('Company Limited by Guarantee') }}</p>
+        <p>{{ _('ACNC Registered Charity') }}</p>
+      </div>
+
+      <div class="col-lg-2 col-md-6">
+        <h6 class="text-white text-uppercase mb-3">{{ _('Navigate') }}</h6>
+        <a class="donation-footer-link" href="{{ url_for('home') }}">{{ _('Home') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('about') }}">{{ _('About Us') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('services') }}">{{ _('Services') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('events') }}">{{ _('Events') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('news') }}">{{ _('News') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <h6 class="text-white text-uppercase mb-3">{{ _('Services') }}</h6>
+        <a class="donation-footer-link" href="{{ url_for('services') }}">{{ _('Crisis Response') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('services') }}">{{ _('Cultural Mediation') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('services') }}">{{ _('Housing Referrals') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('services') }}">{{ _('Fraud Awareness') }}</a><br>
+        <a class="donation-footer-link" href="{{ url_for('services') }}">{{ _('Health Advocacy') }}</a>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <h6 class="text-white text-uppercase mb-3">{{ _('Contact') }}</h6>
+        <p><i class="bi bi-geo-alt me-2"></i>10 Lake Street, Northbridge, Perth WA</p>
+        <p><i class="bi bi-envelope me-2"></i><a class="donation-footer-link" href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></p>
+        <p><i class="bi bi-telephone me-2"></i>(61) 86555 7072</p>
+      </div>
     </div>
-    <hr class="footer-divider" />
-    <div class="d-flex flex-wrap justify-content-between align-items-center"><p class="footer-copy mb-0">&copy; 2025 {{ _('WA Multicultural Assistance Alliance. All rights reserved.') }}</p><p class="footer-copy mb-0">{{ _('Fundraising License: CC23982') }}</p></div>
+
+    <hr class="my-4">
+    <div class="d-flex justify-content-between flex-wrap gap-2">
+      <p class="mb-0">© 2025 WA Multicultural Assistance Alliance. {{ _('All rights reserved.') }}</p>
+      <p class="mb-0">{{ _('Fundraising License: CC23982') }}</p>
+    </div>
   </div>
 </footer>
-<button id="backToTop" class="back-to-top" aria-label="{{ _('Back to top') }}"><i class="bi bi-arrow-up"></i></button>
+
+<!-- Donation details modal - frontend layout only. Payment gateway integration will be added later. -->
+<div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content donation-modal text-start">
+      <div class="modal-header border-0">
+        <div>
+          <p class="section-eyebrow mb-1">{{ _('Secure Donation') }}</p>
+          <h5 class="modal-title" id="donationModalLabel">{{ _('Complete Your Donation') }}</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="secure-note d-flex align-items-center gap-2 mb-3">
+          <i class="bi bi-shield-lock"></i>
+          <span class="small">{{ _('Your donation details are protected. Payment gateway integration will be connected later.') }}</span>
+        </div>
+
+        <form>
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <h6 class="mb-2">{{ _('Donor Details') }}</h6>
+
+              <div class="mb-2">
+                <label class="form-label">{{ _('Full Name') }}</label>
+                <input type="text" class="form-control" placeholder="{{ _('Enter your full name') }}">
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label">{{ _('Email Address') }}</label>
+                <input type="email" class="form-control" placeholder="name@example.com">
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label">{{ _('Phone Number') }}</label>
+                <input type="tel" class="form-control" placeholder="04xx xxx xxx">
+              </div>
+
+              <div class="mb-0">
+                <label class="form-label">{{ _('Donation Amount') }}</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="text" class="form-control" id="modalDonationAmount" value="50" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <h6 class="mb-2">{{ _('Card Details') }}</h6>
+
+              <div class="mb-2">
+                <label class="form-label">{{ _('Cardholder Name') }}</label>
+                <input type="text" class="form-control" placeholder="{{ _('Name on card') }}">
+              </div>
+
+              <div class="mb-2">
+                <label class="form-label">{{ _('Card Number') }}</label>
+                <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+              </div>
+
+              <div class="row g-2 mb-2">
+                <div class="col-6">
+                  <label class="form-label">{{ _('Expiry Date') }}</label>
+                  <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">{{ _('CVV') }}</label>
+                  <input type="password" class="form-control" placeholder="123" maxlength="4">
+                </div>
+              </div>
+
+              <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" id="donationTerms">
+                <label class="form-check-label small" for="donationTerms">
+                  {{ _('I agree to the terms and conditions and understand this is a donation to WMAA.') }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ _('Cancel') }}</button>
+        <button type="button" class="btn btn-primary-green">{{ _('Pay Securely') }} <span id="modalPayAmount">$50</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const amountButtons = document.querySelectorAll(".donate-btn");
+    const customAmount = document.getElementById("customAmount");
+    const modalDonationAmount = document.getElementById("modalDonationAmount");
+    const modalPayAmount = document.getElementById("modalPayAmount");
+    const donateLabel = document.getElementById("donateLabel");
+
+    function updateAmount(amount) {
+      if (!amount || Number(amount) <= 0) return;
+      if (modalDonationAmount) modalDonationAmount.value = amount;
+      if (modalPayAmount) modalPayAmount.textContent = `$${amount}`;
+      if (donateLabel) donateLabel.textContent = `$${amount}`;
+    }
+
+    amountButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        amountButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        updateAmount(button.dataset.amount);
+      });
+    });
+
+    if (customAmount) {
+      customAmount.addEventListener("input", function () {
+        amountButtons.forEach(btn => btn.classList.remove("active"));
+        updateAmount(customAmount.value);
+      });
+    }
+  });
+</script>
 {% endblock %}
