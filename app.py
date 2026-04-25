@@ -81,9 +81,22 @@ def volunteer():
 def forgot_password():
     return render_template("forgot-password.html")
 
-@app.route("/dashboard")
+@app.route("/vol-dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    user = {
+
+        "name": session.get("user_name", "Volunteer"),
+
+        "role": session.get("user_role", "volunteer")
+
+    }
+
+    return render_template("vol-dashboard.html", user=user)
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("volunteer"))
 
 if __name__ == "__main__":
     app.run(debug=True)

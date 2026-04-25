@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set upcoming_events = [
+  {
+    "title": "Community Food Drive",
+    "date": "12 April 2026",
+    "location": "Perth Community Centre",
+    "description": "Help organise and distribute food packs."
+  },
+  {
+    "title": "Cultural Support Workshop",
+    "date": "18 April 2026",
+    "location": "Northbridge Hall",
+    "description": "Assist with workshop setup and coordination."
+  },
+  {
+    "title": "Donation Sorting Day",
+    "date": "24 April 2026",
+    "location": "WMAA Office",
+    "description": "Sort and organise donated items."
+  },
+  {
+    "title": "Community Outreach",
+    "date": "30 April 2026",
+    "location": "Perth CBD",
+    "description": "Support outreach activities and engagement."
+  }
+] %}
+
+<section class="section-padding">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+      <div>
+        <h2 class="mb-1">Welcome, {{ user.name }}</h2>
+        <p class="text-muted mb-0">
+          Here you can view your volunteer updates and upcoming events.
+        </p>
+      </div>
+
+      <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">
+        Logout
+      </a>
+    </div>
+
+    {% if user.role == "volunteer" %}
+      <h4 class="mb-3">Upcoming Events</h4>
+
+      {% if upcoming_events %}
+        <div class="row g-4">
+          {% for event in upcoming_events %}
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100 shadow-sm border-0 rounded-4">
+                <div class="card-body p-4">
+                  <h5 class="card-title text-success">{{ event.title }}</h5>
+
+                  <p class="mb-1">
+                    <strong>Date:</strong> {{ event.date }}
+                  </p>
+
+                  <p class="mb-1">
+                    <strong>Location:</strong> {{ event.location }}
+                  </p>
+
+                  <p class="text-muted mb-0">
+                    {{ event.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info mt-3">
+          No upcoming events available.
+        </div>
+      {% endif %}
+
+    {% else %}
+      <div class="alert alert-warning mt-3">
+        Access restricted. Volunteers only.
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}
