@@ -1,88 +1,135 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% set upcoming_events = [
-  {
-    "title": "Community Food Drive",
-    "date": "12 April 2026",
-    "location": "Perth Community Centre",
-    "description": "Help organise and distribute food packs."
-  },
-  {
-    "title": "Cultural Support Workshop",
-    "date": "18 April 2026",
-    "location": "Northbridge Hall",
-    "description": "Assist with workshop setup and coordination."
-  },
-  {
-    "title": "Donation Sorting Day",
-    "date": "24 April 2026",
-    "location": "WMAA Office",
-    "description": "Sort and organise donated items."
-  },
-  {
-    "title": "Community Outreach",
-    "date": "30 April 2026",
-    "location": "Perth CBD",
-    "description": "Support outreach activities and engagement."
-  }
-] %}
+<style>
+.dashboard-sidebar { background: var(--clr-primary); min-height: 100vh; padding: 30px 0; }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255,255,255,.75); font-size: .9rem; font-weight: 500; text-decoration: none; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--clr-white); }
+.dashboard-card { background: var(--clr-white); border: 1px solid #e8ece8; border-radius: 12px; padding: 24px; height: 100%; }
+.dashboard-icon { width: 50px; height: 50px; background: var(--clr-bg-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+.dashboard-icon i { color: var(--clr-primary); font-size: 1.35rem; }
+.dashboard-stat-number { font-family: var(--ff-heading); color: var(--clr-primary); font-weight: 700; margin-bottom: 4px; }
+</style>
 
-<section class="section-padding">
-  <div class="container">
+<div class="d-flex" style="margin-top:80px;">
 
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-      <div>
-        <h2 class="mb-1">Welcome, {{ user.name }}</h2>
-        <p class="text-muted mb-0">
-          Here you can view your volunteer updates and upcoming events.
-        </p>
+  <!-- Sidebar -->
+  <div class="dashboard-sidebar" style="width:240px;">
+    <div class="px-4 mb-4 text-white">
+      <h5>{{ user.name }}</h5>
+      <small>Volunteer</small>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="sidebar-link active"><i class="bi bi-grid"></i> Dashboard</a>
+    <a href="/volunteer-schedule" class="sidebar-link"><i class="bi bi-calendar-event"></i> My Schedule</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-events" class="sidebar-link"><i class="bi bi-calendar-check"></i> Events</a>
+    <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
+    <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div style="flex:1; padding:30px;">
+
+    <!-- Welcome -->
+    <h2>Welcome, {{ user.name }}</h2>
+    <p class="text-muted">Overview of your volunteer activity</p>
+
+    <!-- Stats -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="dashboard-card text-center">
+          <div class="dashboard-icon"><i class="bi bi-clock-history"></i></div>
+          <h4 class="dashboard-stat-number">24</h4>
+          <p class="text-muted mb-0">Hours Volunteered</p>
+        </div>
       </div>
-
-      <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">
-        Logout
-      </a>
+      <div class="col-md-3">
+        <div class="dashboard-card text-center">
+          <div class="dashboard-icon"><i class="bi bi-calendar-check"></i></div>
+          <h4 class="dashboard-stat-number">8</h4>
+          <p class="text-muted mb-0">Events Attended</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="dashboard-card text-center">
+          <div class="dashboard-icon"><i class="bi bi-clipboard-check"></i></div>
+          <h4 class="dashboard-stat-number">5</h4>
+          <p class="text-muted mb-0">Tasks Completed</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="dashboard-card text-center">
+          <div class="dashboard-icon"><i class="bi bi-people"></i></div>
+          <h4 class="dashboard-stat-number">12</h4>
+          <p class="text-muted mb-0">People Helped</p>
+        </div>
+      </div>
     </div>
 
-    {% if user.role == "volunteer" %}
-      <h4 class="mb-3">Upcoming Events</h4>
+    <!-- Tasks & Announcements -->
+    <div class="row g-4 mb-4">
 
-      {% if upcoming_events %}
-        <div class="row g-4">
-          {% for event in upcoming_events %}
-            <div class="col-md-6 col-lg-4">
-              <div class="card h-100 shadow-sm border-0 rounded-4">
-                <div class="card-body p-4">
-                  <h5 class="card-title text-success">{{ event.title }}</h5>
+      <!-- Tasks -->
+      <div class="col-md-6">
+        <div class="dashboard-card">
+          <h5>My Tasks</h5>
 
-                  <p class="mb-1">
-                    <strong>Date:</strong> {{ event.date }}
-                  </p>
+          <div class="mb-3">
+            <span class="badge bg-primary">Upcoming</span>
+            <p class="mb-0">Crisis Response Training</p>
+            <small class="text-muted">15 April · 10:00 AM</small>
+          </div>
 
-                  <p class="mb-1">
-                    <strong>Location:</strong> {{ event.location }}
-                  </p>
+          <div class="mb-3">
+            <span class="badge bg-warning text-dark">Pending</span>
+            <p class="mb-0">Submit Volunteer Report</p>
+            <small class="text-muted">Due: 20 April</small>
+          </div>
 
-                  <p class="text-muted mb-0">
-                    {{ event.description }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
+          <div>
+            <span class="badge bg-success">Completed</span>
+            <p class="mb-0">Community Awareness Session</p>
+            <small class="text-muted">10 April</small>
+          </div>
         </div>
-      {% else %}
-        <div class="alert alert-info mt-3">
-          No upcoming events available.
-        </div>
-      {% endif %}
-
-    {% else %}
-      <div class="alert alert-warning mt-3">
-        Access restricted. Volunteers only.
       </div>
-    {% endif %}
+
+      <!-- Announcements -->
+      <div class="col-md-6">
+        <div class="dashboard-card">
+          <h5>Announcements</h5>
+
+          <div class="mb-3">
+            <strong>New Volunteer Handbook</strong>
+            <p class="text-muted mb-0">Please review the updated handbook before your next shift.</p>
+          </div>
+
+          <div class="mb-3">
+            <strong>Monthly Meeting</strong>
+            <p class="text-muted mb-0">25 April · 6:00 PM (Zoom)</p>
+          </div>
+
+          <div>
+            <strong>Reminder</strong>
+            <p class="text-muted mb-0">Submit your volunteer hours at month end.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Timesheet -->
+    <div class="dashboard-card">
+      <h5>Timesheet</h5>
+      <table class="table">
+        <tr><th>Date</th><th>Task</th><th>Hours</th></tr>
+        <tr><td>12 Apr</td><td>Food Drive</td><td>4</td></tr>
+        <tr><td>18 Apr</td><td>Workshop</td><td>5</td></tr>
+      </table>
+    </div>
 
   </div>
-</section>
+</div>
+
 {% endblock %}
