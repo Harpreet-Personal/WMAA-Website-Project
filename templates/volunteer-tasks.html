@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.dashboard-sidebar { background: var(--clr-primary); min-height: 100vh; padding: 30px 0; }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255,255,255,.75); font-size: .9rem; font-weight: 500; text-decoration: none; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--clr-white); }
+.dashboard-card { background: var(--clr-white); border: 1px solid #e8ece8; border-radius: 12px; padding: 24px; height: 100%; }
+.task-row { border-bottom: 1px solid #edf0ed; padding: 16px 0; }
+.task-row:last-child { border-bottom: none; }
+</style>
+
+<div class="d-flex" style="margin-top:80px;">
+  <div class="dashboard-sidebar" style="width:240px;">
+    <div class="px-4 mb-4 text-white">
+      <h5>{{ user.name if user else 'Volunteer' }}</h5>
+      <small>Volunteer</small>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>
+    <a href="/volunteer-schedule" class="sidebar-link"><i class="bi bi-calendar-event"></i> My Schedule</a>
+    <a href="/volunteer-tasks" class="sidebar-link active"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-events" class="sidebar-link"><i class="bi bi-calendar-check"></i> Events</a>
+    <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
+    <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  </div>
+
+  <div style="flex:1; padding:30px;">
+    <div class="mb-4">
+      <p class="section-eyebrow">Volunteer Portal</p>
+      <h2 class="section-heading" style="margin-bottom:.5rem;">My Tasks</h2>
+      <p style="color:var(--clr-muted);">Track upcoming, pending, and completed volunteer tasks.</p>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-4">
+        <div class="dashboard-card text-center">
+          <h4 class="text-success">2</h4>
+          <p class="text-muted mb-0">Upcoming</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="dashboard-card text-center">
+          <h4 class="text-warning">1</h4>
+          <p class="text-muted mb-0">Pending</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="dashboard-card text-center">
+          <h4 class="text-success">3</h4>
+          <p class="text-muted mb-0">Completed</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <div class="task-row d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <span class="badge bg-primary mb-2">Upcoming</span>
+          <h6 class="mb-1">Crisis Response Training</h6>
+          <p class="text-muted mb-0">15 April · 10:00 AM · Training Room 2</p>
+        </div>
+        <button class="btn btn-outline-success btn-sm">View Details</button>
+      </div>
+
+      <div class="task-row d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <span class="badge bg-warning text-dark mb-2">Pending</span>
+          <h6 class="mb-1">Submit Volunteer Report</h6>
+          <p class="text-muted mb-0">Due: 20 April · Monthly activity update</p>
+        </div>
+        <button class="btn btn-primary-green btn-sm">Submit</button>
+      </div>
+
+      <div class="task-row d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <span class="badge bg-success mb-2">Completed</span>
+          <h6 class="mb-1">Community Awareness Session</h6>
+          <p class="text-muted mb-0">Completed on 10 April</p>
+        </div>
+        <button class="btn btn-outline-secondary btn-sm">Completed</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
