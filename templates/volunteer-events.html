@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.dashboard-sidebar { background: var(--clr-primary); min-height: 100vh; padding: 30px 0; }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255,255,255,.75); font-size: .9rem; font-weight: 500; text-decoration: none; }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--clr-white); }
+.dashboard-card { background: var(--clr-white); border: 1px solid #e8ece8; border-radius: 12px; padding: 24px; height: 100%; }
+.event-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--clr-bg-light); color: var(--clr-primary); font-size: 1.3rem; margin-bottom: 12px; }
+</style>
+
+<div class="d-flex" style="margin-top:80px;">
+  <div class="dashboard-sidebar" style="width:240px;">
+    <div class="px-4 mb-4 text-white">
+      <h5>{{ user.name if user else 'Volunteer' }}</h5>
+      <small>Volunteer</small>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>
+    <a href="/volunteer-schedule" class="sidebar-link"><i class="bi bi-calendar-event"></i> My Schedule</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-events" class="sidebar-link active"><i class="bi bi-calendar-check"></i> Events</a>
+    <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
+    <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  </div>
+
+  <div style="flex:1; padding:30px;">
+    <div class="mb-4">
+      <p class="section-eyebrow">Volunteer Portal</p>
+      <h2 class="section-heading" style="margin-bottom:.5rem;">Volunteer Events</h2>
+      <p style="color:var(--clr-muted);">Browse upcoming volunteer opportunities and register your interest.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-xl-4">
+        <div class="dashboard-card">
+          <div class="event-icon"><i class="bi bi-basket"></i></div>
+          <h5>Community Food Drive</h5>
+          <p class="text-muted mb-2">12 April 2026 · Perth Community Centre</p>
+          <p>Help prepare and distribute food packs to community members.</p>
+          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="dashboard-card">
+          <div class="event-icon"><i class="bi bi-people"></i></div>
+          <h5>Cultural Support Workshop</h5>
+          <p class="text-muted mb-2">18 April 2026 · Northbridge Hall</p>
+          <p>Assist with setup, registration, and attendee support.</p>
+          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="dashboard-card">
+          <div class="event-icon"><i class="bi bi-box-seam"></i></div>
+          <h5>Donation Sorting Day</h5>
+          <p class="text-muted mb-2">24 April 2026 · WMAA Office</p>
+          <p>Sort donated items and prepare them for distribution.</p>
+          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="dashboard-card">
+          <div class="event-icon"><i class="bi bi-megaphone"></i></div>
+          <h5>Community Outreach Visit</h5>
+          <p class="text-muted mb-2">30 April 2026 · Perth CBD Outreach Centre</p>
+          <p>Support outreach activities and provide information to CALD community members.</p>
+          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="dashboard-card">
+          <div class="event-icon"><i class="bi bi-cup-hot"></i></div>
+          <h5>Morning Tea Support</h5>
+          <p class="text-muted mb-2">4 May 2026 · WMAA Community Hall</p>
+          <p>Help welcome attendees, arrange refreshments, and support event coordination.</p>
+          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4">
+        <div class="dashboard-card">
+          <div class="event-icon"><i class="bi bi-translate"></i></div>
+          <h5>Language Support Session</h5>
+          <p class="text-muted mb-2">9 May 2026 · Online</p>
+          <p>Assist community members by providing basic language and digital support.</p>
+          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
