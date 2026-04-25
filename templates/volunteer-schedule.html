@@ -1,3 +1,5 @@
+
+{% set hide_public_nav = true %}
 {% extends "base.html" %}
 
 {% block content %}
@@ -10,7 +12,7 @@
 .calendar-day.available { background: #f4f8f4; border-color: var(--clr-primary); }
 </style>
 
-<div class="d-flex" style="margin-top:80px;">
+<div class="d-flex">
   <div class="dashboard-sidebar" style="width:240px;">
     <div class="px-4 mb-4 text-white">
       <h5>{{ user.name if user else 'Volunteer' }}</h5>

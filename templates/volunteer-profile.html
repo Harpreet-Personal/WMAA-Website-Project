@@ -1,3 +1,4 @@
+{% set hide_public_nav = true %}
 {% extends "base.html" %}
 
 {% block content %}
@@ -9,7 +10,7 @@
 .profile-avatar { width: 76px; height: 76px; border-radius: 50%; background: var(--clr-bg-light); display: flex; align-items: center; justify-content: center; color: var(--clr-primary); font-size: 2rem; margin-bottom: 14px; }
 </style>
 
-<div class="d-flex" style="margin-top:80px;">
+<div class="d-flex">
   <div class="dashboard-sidebar" style="width:240px;">
     <div class="px-4 mb-4 text-white">
       <h5>{{ user.name if user else 'Volunteer' }}</h5>
