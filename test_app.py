@@ -133,3 +133,51 @@ def test_volunteer_page_loads_in_chinese(client):
         sess["lang"] = "zh_Hans_CN"
     response = client.get("/volunteer")
     assert response.status_code == 200
+
+
+
+# ── Navigation Tests ──────────────────────────────────────
+
+def test_navbar_contains_home_link(client):
+    response = client.get("/")
+    assert b"Home" in response.data
+
+def test_navbar_contains_about_link(client):
+    response = client.get("/")
+    assert b"About Us" in response.data
+
+def test_navbar_contains_services_link(client):
+    response = client.get("/")
+    assert b"Services" in response.data
+
+def test_navbar_contains_contact_link(client):
+    response = client.get("/")
+    assert b"Contact Us" in response.data
+
+def test_navbar_contains_news_link(client):
+    response = client.get("/")
+    assert b"News" in response.data
+
+def test_navbar_contains_donate_button(client):
+    response = client.get("/")
+    assert b"Donate" in response.data
+
+def test_navbar_contains_login_button(client):
+    response = client.get("/")
+    assert b"Login" in response.data
+
+def test_navbar_contains_our_stories_link(client):
+    response = client.get("/")
+    assert b"Our Stories" in response.data
+
+def test_navbar_contains_events_link_text(client):
+    response = client.get("/")
+    assert b"Events" in response.data
+
+def test_navbar_contains_language_switcher(client):
+    response = client.get("/")
+    assert b"English" in response.data
+
+def test_navbar_contains_wmaa_logo(client):
+    response = client.get("/")
+    assert b"WMAA" in response.data
