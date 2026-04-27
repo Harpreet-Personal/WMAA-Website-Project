@@ -17,6 +17,13 @@
       <div class="row justify-content-center">
         <div class="col-lg-8">
 
+          {% if success %}
+          <div class="alert alert-success">{{ success }}</div>
+          {% endif %}
+          {% if error and not show_signup %}
+          <div class="alert alert-danger">{{ error }}</div>
+          {% endif %}
+
           <!-- LOGIN FORM -->
           <div id="loginForm">
             <div class="vision-box large mb-4">
@@ -56,35 +63,38 @@
               <h5><i class="bi bi-person-plus me-2"></i>Volunteer Registration</h5>
               <p class="mb-0" style="color:var(--clr-muted); font-size:.9rem;">Join our volunteer community and make a difference across Western Australia.</p>
             </div>
-            <form novalidate>
+            {% if error and show_signup %}
+            <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <form method="POST" action="{{ url_for('signup') }}" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
                   <label class="form-label">First Name *</label>
-                  <input type="text" class="form-control" placeholder="First name" required />
+                  <input type="text" name="first_name" class="form-control" placeholder="First name" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Last Name *</label>
-                  <input type="text" class="form-control" placeholder="Last name" required />
+                  <input type="text" name="last_name" class="form-control" placeholder="Last name" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-control" placeholder="your@email.com" required />
+                  <input type="email" name="email" class="form-control" placeholder="your@email.com" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Phone Number</label>
-                  <input type="tel" class="form-control" placeholder="04xx xxx xxx" />
+                  <input type="tel" name="phone" class="form-control" placeholder="04xx xxx xxx" />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Password *</label>
-                  <input type="password" class="form-control" placeholder="Create a password" required />
+                  <input type="password" name="password" class="form-control" placeholder="Create a password" required />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label">Confirm Password *</label>
-                  <input type="password" class="form-control" placeholder="Confirm your password" required />
+                  <input type="password" name="confirm_password" class="form-control" placeholder="Confirm your password" required />
                 </div>
                 <div class="col-12">
                   <label class="form-label">Area of Interest</label>
-                  <select class="form-control">
+                  <select name="area" class="form-control">
                     <option value="">Select an area</option>
                     <option>Crisis Response Support</option>
                     <option>Cultural Mediation</option>
@@ -97,7 +107,7 @@
                 </div>
                 <div class="col-12">
                   <label class="form-label">Languages Spoken</label>
-                  <input type="text" class="form-control" placeholder="e.g. English, Mandarin, Arabic" />
+                  <input type="text" name="languages" class="form-control" placeholder="e.g. English, Mandarin, Arabic" />
                 </div>
                 <div class="col-12">
                   <div class="form-check">
@@ -137,11 +147,14 @@
   </footer>
 
   <button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+<div id="defaultTab" data-tab="{{ 'signup' if show_signup else 'login' }}" style="display:none;"></div>
 <script>
     function showTab(tab) {
       document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
       document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
     }
+    var defaultTab = document.getElementById('defaultTab').dataset.tab;
+    showTab(defaultTab);
   </script>
 
 {% endblock %}
