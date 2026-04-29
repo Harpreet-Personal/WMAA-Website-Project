@@ -242,7 +242,7 @@ input, textarea {
     </div>
     <a href="{{ url_for('dashboard') }}" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>
     <a href="/volunteer-schedule" class="sidebar-link active"><i class="bi bi-calendar-event"></i> My Schedule</a>
-    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clock-history"></i> My Hours</a>
     <a href="/volunteer-events" class="sidebar-link"><i class="bi bi-calendar-check"></i> Events</a>
     <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
     <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
@@ -363,53 +363,12 @@ input, textarea {
           </form>
         </div>
 
-        <div class="dashboard-card timesheet-card">
-          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <div>
-              <h5 class="mb-1">Past Volunteer Hours</h5>
-              <p class="text-muted mb-0">Recent volunteer work.</p>
-            </div>
-            <span class="badge bg-success">18 hrs logged</span>
-          </div>
-
-          <div class="table-responsive">
-            <table class="table align-middle mb-0 compact-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Activity</th>
-                  <th>Hours</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>5 Apr 2026</td>
-                  <td>Community Food Drive</td>
-                  <td>4</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                </tr>
-                <tr>
-                  <td>9 Apr 2026</td>
-                  <td>Donation Sorting</td>
-                  <td>3</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                </tr>
-                <tr>
-                  <td>15 Apr 2026</td>
-                  <td>Cultural Workshop Support</td>
-                  <td>5</td>
-                  <td><span class="badge bg-warning text-dark">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>21 Apr 2026</td>
-                  <td>Outreach Preparation</td>
-                  <td>6</td>
-                  <td><span class="badge bg-success">Approved</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="dashboard-card">
+          <h5 class="mb-2">Past Volunteer Hours</h5>
+          <p class="text-muted">View your completed volunteering hours, approval status, and activity history on the My Hours page.</p>
+          <a href="/volunteer-tasks" class="btn btn-outline-success w-100" style="border-radius:10px; padding:10px; font-weight:600;">
+            View My Hours <i class="bi bi-arrow-right ms-1"></i>
+          </a>
         </div>
       </div>
     </div>
