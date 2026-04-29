@@ -3,13 +3,127 @@
 
 {% block content %}
 <style>
-.dashboard-sidebar { background: var(--clr-primary); min-height: 100vh; padding: 30px 0; }
-.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255,255,255,.75); font-size: .9rem; font-weight: 500; text-decoration: none; }
-.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--clr-white); }
-.dashboard-card { background: var(--clr-white); border: 1px solid #e8ece8; border-radius: 12px; padding: 24px; height: 100%; }
-.dashboard-icon { width: 50px; height: 50px; background: var(--clr-bg-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
-.dashboard-icon i { color: var(--clr-primary); font-size: 1.35rem; }
-.dashboard-stat-number { font-family: var(--ff-heading); color: var(--clr-primary); font-weight: 700; margin-bottom: 4px; }
+.dashboard-sidebar {
+  background: linear-gradient(180deg, #1f6f4a, #155d3b);
+  min-height: 100vh;
+  padding: 30px 0;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: rgba(255,255,255,.75);
+  font-size: .9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 8px;
+  margin: 4px 12px;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background: rgba(255,255,255,.15);
+  color: #fff;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 28px 30px;
+  background: #f7f9f8;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, #1f6f4a, #2f8f61);
+  color: #fff;
+  border-radius: 20px;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 28px rgba(31,111,74,0.18);
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border: none;
+  transition: transform .2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+}
+
+.dashboard-icon {
+  width: 50px;
+  height: 50px;
+  background: #e8f5ee;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.dashboard-icon i {
+  color: #1f6f4a;
+  font-size: 1.35rem;
+}
+
+.dashboard-stat-number {
+  font-weight: 700;
+  color: #1f6f4a;
+}
+
+.insight-card {
+  background: linear-gradient(135deg, #ffffff, #f4faf6);
+  border-left: 5px solid #1f6f4a;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  background: #e8f5ee;
+}
+
+.progress-bar {
+  background: #1f6f4a;
+}
+
+.activity-item {
+  border-left: 3px solid #e8f5ee;
+  padding-left: 14px;
+}
+
+.quick-action-btn {
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.recent-hours-table th,
+.recent-hours-table td {
+  padding: .65rem .75rem;
+  font-size: .9rem;
+}
+
+.dashboard-card h5 {
+  font-size: 1rem;
+}
+
+.dashboard-card p,
+.dashboard-card small,
+.recent-hours-table th,
+.recent-hours-table td {
+  font-size: .86rem;
+}
+
+.compact-section {
+  margin-bottom: 16px !important;
+}
 </style>
 
 <div class="d-flex">
@@ -22,21 +136,22 @@
     </div>
     <a href="{{ url_for('dashboard') }}" class="sidebar-link active"><i class="bi bi-grid"></i> Dashboard</a>
     <a href="/volunteer-schedule" class="sidebar-link"><i class="bi bi-calendar-event"></i> My Schedule</a>
-    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Hours</a>
     <a href="/volunteer-events" class="sidebar-link"><i class="bi bi-calendar-check"></i> Events</a>
     <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
     <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
   </div>
 
   <!-- Main Content -->
-  <div style="flex:1; padding:30px;">
+  <div class="dashboard-main">
 
-    <!-- Welcome -->
-    <h2>Welcome, {{ user.name }}</h2>
-    <p class="text-muted">Overview of your volunteer activity</p>
+    <div class="dashboard-header">
+      <h2 style="margin-bottom:.5rem;">Welcome, {{ user.name }}</h2>
+      <p class="mb-0">Overview of your volunteer activity and engagement.</p>
+    </div>
 
     <!-- Stats -->
-    <div class="row g-4 mb-4">
+    <div class="row g-3 compact-section">
       <div class="col-md-3">
         <div class="dashboard-card text-center">
           <div class="dashboard-icon"><i class="bi bi-clock-history"></i></div>
@@ -53,9 +168,9 @@
       </div>
       <div class="col-md-3">
         <div class="dashboard-card text-center">
-          <div class="dashboard-icon"><i class="bi bi-clipboard-check"></i></div>
+          <div class="dashboard-icon"><i class="bi bi-clock-history"></i></div>
           <h4 class="dashboard-stat-number">5</h4>
-          <p class="text-muted mb-0">Tasks Completed</p>
+          <p class="text-muted mb-0">Hours Pending</p>
         </div>
       </div>
       <div class="col-md-3">
@@ -67,67 +182,75 @@
       </div>
     </div>
 
-    <!-- Tasks & Announcements -->
-    <div class="row g-4 mb-4">
+    <!-- Quick Actions & Activity -->
+    <div class="row g-3 compact-section">
 
-      <!-- Tasks -->
+      <!-- Quick Actions -->
       <div class="col-md-6">
         <div class="dashboard-card">
-          <h5>My Tasks</h5>
+          <h5 class="mb-3">Quick Actions</h5>
 
-          <div class="mb-3">
-            <span class="badge bg-primary">Upcoming</span>
-            <p class="mb-0">Crisis Response Training</p>
-            <small class="text-muted">15 April · 10:00 AM</small>
-          </div>
+          <div class="d-grid gap-3">
+            <a href="/volunteer-schedule" class="btn btn-outline-success quick-action-btn">
+              <i class="bi bi-calendar-plus me-2"></i>Set Availability
+            </a>
 
-          <div class="mb-3">
-            <span class="badge bg-warning text-dark">Pending</span>
-            <p class="mb-0">Submit Volunteer Report</p>
-            <small class="text-muted">Due: 20 April</small>
-          </div>
+            <a href="/volunteer-events" class="btn btn-outline-success quick-action-btn">
+              <i class="bi bi-calendar-check me-2"></i>Browse Events
+            </a>
 
-          <div>
-            <span class="badge bg-success">Completed</span>
-            <p class="mb-0">Community Awareness Session</p>
-            <small class="text-muted">10 April</small>
+            <a href="/volunteer-tasks" class="btn btn-outline-success quick-action-btn">
+              <i class="bi bi-clock-history me-2"></i>View My Hours
+            </a>
           </div>
         </div>
       </div>
 
-      <!-- Announcements -->
+      <!-- Recent Activity -->
       <div class="col-md-6">
         <div class="dashboard-card">
-          <h5>Announcements</h5>
+          <h5 class="mb-3">Volunteer Snapshot</h5>
 
-          <div class="mb-3">
-            <strong>New Volunteer Handbook</strong>
-            <p class="text-muted mb-0">Please review the updated handbook before your next shift.</p>
+          <div class="activity-item mb-3">
+            <span class="badge bg-primary">Next Event</span>
+            <p class="mb-0 fw-semibold">Cultural Support Workshop</p>
+            <small class="text-muted">18 April · 2:00 PM – 5:00 PM · Northbridge Hall</small>
           </div>
 
-          <div class="mb-3">
-            <strong>Monthly Meeting</strong>
-            <p class="text-muted mb-0">25 April · 6:00 PM (Zoom)</p>
+          <div class="activity-item mb-3">
+            <span class="badge bg-success">Availability Match</span>
+            <p class="mb-0 fw-semibold">You are available for 3 upcoming events</p>
+            <small class="text-muted">Based on saved availability shown in My Schedule.</small>
           </div>
 
-          <div>
-            <strong>Reminder</strong>
-            <p class="text-muted mb-0">Submit your volunteer hours at month end.</p>
+          <div class="activity-item">
+            <span class="badge bg-warning text-dark">Pending Approval</span>
+            <p class="mb-0 fw-semibold">5 volunteer hours waiting for review</p>
+            <small class="text-muted">View details in My Hours.</small>
           </div>
-
         </div>
       </div>
 
     </div>
 
-    <!-- Timesheet -->
-    <div class="dashboard-card">
-      <h5>Timesheet</h5>
-      <table class="table">
-        <tr><th>Date</th><th>Task</th><th>Hours</th></tr>
-        <tr><td>12 Apr</td><td>Food Drive</td><td>4</td></tr>
-        <tr><td>18 Apr</td><td>Workshop</td><td>5</td></tr>
-      </table>
+    <!-- Recent Hours -->
+    <div class="dashboard-card compact-section">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Recent Hours</h5>
+        <a href="/volunteer-tasks" class="btn btn-sm btn-outline-success">View All</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table recent-hours-table mb-0 align-middle">
+          <thead>
+            <tr><th>Date</th><th>Activity</th><th>Start</th><th>End</th><th>Hours</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>12 Apr</td><td>Food Drive</td><td>9:00 AM</td><td>1:00 PM</td><td>4</td><td><span class="badge bg-success">Approved</span></td></tr>
+            <tr><td>18 Apr</td><td>Cultural Workshop</td><td>2:00 PM</td><td>5:00 PM</td><td>3</td><td><span class="badge bg-warning text-dark">Pending</span></td></tr>
+            <tr><td>21 Apr</td><td>Outreach Preparation</td><td>9:00 AM</td><td>3:00 PM</td><td>6</td><td><span class="badge bg-success">Approved</span></td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </div>
