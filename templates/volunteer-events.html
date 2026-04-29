@@ -3,11 +3,143 @@
 
 {% block content %}
 <style>
-.dashboard-sidebar { background: var(--clr-primary); min-height: 100vh; padding: 30px 0; }
-.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: rgba(255,255,255,.75); font-size: .9rem; font-weight: 500; text-decoration: none; }
-.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--clr-white); }
-.dashboard-card { background: var(--clr-white); border: 1px solid #e8ece8; border-radius: 12px; padding: 24px; height: 100%; }
-.event-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--clr-bg-light); color: var(--clr-primary); font-size: 1.3rem; margin-bottom: 12px; }
+.dashboard-sidebar {
+  background: linear-gradient(180deg, #1f6f4a, #155d3b);
+  min-height: 100vh;
+  padding: 30px 0;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: rgba(255,255,255,.75);
+  font-size: .9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 8px;
+  margin: 4px 12px;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: rgba(255,255,255,.15);
+  color: #fff;
+}
+
+.events-main {
+  flex: 1;
+  padding: 40px 36px;
+  background: #f7f9f8;
+  min-height: 100vh;
+}
+
+.events-header {
+  background: linear-gradient(135deg, #1f6f4a, #2f8f61);
+  color: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 28px rgba(31,111,74,0.18);
+}
+
+.events-header .section-eyebrow,
+.events-header p {
+  color: rgba(255,255,255,0.82) !important;
+}
+
+.events-header h2 {
+  color: #fff;
+}
+
+.event-filter {
+  border: 1px solid #dfe6df;
+  background: #fff;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: .85rem;
+  color: #1f6f4a;
+  cursor: pointer;
+}
+
+.event-filter.active,
+.event-filter:hover {
+  background: #1f6f4a;
+  color: #fff;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  height: 100%;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+
+.event-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f5ee;
+  color: #1f6f4a;
+  font-size: 1.35rem;
+  margin-bottom: 14px;
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0;
+  color: #6c7b70;
+  font-size: .9rem;
+}
+
+.event-meta span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: .78rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.available-slot {
+  background: #e8f5ee;
+  color: #1f6f4a;
+}
+
+.pending-slot {
+  background: #fff4d8;
+  color: #8a6100;
+}
+
+.interest-message {
+  display: none;
+  color: #1f6f4a;
+  font-size: .85rem;
+  margin-top: 10px;
+}
 </style>
 
 <div class="d-flex">
@@ -18,80 +150,155 @@
     </div>
     <a href="{{ url_for('dashboard') }}" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>
     <a href="/volunteer-schedule" class="sidebar-link"><i class="bi bi-calendar-event"></i> My Schedule</a>
-    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Tasks</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clipboard-check"></i> My Hours</a>
     <a href="/volunteer-events" class="sidebar-link active"><i class="bi bi-calendar-check"></i> Events</a>
     <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
     <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
   </div>
 
-  <div style="flex:1; padding:30px;">
-    <div class="mb-4">
-      <p class="section-eyebrow">Volunteer Portal</p>
-      <h2 class="section-heading" style="margin-bottom:.5rem;">Volunteer Events</h2>
-      <p style="color:var(--clr-muted);">Browse upcoming volunteer opportunities and register your interest.</p>
+  <div class="events-main">
+    <div class="events-header">
+      <p class="section-eyebrow mb-2">Volunteer Portal</p>
+      <h2 class="section-heading" style="margin-bottom:.5rem; font-weight:700;">Volunteer Events</h2>
+      <p class="mb-0">Browse upcoming volunteer opportunities, compare them with your availability, and register your interest.</p>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+      <div>
+        <h5 class="mb-1">Upcoming Opportunities</h5>
+        <p class="text-muted mb-0">Event times are shown so volunteers can match them with saved availability.</p>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="button" class="event-filter active" data-filter="All">All</button>
+        <button type="button" class="event-filter" data-filter="Available">Available</button>
+        <button type="button" class="event-filter" data-filter="Pending">Check Availability</button>
+      </div>
     </div>
 
     <div class="row g-4">
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-basket"></i></div>
+          <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
           <h5>Community Food Drive</h5>
-          <p class="text-muted mb-2">12 April 2026 · Perth Community Centre</p>
+          <div class="event-meta">
+            <span><i class="bi bi-calendar-event"></i>12 April 2026</span>
+            <span><i class="bi bi-clock"></i>9:00 AM – 1:00 PM</span>
+            <span><i class="bi bi-geo-alt"></i>Perth Community Centre</span>
+          </div>
           <p>Help prepare and distribute food packs to community members.</p>
-          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
+          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-people"></i></div>
+          <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
           <h5>Cultural Support Workshop</h5>
-          <p class="text-muted mb-2">18 April 2026 · Northbridge Hall</p>
+          <div class="event-meta">
+            <span><i class="bi bi-calendar-event"></i>18 April 2026</span>
+            <span><i class="bi bi-clock"></i>2:00 PM – 5:00 PM</span>
+            <span><i class="bi bi-geo-alt"></i>Northbridge Hall</span>
+          </div>
           <p>Assist with setup, registration, and attendee support.</p>
-          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
+          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-box-seam"></i></div>
+          <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
           <h5>Donation Sorting Day</h5>
-          <p class="text-muted mb-2">24 April 2026 · WMAA Office</p>
+          <div class="event-meta">
+            <span><i class="bi bi-calendar-event"></i>24 April 2026</span>
+            <span><i class="bi bi-clock"></i>10:00 AM – 2:00 PM</span>
+            <span><i class="bi bi-geo-alt"></i>WMAA Office</span>
+          </div>
           <p>Sort donated items and prepare them for distribution.</p>
-          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
+          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-megaphone"></i></div>
+          <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
           <h5>Community Outreach Visit</h5>
-          <p class="text-muted mb-2">30 April 2026 · Perth CBD Outreach Centre</p>
+          <div class="event-meta">
+            <span><i class="bi bi-calendar-event"></i>30 April 2026</span>
+            <span><i class="bi bi-clock"></i>9:00 AM – 3:00 PM</span>
+            <span><i class="bi bi-geo-alt"></i>Perth CBD Outreach Centre</span>
+          </div>
           <p>Support outreach activities and provide information to CALD community members.</p>
-          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
+          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-cup-hot"></i></div>
+          <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
           <h5>Morning Tea Support</h5>
-          <p class="text-muted mb-2">4 May 2026 · WMAA Community Hall</p>
+          <div class="event-meta">
+            <span><i class="bi bi-calendar-event"></i>4 May 2026</span>
+            <span><i class="bi bi-clock"></i>10:00 AM – 12:00 PM</span>
+            <span><i class="bi bi-geo-alt"></i>WMAA Community Hall</span>
+          </div>
           <p>Help welcome attendees, arrange refreshments, and support event coordination.</p>
-          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
+          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-translate"></i></div>
+          <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
           <h5>Language Support Session</h5>
-          <p class="text-muted mb-2">9 May 2026 · Online</p>
+          <div class="event-meta">
+            <span><i class="bi bi-calendar-event"></i>9 May 2026</span>
+            <span><i class="bi bi-clock"></i>6:00 PM – 8:00 PM</span>
+            <span><i class="bi bi-laptop"></i>Online</span>
+          </div>
           <p>Assist community members by providing basic language and digital support.</p>
-          <button class="btn btn-primary-green btn-sm">Register Interest</button>
+          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
+          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  document.querySelectorAll('.register-interest-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      button.textContent = 'Interest Registered';
+      button.classList.remove('btn-primary-green');
+      button.classList.add('btn-outline-success');
+      button.disabled = true;
+
+      const message = button.nextElementSibling;
+      if (message) {
+        message.style.display = 'block';
+      }
+    });
+  });
+
+  document.querySelectorAll('.event-filter').forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      document.querySelectorAll('.event-filter').forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+
+      document.querySelectorAll('.event-card').forEach(card => {
+        card.style.display = filter === 'All' || card.dataset.status === filter ? '' : 'none';
+      });
+    });
+  });
+</script>
 {% endblock %}
