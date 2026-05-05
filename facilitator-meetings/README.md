@@ -25,3 +25,20 @@ This folder contains Minutes of Meeting notes for facilitator meetings.
 - We contacted Rachel and received approval for an extension for Deliverable 1. We are currently working towards completing it within the revised timeline.
 - We have also emailed the client requesting necessary materials such as logos and other branding assets.
 - Regarding the source code, the client informed us that their existing website is built using Wix. As a result, there is no underlying source code or database available to share with us.
+
+### Meeting 03
+
+**Minutes of the Meeting**
+
+- The team provided an update on the current state of the website. All HTML pages, CSS styling, and foundational JavaScript have been completed. Chinese language integration is functional and the website is responsive across devices.
+- The facilitator recommended developing a client training manual to assist the client in managing website updates independently after project handoff.
+- An admin dashboard should be developed to allow the client to make content changes without technical knowledge.
+- Each team member should record individual hours worked per week (approximately 10 hours per week per person).
+- Remaining back-end tasks include login/signup database integration, payment integration, automated email confirmation, invoice generation, and input validation.
+- A follow-up email to be sent to Jayden (client's payment contact) as no response received. Matter to be escalated to facilitator if no reply.
+- Volunteer dashboard to be developed as a separate restricted portal with hours worked, upcoming events, and availability calendar.
+- Varun Suresh takes over as Project Coordinator. Aneesh and Harpreet lead back-end, Navdeep leads front-end, testing led by Varun and Neha.
+- A dedicated test branch will be created and a test suite set up to run automatically after each update.
+- D2 technical interview is a 10-minute one-on-one online session focused on individual contributions and skills applied.
+- Next client meeting scheduled for the following Monday.
+
