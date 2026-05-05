@@ -60,7 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { threshold: 0.1 });
-  animatedEls.forEach(el => observer.observe(el));
+  animatedEls.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('visible');
+    } else {
+      observer.observe(el);
+    }
+  });
 
 
   /* ── 5. Back to Top ────────────────────────────────────── */
