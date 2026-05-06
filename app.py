@@ -111,8 +111,22 @@ def news():
 def contact():
     return render_template("contact.html")
 
-@app.route("/donate")
+@app.route("/donate", methods=["GET", "POST"])
 def donate():
+    if request.method == "POST":
+        donor_name = request.form.get("donor_name")
+        donor_email = request.form.get("donor_email")
+        amount = request.form.get("amount")
+
+        donation_data = {
+            "donor_name": donor_name,
+            "donor_email": donor_email,
+            "amount": amount,
+            "status": "Successful"
+        }
+
+        return render_template("donation-success.html", donation=donation_data)
+
     return render_template("donate.html")
 
 @app.route("/set-language/<lang>")
@@ -234,7 +248,27 @@ def forgot_password():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    user = {
+        "name": "Neha",
+        "role": "volunteer"
+    }
+
+    upcoming_events = [
+        {
+            "title": "Community Food Drive",
+            "date": "12 April 2026",
+            "location": "Perth Community Centre",
+            "description": "Help distribute food packs to families in need."
+        },
+        {
+            "title": "Cultural Support Workshop",
+            "date": "18 April 2026",
+            "location": "Northbridge Hall",
+            "description": "Assist with workshop coordination and attendee support."
+        }
+    ]
+
+    return render_template("dashboard.html", user=user, upcoming_events=upcoming_events)
 
 if __name__ == "__main__":
     app.run(debug=True)
