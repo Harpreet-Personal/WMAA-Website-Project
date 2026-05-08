@@ -232,9 +232,43 @@ def verify_otp():
 def forgot_password():
     return render_template("forgot-password.html")
 
-@app.route("/dashboard")
+@app.route("/vol-dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    user = {
+
+        "name": session.get("user_name", "Volunteer"),
+
+        "role": session.get("user_role", "volunteer")
+
+    }
+
+    return render_template("vol-dashboard.html", user=user)
+
+@app.route("/volunteer-schedule")
+def volunteer_schedule():
+    return render_template("volunteer-schedule.html")
+
+@app.route("/volunteer-tasks")
+def volunteer_tasks():
+    return render_template("volunteer-tasks.html")
+
+@app.route("/volunteer-events")
+def volunteer_events():
+    return render_template("volunteer-events.html")
+
+@app.route("/volunteer-profile")
+def volunteer_profile():
+    user = {
+        "name": session.get("user_name", "Volunteer"),
+        "role": session.get("user_role", "volunteer"),
+        "email": session.get("user_email", "volunteer@email.com")
+    }
+    return render_template("volunteer-profile.html", user=user)
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("volunteer"))
 
 if __name__ == "__main__":
     app.run(debug=True)

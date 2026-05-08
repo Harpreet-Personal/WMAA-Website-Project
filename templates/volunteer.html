@@ -48,7 +48,7 @@
                   <a href="{{ url_for('forgot_password') }}" style="font-size:.85rem; color:var(--clr-primary);">Forgot password?</a>
                 </div>
                 <div class="col-12">
-                  <a href="{{ url_for('dashboard') }}" class="btn btn-primary-green w-100">Login <i class="bi bi-arrow-right ms-1"></i></a>
+                  <a href="/vol-dashboard" class="btn btn-primary-green w-100">Login <i class="bi bi-arrow-right ms-1"></i></a>
                 </div>
                 <div class="col-12 text-center" style="font-size:.85rem; color:var(--clr-muted);">
                   Don't have an account? <a href="#" onclick="showTab('signup')" style="color:var(--clr-primary); font-weight:600;">Sign up here</a>
@@ -136,7 +136,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="row g-4 align-items-start">
-        <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="https://static.wixstatic.com/media/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png/v1/fill/w_172,h_179,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/848b67_6e855971355b428b9e360cd85d651ff0~mv2.png" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">Join Us in Our Mission</p><p class="footer-small">Company Limited by Guarantee<br />ACNC Registered Charity</p></div>
+        <div class="col-lg-4"><div class="d-flex align-items-center gap-2 mb-3"><img src="{{ url_for('static', filename='images/wmaa-logo.png') }}" alt="WMAA" height="50" /><span class="footer-brand">WMAA</span></div><p class="footer-tagline">Join Us in Our Mission</p><p class="footer-small">Company Limited by Guarantee<br />ACNC Registered Charity</p></div>
         <div class="col-lg-2 col-6"><h6 class="footer-heading">Navigate</h6><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="stories.html">Our Stories</a></li><li><a href="events.html">Events</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
         <div class="col-lg-3 col-6"><h6 class="footer-heading">Services</h6><ul class="footer-links"><li><a href="services.html#crisis">Crisis Response</a></li><li><a href="services.html#mediation">Cultural Mediation</a></li><li><a href="services.html#housing">Housing Referrals</a></li><li><a href="services.html#fraud">Fraud Awareness</a></li><li><a href="services.html#health">Health Advocacy</a></li></ul></div>
         <div class="col-lg-3"><h6 class="footer-heading">Contact</h6><ul class="footer-links"><li><i class="bi bi-geo-alt"></i> 10 Lake Street, Northbridge, Perth WA</li><li><i class="bi bi-envelope"></i> <a href="mailto:admin@wmaacharity.com.au">admin@wmaacharity.com.au</a></li><li><i class="bi bi-telephone"></i> (61) 86555 7072</li></ul></div>

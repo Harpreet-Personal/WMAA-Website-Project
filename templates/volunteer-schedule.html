@@ -1,0 +1,416 @@
+{% set hide_public_nav = true %}
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.dashboard-sidebar { 
+  background: linear-gradient(180deg, #1f6f4a, #155d3b);
+  min-height: 100vh; 
+  padding: 30px 0; 
+  box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+}
+
+.sidebar-link { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  padding: 12px 24px; 
+  color: rgba(255,255,255,.75); 
+  font-size: .9rem; 
+  font-weight: 500; 
+  text-decoration: none; 
+  border-radius: 8px;
+  margin: 4px 12px;
+}
+
+.sidebar-link:hover, .sidebar-link.active { 
+  background: rgba(255,255,255,.15); 
+  color: #fff; 
+}
+
+.dashboard-card { 
+  background: #fff; 
+  border-radius: 16px; 
+  padding: 24px; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+}
+
+.calendar-day { 
+  min-height: 68px; 
+  border-radius: 10px; 
+  padding: 8px; 
+  background: #fff; 
+  border: 1px solid #edf0ed;
+  transition: all 0.2s ease;
+  font-size: .82rem;
+}
+
+.calendar-day.available { 
+  background: linear-gradient(135deg, #e8f5ee, #d6f0e3);
+  border-color: #1f6f4a;
+}
+
+.calendar-day:hover {
+  transform: scale(1.03);
+}
+
+.shift-option { 
+  border: 1px solid #dfe6df; 
+  background: #fff; 
+  border-radius: 999px; 
+  padding: 6px 14px; 
+  font-size: .82rem; 
+  color: #1f6f4a; 
+  cursor: pointer; 
+  transition: all 0.2s ease;
+}
+
+.shift-option:hover { 
+  background: #e8f5ee; 
+  border-color: #1f6f4a;
+}
+
+input, textarea {
+  border-radius: 10px !important;
+}
+
+.availability-message { 
+  display: none; 
+  border-radius: 10px; 
+  padding: 10px 12px; 
+  margin-top: 14px; 
+  background: #e8f5ee; 
+  color: #1f6f4a; 
+  font-size: .9rem; 
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table th {
+  background: #f8faf9;
+}
+
+.schedule-header {
+  background: linear-gradient(135deg, #1f6f4a, #2f8f61);
+  color: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 28px rgba(31,111,74,0.18);
+}
+
+.schedule-header .section-eyebrow,
+.schedule-header p {
+  color: rgba(255,255,255,0.82) !important;
+}
+
+.schedule-header h2 {
+  color: #fff;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(31,111,74,0.08);
+  right: -25px;
+  top: -25px;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #e8f5ee;
+  color: #1f6f4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 1.15rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-size: .78rem;
+  font-weight: 700;
+  color: #6c7b70;
+  text-transform: uppercase;
+}
+
+.calendar-day {
+  position: relative;
+}
+
+.calendar-day strong {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f7f9f8;
+  color: #1f6f4a;
+}
+
+.calendar-day.available strong {
+  background: #1f6f4a;
+  color: #fff;
+}
+
+.calendar-time {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: rgba(31,111,74,0.1);
+  color: #1f6f4a;
+  font-weight: 600;
+  font-size: .72rem;
+}
+
+.calendar-status {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #1f6f4a;
+}
+
+.timesheet-card {
+  height: auto;
+}
+
+.timesheet-card tbody tr:hover {
+  background: #f8faf9;
+}
+
+.schedule-layout {
+  display: grid;
+  grid-template-columns: 1.35fr .9fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.schedule-side-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.compact-table th,
+.compact-table td {
+  padding: .5rem .6rem;
+  font-size: .84rem;
+}
+
+.month-badge {
+  background: #e8f5ee;
+  color: #1f6f4a;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600;
+  font-size: .82rem;
+}
+</style>
+
+<div class="d-flex">
+  <div class="dashboard-sidebar" style="width:240px;">
+    <div class="px-4 mb-4 text-white">
+      <h5>{{ user.name if user else 'Volunteer' }}</h5>
+      <small>Volunteer</small>
+    </div>
+    <a href="{{ url_for('dashboard') }}" class="sidebar-link"><i class="bi bi-grid"></i> Dashboard</a>
+    <a href="/volunteer-schedule" class="sidebar-link active"><i class="bi bi-calendar-event"></i> My Schedule</a>
+    <a href="/volunteer-tasks" class="sidebar-link"><i class="bi bi-clock-history"></i> My Hours</a>
+    <a href="/volunteer-events" class="sidebar-link"><i class="bi bi-calendar-check"></i> Events</a>
+    <a href="/volunteer-profile" class="sidebar-link"><i class="bi bi-person"></i> My Profile</a>
+    <a href="{{ url_for('logout') }}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  </div>
+
+  <div style="flex:1; padding:40px 36px; background:#f7f9f8;">
+    <div class="schedule-header">
+      <p class="section-eyebrow mb-2">Volunteer Portal</p>
+      <h2 class="section-heading" style="margin-bottom:.5rem; font-weight:700;">My Schedule</h2>
+      <p class="mb-0">Set your availability, track your shifts, and review your volunteer hours in one place.</p>
+    </div>
+
+    <div class="schedule-layout">
+      <div>
+        <div class="dashboard-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">April Availability Calendar</h5>
+            <span class="month-badge">April 2026</span>
+          </div>
+
+          <div class="calendar-grid mb-2">
+            <div class="calendar-weekday">Mon</div>
+            <div class="calendar-weekday">Tue</div>
+            <div class="calendar-weekday">Wed</div>
+            <div class="calendar-weekday">Thu</div>
+            <div class="calendar-weekday">Fri</div>
+            <div class="calendar-weekday">Sat</div>
+            <div class="calendar-weekday">Sun</div>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="calendar-day"><strong>1</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>2</strong><br><small class="calendar-time">9am–1pm</small></div>
+            <div class="calendar-day"><strong>3</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>4</strong><br><small class="calendar-time">2pm–5pm</small></div>
+            <div class="calendar-day"><strong>5</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>6</strong><br><small class="calendar-time">10am–2pm</small></div>
+            <div class="calendar-day"><strong>7</strong></div>
+            <div class="calendar-day"><strong>8</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>9</strong><br><small class="calendar-time">12pm–4pm</small></div>
+            <div class="calendar-day"><strong>10</strong></div>
+            <div class="calendar-day"><strong>11</strong></div>
+            <div class="calendar-day"><strong>12</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>13</strong><br><small class="calendar-time">7am–3pm</small></div>
+            <div class="calendar-day"><strong>14</strong></div>
+            <div class="calendar-day"><strong>15</strong></div>
+            <div class="calendar-day"><strong>16</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>17</strong><br><small class="calendar-time">3pm–8pm</small></div>
+            <div class="calendar-day"><strong>18</strong></div>
+            <div class="calendar-day"><strong>19</strong></div>
+            <div class="calendar-day"><strong>20</strong></div>
+            <div class="calendar-day"><strong>21</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>22</strong><br><small class="calendar-time">9am–5pm</small></div>
+            <div class="calendar-day"><strong>23</strong></div>
+            <div class="calendar-day"><strong>24</strong></div>
+            <div class="calendar-day"><strong>25</strong></div>
+            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>26</strong><br><small class="calendar-time">10am–2pm</small></div>
+            <div class="calendar-day"><strong>27</strong></div>
+            <div class="calendar-day"><strong>28</strong></div>
+            <div class="calendar-day"><strong>29</strong></div>
+            <div class="calendar-day"><strong>30</strong></div>
+          </div>
+
+          <p class="text-muted mt-3 mb-0">
+            <i class="bi bi-info-circle me-1"></i>Green dates show selected availability.
+          </p>
+        </div>
+      </div>
+
+      <div class="schedule-side-stack">
+        <div class="dashboard-card">
+          <h5 class="mb-3" style="font-weight:600;">Add Availability</h5>
+
+          <form id="availabilityForm">
+            <div class="mb-3">
+              <label class="form-label">Available Date</label>
+              <input type="date" id="availabilityDate" class="form-control">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Quick Select</label>
+              <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="shift-option" data-start="07:00" data-end="15:00">AM Shift</button>
+                <button type="button" class="shift-option" data-start="15:00" data-end="23:00">PM Shift</button>
+                <button type="button" class="shift-option" data-start="12:00" data-end="20:00">Mid Shift</button>
+                <button type="button" class="shift-option" data-start="09:00" data-end="17:00">All Day</button>
+              </div>
+            </div>
+
+            <div class="row g-3 align-items-end">
+              <div class="col-md-4">
+                <label class="form-label">Start Time</label>
+                <input type="time" id="availabilityStart" class="form-control">
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">End Time</label>
+                <input type="time" id="availabilityEnd" class="form-control">
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Estimated Hours</label>
+                <input type="number" id="estimatedHours" class="form-control" placeholder="Auto" readonly>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Availability Notes</label>
+              <textarea class="form-control" rows="3" placeholder="Example: Available for food sorting or event setup."></textarea>
+            </div>
+
+            <button type="button" id="saveAvailabilityBtn" class="btn btn-primary-green w-100" style="border-radius:10px; padding:10px; font-weight:600;">
+              Save Availability <i class="bi bi-check ms-1"></i>
+            </button>
+            <div id="availabilityMessage" class="availability-message">
+              Availability saved for this session. Database sync will be connected once backend is ready.
+            </div>
+          </form>
+        </div>
+
+        <div class="dashboard-card">
+          <h5 class="mb-2">Past Volunteer Hours</h5>
+          <p class="text-muted">View your completed volunteering hours, approval status, and activity history on the My Hours page.</p>
+          <a href="/volunteer-tasks" class="btn btn-outline-success w-100" style="border-radius:10px; padding:10px; font-weight:600;">
+            View My Hours <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const startInput = document.getElementById('availabilityStart');
+  const endInput = document.getElementById('availabilityEnd');
+  const hoursInput = document.getElementById('estimatedHours');
+  const message = document.getElementById('availabilityMessage');
+  const dateInput = document.getElementById('availabilityDate');
+
+  function calculateHours() {
+    if (!startInput.value || !endInput.value) return;
+
+    const [startHour, startMinute] = startInput.value.split(':').map(Number);
+    const [endHour, endMinute] = endInput.value.split(':').map(Number);
+
+    let start = startHour + startMinute / 60;
+    let end = endHour + endMinute / 60;
+
+    if (end < start) {
+      end += 24;
+    }
+
+    hoursInput.value = Math.max(end - start, 0).toFixed(1);
+  }
+
+  document.querySelectorAll('.shift-option').forEach(button => {
+    button.addEventListener('click', () => {
+      startInput.value = button.dataset.start;
+      endInput.value = button.dataset.end;
+      calculateHours();
+    });
+  });
+
+  startInput.addEventListener('change', calculateHours);
+  endInput.addEventListener('change', calculateHours);
+
+  document.getElementById('saveAvailabilityBtn').addEventListener('click', () => {
+    calculateHours();
+    message.style.display = 'block';
+  });
+</script>
+{% endblock %}
