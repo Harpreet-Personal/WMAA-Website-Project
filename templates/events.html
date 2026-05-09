@@ -19,57 +19,100 @@
       </div>
     </div>
 
+    <!-- ── UPCOMING EVENTS (from DB) ───────────────────────────────────────── -->
     <h4 class="mb-4 fw-semibold" style="color:var(--clr-primary)">{{ _('Upcoming Events') }}</h4>
-    <div class="row g-4 mb-5">
-      <div class="col-md-6" data-animate="fade-up" data-delay="0">
-        <div class="event-card-full">
-          <div class="event-date-block"><span class="event-day">TBD</span><span class="event-month">2025</span></div>
-          <div class="event-info-full">
-            <span class="news-tag">{{ _('Fundraiser') }}</span>
-            <h5>{{ _('Event Name Here') }}</h5>
-            <p class="mb-1"><i class="bi bi-clock"></i> {{ _('Time TBD') }}</p>
-            <p class="mb-1"><i class="bi bi-geo-alt"></i> {{ _('Venue, Perth WA') }}</p>
-            <p class="mb-3">{{ _('Short description of the event and what attendees can expect.') }}</p>
-            <a href="{{ url_for('contact') }}" class="btn btn-primary-green btn-sm">{{ _('Register Interest') }} <i class="bi bi-arrow-right ms-1"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6" data-animate="fade-up" data-delay="100">
-        <div class="event-card-full">
-          <div class="event-date-block"><span class="event-day">TBD</span><span class="event-month">2025</span></div>
-          <div class="event-info-full">
-            <span class="news-tag">{{ _('Community') }}</span>
-            <h5>{{ _('Event Name Here') }}</h5>
-            <p class="mb-1"><i class="bi bi-clock"></i> {{ _('Time TBD') }}</p>
-            <p class="mb-1"><i class="bi bi-geo-alt"></i> {{ _('Venue, Perth WA') }}</p>
-            <p class="mb-3">{{ _('Short description of the event.') }}</p>
-            <a href="{{ url_for('contact') }}" class="btn btn-primary-green btn-sm">{{ _('Register Interest') }} <i class="bi bi-arrow-right ms-1"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
 
+    {% if upcoming_events %}
+      <div class="row g-4 mb-5">
+        {% for event in upcoming_events %}
+        <div class="col-md-6" data-animate="fade-up" data-delay="{{ loop.index0 * 100 }}">
+          <div class="event-card-full">
+
+            {% if event.image_url %}
+              <img src="{{ event.image_url }}" alt="{{ event.title }}"
+                   style="width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0;" />
+            {% endif %}
+
+            {% set date_parts = event.date.split('-') if event.date else [] %}
+            <div class="event-date-block">
+              <span class="event-day">{{ date_parts[2] if date_parts|length == 3 else 'TBD' }}</span>
+              <span class="event-month">
+                {% if date_parts|length == 3 %}
+                  {% set months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %}
+                  {{ months[date_parts[1]|int] }} {{ date_parts[0] }}
+                {% else %}
+                  TBD
+                {% endif %}
+              </span>
+            </div>
+
+            <div class="event-info-full">
+              <span class="news-tag">{{ event.category | default('Event') }}</span>
+              <h5>{{ event.title }}</h5>
+              {% if event.time %}
+                <p class="mb-1"><i class="bi bi-clock"></i> {{ event.time }}</p>
+              {% endif %}
+              {% if event.location %}
+                <p class="mb-1"><i class="bi bi-geo-alt"></i> {{ event.location }}</p>
+              {% endif %}
+              {% if event.description %}
+                <p class="mb-3">{{ event.description }}</p>
+              {% endif %}
+              <a href="{{ url_for('contact') }}" class="btn btn-primary-green btn-sm">
+                {{ _('Register Interest') }} <i class="bi bi-arrow-right ms-1"></i>
+              </a>
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <div class="mb-5">
+        <p style="color:#6c7b70;">{{ _('No upcoming events at this time. Please check back soon.') }}</p>
+      </div>
+    {% endif %}
+
+    <!-- ── PAST EVENTS (from DB) ───────────────────────────────────────────── -->
     <h4 class="mb-4 fw-semibold" style="color:var(--clr-primary)">{{ _('Past Events') }}</h4>
-    <div class="row g-4">
-      <div class="col-md-4" data-animate="fade-up" data-delay="0">
-        <div class="news-card past-event">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body"><span class="news-tag past">{{ _('Past Event') }}</span><h6>{{ _('Event Name Here') }}</h6><p>{{ _('A short recap of a past fundraising event.') }}</p></div>
+
+    {% if past_events %}
+      <div class="row g-4">
+        {% for event in past_events %}
+        <div class="col-md-4" data-animate="fade-up" data-delay="{{ loop.index0 * 100 }}">
+          <div class="news-card past-event">
+
+            {% if event.image_url %}
+              <img src="{{ event.image_url }}" alt="{{ event.title }}"
+                   style="width:100%; height:160px; object-fit:cover;" />
+            {% else %}
+              <div class="news-img-placeholder"></div>
+            {% endif %}
+
+            <div class="news-body">
+              <span class="news-tag past">{{ _('Past Event') }}</span>
+              <h6>{{ event.title }}</h6>
+              {% if event.date %}
+                <p class="mb-1" style="font-size:.82rem; color:#6c7b70;">
+                  <i class="bi bi-calendar3"></i> {{ event.date }}
+                  {% if event.location %} &nbsp;·&nbsp; <i class="bi bi-geo-alt"></i> {{ event.location }}{% endif %}
+                </p>
+              {% endif %}
+              {% if event.description %}
+                <p>{{ event.description | truncate(120) }}</p>
+              {% endif %}
+            </div>
+
+          </div>
         </div>
+        {% endfor %}
       </div>
-      <div class="col-md-4" data-animate="fade-up" data-delay="100">
-        <div class="news-card past-event">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body"><span class="news-tag past">{{ _('Past Event') }}</span><h6>{{ _('Event Name Here') }}</h6><p>{{ _('A short recap of a past fundraising event.') }}</p></div>
-        </div>
-      </div>
-      <div class="col-md-4" data-animate="fade-up" data-delay="200">
-        <div class="news-card past-event">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body"><span class="news-tag past">{{ _('Past Event') }}</span><h6>{{ _('Event Name Here') }}</h6><p>{{ _('A short recap of a past fundraising event.') }}</p></div>
-        </div>
-      </div>
-    </div>
+
+    {% else %}
+      <p style="color:#6c7b70;">{{ _('No past events to display yet.') }}</p>
+    {% endif %}
+
   </div>
 </section>
 

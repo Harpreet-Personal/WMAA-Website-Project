@@ -1,0 +1,61 @@
+{% set hide_public_nav = true %}
+{% extends "base.html" %}
+{#
+  BACKEND: GET/POST /admin/login
+  Pass on error: error (str). On success: redirect to /admin/dashboard.
+#}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-login-wrap">
+  <div class="d-flex flex-column align-items-center">
+
+    <div class="admin-login-card text-center">
+      <div class="admin-login-logo">
+        <img src="{{ url_for('static', filename='images/wmaa-logo.png') }}" alt="WMAA" />
+      </div>
+      <span class="admin-pill">Website Admin</span>
+      <h1 class="admin-login-title">Admin Portal</h1>
+      <p class="admin-login-sub">Sign in to manage the WMAA website</p>
+
+      {% if error %}
+      <div class="alert alert-danger d-flex align-items-center gap-2 mb-3 text-start" style="border-radius:12px; font-size:.88rem;">
+        <i class="bi bi-exclamation-circle-fill flex-shrink-0"></i>
+        <span>{{ error }}</span>
+      </div>
+      {% endif %}
+
+      <form method="POST" action="/admin/login" novalidate>
+        <div class="mb-3 text-start">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-control" placeholder="admin@wmaacharity.com.au" required autofocus />
+        </div>
+        <div class="mb-4 text-start">
+          <label class="form-label">Password</label>
+          <div class="pw-wrap">
+            <input type="password" name="password" id="pwInput" class="form-control" placeholder="Enter your password" required />
+            <button type="button" class="pw-toggle" onclick="togglePw()">
+              <i class="bi bi-eye" id="pwIcon"></i>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="btn-admin-signin">
+          <i class="bi bi-shield-lock"></i> Sign In Securely
+        </button>
+      </form>
+    </div>
+
+    <a href="/" class="admin-back">
+      <i class="bi bi-arrow-left"></i> Back to main website
+    </a>
+
+  </div>
+</div>
+{% endblock %}

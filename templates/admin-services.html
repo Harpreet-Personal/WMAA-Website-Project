@@ -1,0 +1,106 @@
+{% set hide_public_nav = true %}
+{% set active_page = 'services' %}
+{% extends "base.html" %}
+{# BACKEND: GET /admin/services → pass services (list of 6), admin_name
+   POST /admin/services/<id>/save → save edits, redirect back
+   Each service: id, slug, icon, title, label, short_description, long_description, detail_items (list) #}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+  {% include 'admin-sidebar.html' %}
+
+  <div class="admin-main">
+
+    <div class="admin-page-header">
+      <div class="eyebrow">Content Management</div>
+      <h2>Services</h2>
+      <p>Edit the descriptions and bullet points for each of WMAA's six services.</p>
+    </div>
+
+    {% if success %}
+    <div class="alert alert-success d-flex align-items-center gap-2 mb-4" style="border-radius:14px;">
+      <i class="bi bi-check-circle-fill"></i> Service updated successfully.
+    </div>
+    {% endif %}
+
+    {% set default_services = [
+      {'id':1,'slug':'crisis','icon':'bi bi-alarm','label':'Crisis Response & Emergency Support'},
+      {'id':2,'slug':'mediation','icon':'bi bi-chat-dots','label':'Cultural Mediation & Family Liaison'},
+      {'id':3,'slug':'housing','icon':'bi bi-house-heart','label':'Temporary Accommodation Referrals'},
+      {'id':4,'slug':'fraud','icon':'bi bi-shield-check','label':'Anti-Fraud & Safety Awareness'},
+      {'id':5,'slug':'health','icon':'bi bi-heart-pulse','label':'Health & Welfare Advocacy'},
+      {'id':6,'slug':'sustainability','icon':'bi bi-tree','label':'Sustainability'}
+    ] %}
+
+    {% set service_list = services if services else default_services %}
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      {% for svc in service_list %}
+      <div class="admin-card" style="border-left:4px solid #1f6f4a; padding:0; overflow:hidden; margin-bottom:0;">
+
+        <button class="accordion-btn d-flex align-items-center gap-3 w-100 text-start"
+          style="background:none; border:none; padding:20px 24px; cursor:pointer;"
+          data-target="svc-{{ svc.slug | default(loop.index) }}">
+          <div style="width:40px; height:40px; background:#e8f5ee; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#1f6f4a; font-size:1.1rem; flex-shrink:0;">
+            <i class="{{ svc.icon | default('bi bi-circle') }}"></i>
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:700; color:#1a2e20; font-size:.95rem;">{{ svc.label | default(svc.title) }}</div>
+            <div style="font-size:.8rem; color:#6c7b70;">Click to expand and edit</div>
+          </div>
+          <i class="bi bi-chevron-down chevron-icon" style="color:#1f6f4a; font-size:.9rem;"></i>
+        </button>
+
+        <div id="svc-{{ svc.slug | default(loop.index) }}" style="display:none; border-top:1px solid #e8f5ee;">
+          <form method="POST" action="/admin/services/{{ svc.id }}/save" style="padding:24px;">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Service Title</label>
+                <input type="text" name="title" class="form-control" value="{{ svc.title | default(svc.label | default('')) }}" placeholder="Service name" />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Short Description <span style="color:#6c7b70; font-weight:400;">— shown on the home page service cards</span></label>
+                <textarea name="short_description" class="form-control" rows="2" placeholder="One short sentence about what this service does…">{{ svc.short_description | default('') }}</textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Full Description <span style="color:#6c7b70; font-weight:400;">— shown on the Services page (can be 2 paragraphs)</span></label>
+                <textarea name="long_description" class="form-control" rows="5" placeholder="Detailed description of this service…">{{ svc.long_description | default('') }}</textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Key Points <span style="color:#6c7b70; font-weight:400;">— the 5 bullet points shown on the right side of the service section</span></label>
+                {% for i in range(5) %}
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span style="width:24px; height:24px; background:#e8f5ee; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#1f6f4a; font-size:.7rem; font-weight:700; flex-shrink:0;">{{ i+1 }}</span>
+                  <input type="text" name="detail_item_{{ i+1 }}" class="form-control"
+                    placeholder="e.g. 24/7 emergency referral support"
+                    value="{{ svc.detail_items[i] if svc.detail_items is defined and svc.detail_items|length > i else '' }}" />
+                </div>
+                {% endfor %}
+              </div>
+              <div class="col-12 d-flex justify-content-end gap-2">
+                <a href="/services#{{ svc.slug | default('') }}" target="_blank" class="btn-admin-outline">
+                  <i class="bi bi-eye"></i> Preview
+                </a>
+                <button type="submit" class="btn-admin-primary">
+                  <i class="bi bi-check-lg"></i> Save Service
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

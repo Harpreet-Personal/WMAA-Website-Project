@@ -1,0 +1,126 @@
+{% set hide_public_nav = true %}
+{% set active_page = 'donations' %}
+{% extends "base.html" %}
+{# BACKEND: GET /admin/donations → pass payments (list), totals{total_amount,month_amount,total_completed,total_pending}, admin_name
+   Each payment: payment_id, user_name, user_email, amount, payment_method, payment_status, payment_date, invoice_reference #}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+  {% include 'admin-sidebar.html' %}
+
+  <div class="admin-main">
+
+    <div class="admin-page-header">
+      <div class="eyebrow">People Management</div>
+      <h2>Donation Records</h2>
+      <p>A complete read-only record of all donations received through the website.</p>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-heart-fill"></i></div>
+          <div class="admin-stat-num" style="font-size:1.5rem;">{{ totals.total_amount | default('$0') }}</div>
+          <div class="admin-stat-label">Total Donations Received</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background:#e0f0ff; color:#1a5fa0;"><i class="bi bi-calendar-month"></i></div>
+          <div class="admin-stat-num" style="font-size:1.5rem; color:#1a5fa0;">{{ totals.month_amount | default('$0') }}</div>
+          <div class="admin-stat-label">This Month</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-check-circle-fill"></i></div>
+          <div class="admin-stat-num">{{ totals.total_completed | default('0') }}</div>
+          <div class="admin-stat-label">Completed Donations</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background:#fff4d8; color:#8a6100;"><i class="bi bi-hourglass-split"></i></div>
+          <div class="admin-stat-num" style="color:#8a6100;">{{ totals.total_pending | default('0') }}</div>
+          <div class="admin-stat-label">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card mb-4" style="padding:16px 24px;">
+      <div class="d-flex flex-wrap gap-3 align-items-center">
+        <div class="search-wrap flex-grow-1" style="max-width:360px;">
+          <i class="bi bi-search"></i>
+          <input type="text" class="admin-search form-control" placeholder="Search donor name or invoice…" oninput="filterTable('donationsBody', this.value)" />
+        </div>
+        <div class="d-flex gap-2">
+          <button class="filter-btn active" onclick="filterByStatus('all', this)">All</button>
+          <button class="filter-btn" onclick="filterByStatus('completed', this)">Completed</button>
+          <button class="filter-btn" onclick="filterByStatus('pending', this)">Pending</button>
+          <button class="filter-btn" onclick="filterByStatus('failed', this)">Failed</button>
+        </div>
+        <button class="btn-admin-outline" onclick="exportCSV()" style="margin-left:auto;">
+          <i class="bi bi-download"></i> Export CSV
+        </button>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="table-responsive">
+        <table class="admin-table" id="donationsTable">
+          <thead>
+            <tr><th>#</th><th>Donor</th><th>Amount</th><th>Method</th><th>Date</th><th>Invoice</th><th>Status</th></tr>
+          </thead>
+          <tbody id="donationsBody">
+            {% if payments %}
+              {% for p in payments %}
+              <tr data-status="{{ p.payment_status }}">
+                <td style="color:#6c7b70; font-size:.82rem;">{{ p.payment_id }}</td>
+                <td>
+                  <div style="font-weight:600; color:#1a2e20;">{{ p.user_name | default('Anonymous') }}</div>
+                  <div style="font-size:.8rem; color:#6c7b70;">{{ p.user_email | default('—') }}</div>
+                </td>
+                <td style="font-weight:800; color:#1f6f4a; font-size:1rem;">${{ p.amount }}</td>
+                <td>
+                  <span style="background:#f0f4f1; color:#4a6050; border-radius:8px; padding:3px 10px; font-size:.78rem; font-weight:600;">
+                    {{ p.payment_method | title }}
+                  </span>
+                </td>
+                <td style="font-size:.82rem; color:#6c7b70; white-space:nowrap;">{{ p.payment_date | default('—') }}</td>
+                <td style="font-size:.82rem; color:#6c7b70;">
+                  {% if p.invoice_reference %}
+                    <code style="background:#f0f4f1; padding:2px 8px; border-radius:6px; font-size:.78rem;">{{ p.invoice_reference }}</code>
+                  {% else %}
+                    <span style="color:#a0b4a0;">—</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if p.payment_status == 'completed' %}<span class="badge-active">Completed</span>
+                  {% elif p.payment_status == 'pending' %}<span class="badge-pending">Pending</span>
+                  {% elif p.payment_status == 'failed' %}<span class="badge-inactive">Failed</span>
+                  {% else %}<span class="badge-past">{{ p.payment_status | title }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr><td colspan="7">
+                <div class="admin-empty"><i class="bi bi-heart"></i><h6>No donations recorded yet</h6><p style="font-size:.85rem;">Donations will appear here once the payment system is connected.</p></div>
+              </td></tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

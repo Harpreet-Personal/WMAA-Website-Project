@@ -1,0 +1,126 @@
+{% set hide_public_nav = true %}
+{% set active_page = 'volunteers' %}
+{% extends "base.html" %}
+{# BACKEND: GET /admin/volunteers → pass volunteers (list), counts{total,active,pending}, admin_name
+   POST /admin/volunteers/<id>/approve | /deactivate | /delete #}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+  {% include 'admin-sidebar.html' %}
+
+  <div class="admin-main">
+
+    <div class="admin-page-header">
+      <div class="eyebrow">People Management</div>
+      <h2>Volunteers</h2>
+      <p>View everyone who has registered to volunteer, approve new accounts, or remove inactive ones.</p>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-sm-4">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-people-fill"></i></div>
+          <div class="admin-stat-num">{{ counts.total | default('—') }}</div>
+          <div class="admin-stat-label">Total Volunteers</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-check-circle-fill"></i></div>
+          <div class="admin-stat-num" style="color:#1f6f4a;">{{ counts.active | default('—') }}</div>
+          <div class="admin-stat-label">Active</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon" style="background:#fff4d8; color:#8a6100;"><i class="bi bi-hourglass-split"></i></div>
+          <div class="admin-stat-num" style="color:#8a6100;">{{ counts.pending | default('—') }}</div>
+          <div class="admin-stat-label">Pending Review</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card mb-4" style="padding:16px 24px;">
+      <div class="d-flex flex-wrap gap-3 align-items-center">
+        <div class="search-wrap flex-grow-1" style="max-width:360px;">
+          <i class="bi bi-search"></i>
+          <input type="text" class="admin-search form-control" placeholder="Search by name or email…" oninput="filterTable('volsBody', this.value)" />
+        </div>
+        <div class="d-flex gap-2">
+          <button class="filter-btn active" onclick="filterByStatus('all', this)">All</button>
+          <button class="filter-btn" onclick="filterByStatus('active', this)">Active</button>
+          <button class="filter-btn" onclick="filterByStatus('pending', this)">Pending</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr><th>#</th><th>Volunteer</th><th>Phone</th><th>Area of Interest</th><th>Registered</th><th>Status</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="volsBody">
+            {% if volunteers %}
+              {% for vol in volunteers %}
+              <tr data-status="{{ 'active' if vol.is_active else 'pending' }}">
+                <td style="color:#6c7b70; font-size:.82rem;">{{ loop.index }}</td>
+                <td>
+                  <div style="font-weight:600; color:#1a2e20;">{{ vol.full_name }}</div>
+                  <div style="font-size:.8rem; color:#6c7b70;">{{ vol.email }}</div>
+                </td>
+                <td style="font-size:.85rem; color:#4a6050;">{{ vol.phone_number | default('—') }}</td>
+                <td>
+                  {% if vol.availability %}
+                    <span class="badge-active" style="font-size:.72rem;">{{ vol.availability }}</span>
+                  {% else %}
+                    <span style="color:#a0b4a0; font-size:.82rem;">Not specified</span>
+                  {% endif %}
+                </td>
+                <td style="font-size:.82rem; color:#6c7b70; white-space:nowrap;">{{ vol.created_at | default('—') }}</td>
+                <td>
+                  {% if vol.is_active %}
+                    <span class="badge-active">Active</span>
+                  {% else %}
+                    <span class="badge-pending">Pending</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <div class="d-flex flex-wrap gap-2">
+                    {% if not vol.is_active %}
+                      <form method="POST" action="/admin/volunteers/{{ vol.id }}/approve">
+                        <button type="submit" class="btn-approve"><i class="bi bi-check-lg"></i> Approve</button>
+                      </form>
+                    {% else %}
+                      <form method="POST" action="/admin/volunteers/{{ vol.id }}/deactivate">
+                        <button type="submit" class="btn-reject"><i class="bi bi-pause"></i> Deactivate</button>
+                      </form>
+                    {% endif %}
+                    <form method="POST" action="/admin/volunteers/{{ vol.id }}/delete" onsubmit="return confirmDelete('{{ vol.full_name }}')">
+                      <button type="submit" class="btn-delete"><i class="bi bi-trash"></i></button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr><td colspan="7">
+                <div class="admin-empty"><i class="bi bi-people"></i><h6>No volunteers registered yet</h6><p style="font-size:.85rem;">Volunteers will appear here after they sign up through the website.</p></div>
+              </td></tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
