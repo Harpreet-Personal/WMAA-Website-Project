@@ -269,8 +269,9 @@ def volunteer_tasks():
 
 @app.route("/volunteer-events")
 def volunteer_events():
-    user = {"name": session.get("user_name", "Volunteer")}
-    return render_template("volunteer-events.html", user=user)
+    user    = {"name": session.get("user_name", "Volunteer")}
+    events  = Event.query.filter_by(event_type="upcoming").order_by(Event.date).all()
+    return render_template("volunteer-events.html", user=user, events=events)
 
 
 @app.route("/volunteer-profile")
