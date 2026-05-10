@@ -2,9 +2,14 @@
     <div class="container">
       
       <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home') }}">
-        <img src="{{ url_for('static', filename='images/wmaa-logo.png') }}" alt="WMAA" height="55" />
+        <img 
+          src="{{ url_for('static', filename='images/wmaa-logo.png') }}" 
+          alt="WMAA"
+          height="55"
+          style="background:white; padding:6px 10px; border-radius:10px;"
+        >
         <div class="brand-wrap">
-           <span class="brand-text">WMAA</span>
+          <span class="brand-text">WMAA</span>
           <span class="brand-fullname">WA Multicultural Assistance Alliance</span>
         </div>
       </a>
