@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 100px auto; padding: 20px;">
+  <h2>Email Verification</h2>
+  <p>A 6-digit code has been sent to your email. Enter it below to activate your account.</p>
+
+  {% if error %}
+  <p style="color: red;">{{ error }}</p>
+  {% endif %}
+
+  <form method="POST" action="{{ url_for('verify_otp') }}">
+    <div>
+      <label for="otp">Verification Code</label><br />
+      <input type="text" id="otp" name="otp" maxlength="6" placeholder="Enter 6-digit code" required autofocus />
+    </div>
+    <br />
+    <button type="submit">Verify & Create Account</button>
+  </form>
+
+  <br />
+  <p><a href="{{ url_for('volunteer') }}">Go back and try again</a></p>
+</div>
+{% endblock %}

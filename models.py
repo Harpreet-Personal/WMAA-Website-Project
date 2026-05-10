@@ -1,12 +1,26 @@
 import re
 from flask_sqlalchemy import SQLAlchemy
+
+# UserMixin provides default implementations required by Flask-Login
+# (is_authenticated, is_active, is_anonymous, get_id)
+from flask_login import UserMixin
+
 from sqlalchemy import func
 from sqlalchemy.orm import validates
 
+# Werkzeug utilities for securely hashing and verifying passwords
+from werkzeug.security import generate_password_hash, check_password_hash
+
+# Shared SQLAlchemy instance — initialised in app.py via db.init_app(app)
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
+    """
+    User model representing all registered accounts.
+    Roles: 'volunteer', 'donor', 'admin'
+    Password is never stored in plain text — only the hash is saved.
+    """
     __tablename__ = "users"
 
     VALID_ROLES = {"donor", "volunteer", "admin"}
@@ -18,11 +32,28 @@ class User(db.Model):
     role = db.Column(db.String(20), nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
+
+    # Tracks when the user last logged in — updated on each successful login
+    last_login = db.Column(db.DateTime, nullable=True)
+
+    # Stores volunteer's selected area of interest from the signup form
     availability = db.Column(db.String(255), nullable=True)
+
     date_of_birth = db.Column(db.Date, nullable=True)
+
+    # Soft-delete flag — set to False to deactivate without deleting the record
     is_active = db.Column(db.Boolean, default=True, nullable=False)
 
+    # One user can have many payments; deleting a user cascades to their payments
     payments = db.relationship("Payment", backref="user", lazy=True, cascade="all, delete-orphan")
+
+    def set_password(self, password):
+        # Hashes the plain-text password and stores it — called during signup
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        # Verifies a plain-text password against the stored hash — called during login
+        return check_password_hash(self.password_hash, password)
 
     @validates("role")
     def validate_role(self, key, value):
@@ -41,6 +72,9 @@ class User(db.Model):
 
 
 class Payment(db.Model):
+    """
+    Payment model for tracking donations and transactions linked to users.
+    """
     __tablename__ = "payments"
 
     VALID_STATUSES = {"pending", "completed", "failed", "refunded"}
