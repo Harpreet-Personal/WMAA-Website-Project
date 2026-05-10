@@ -19,78 +19,33 @@
     </div>
 
     <div class="row g-4" id="newsGrid">
-      <div class="col-md-6 col-lg-4 news-item" data-category="community" data-animate="fade-up" data-delay="0">
-        <div class="news-card">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body">
-            <span class="news-tag">{{ _('Community') }}</span>
-            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
-            <h6>{{ _('News Article Title Here') }}</h6>
-            <p>{{ _('Short excerpt from the article.') }}</p>
-            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
+      {% if news_articles %}
+        {% for article in news_articles %}
+        <div class="col-md-6 col-lg-4 news-item" data-category="{{ article.category | lower }}" data-animate="fade-up" data-delay="{{ loop.index0 % 3 * 100 }}">
+          <div class="news-card">
+            {% if article.image_url %}
+  <img src="{{ article.image_url }}" alt="{{ article.title }}"
+       style="width:100%; height:180px; object-fit:cover;" />
+{% else %}
+  <div style="width:100%; height:120px; background:linear-gradient(135deg, #1f6f4a, #2f8f61); border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:center;">
+    <i class="bi bi-newspaper" style="font-size:2rem; color:rgba(255,255,255,0.5);"></i>
+  </div>
+{% endif %}
+            <div class="news-body">
+              <span class="news-tag">{{ article.category | title }}</span>
+              <p class="news-date"><i class="bi bi-calendar3"></i> {{ article.date | default('') }}</p>
+              <h6>{{ article.title }}</h6>
+              <p>{{ article.excerpt | default('') }}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-6 col-lg-4 news-item" data-category="events" data-animate="fade-up" data-delay="100">
-        <div class="news-card">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body">
-            <span class="news-tag">{{ _('Events') }}</span>
-            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
-            <h6>{{ _('News Article Title Here') }}</h6>
-            <p>{{ _('Short excerpt from the article.') }}</p>
-            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
-          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center py-5" style="color:#6c7b70;">
+          <i class="bi bi-newspaper" style="font-size:2.5rem; display:block; margin-bottom:12px;"></i>
+          <p>{{ _('No news articles published yet. Check back soon.') }}</p>
         </div>
-      </div>
-      <div class="col-md-6 col-lg-4 news-item" data-category="announcement" data-animate="fade-up" data-delay="200">
-        <div class="news-card">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body">
-            <span class="news-tag">{{ _('Announcement') }}</span>
-            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
-            <h6>{{ _('News Article Title Here') }}</h6>
-            <p>{{ _('Short excerpt from the article.') }}</p>
-            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 news-item" data-category="community" data-animate="fade-up" data-delay="0">
-        <div class="news-card">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body">
-            <span class="news-tag">{{ _('Community') }}</span>
-            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
-            <h6>{{ _('News Article Title Here') }}</h6>
-            <p>{{ _('Short excerpt from the article.') }}</p>
-            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 news-item" data-category="announcement" data-animate="fade-up" data-delay="100">
-        <div class="news-card">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body">
-            <span class="news-tag">{{ _('Announcement') }}</span>
-            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
-            <h6>{{ _('News Article Title Here') }}</h6>
-            <p>{{ _('Short excerpt from the article.') }}</p>
-            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 news-item" data-category="events" data-animate="fade-up" data-delay="200">
-        <div class="news-card">
-          <div class="news-img-placeholder"></div>
-          <div class="news-body">
-            <span class="news-tag">{{ _('Events') }}</span>
-            <p class="news-date"><i class="bi bi-calendar3"></i> {{ _('Date Here') }}</p>
-            <h6>{{ _('News Article Title Here') }}</h6>
-            <p>{{ _('Short excerpt from the article.') }}</p>
-            <a href="#" class="story-link">{{ _('Read More') }} <i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 </section>

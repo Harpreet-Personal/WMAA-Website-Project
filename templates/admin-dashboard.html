@@ -1,0 +1,166 @@
+{% set hide_public_nav = true %}
+{% set active_page = 'dashboard' %}
+{% extends "base.html" %}
+{#
+  BACKEND: GET /admin/dashboard
+  Pass: admin_name, stats{total_events, total_news, total_stories,
+        total_volunteers, pending_volunteers, total_donations},
+        recent_volunteers (list), recent_payments (list)
+#}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+  {% include 'admin-sidebar.html' %}
+
+  <div class="admin-main">
+
+    <div class="admin-page-header">
+      <div class="eyebrow">Admin Portal</div>
+      <h2>Dashboard</h2>
+      <p>Welcome back, {{ admin_name | default('Administrator') }}. Here's a quick snapshot of your website.</p>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-calendar-event-fill"></i></div>
+          <div class="admin-stat-num">{{ stats.total_events | default('—') }}</div>
+          <div class="admin-stat-label">Total Events</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-newspaper"></i></div>
+          <div class="admin-stat-num">{{ stats.total_news | default('—') }}</div>
+          <div class="admin-stat-label">News Articles</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-people-fill"></i></div>
+          <div class="admin-stat-num">{{ stats.total_volunteers | default('—') }}</div>
+          <div class="admin-stat-label">
+            Volunteers
+            <span class="badge-pending ms-1" style="font-size:.68rem;">{{ stats.pending_volunteers | default(0) }} pending</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon"><i class="bi bi-heart-fill"></i></div>
+          <div class="admin-stat-num" style="font-size:1.5rem;">{{ stats.total_donations | default('—') }}</div>
+          <div class="admin-stat-label">Total Donations</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="admin-card mb-4">
+      <h5 class="admin-card-title mb-3">Quick Actions</h5>
+      <div class="d-flex flex-wrap gap-3">
+        <a href="/admin/events"      class="btn-admin-primary"><i class="bi bi-plus-circle"></i> Add New Event</a>
+        <a href="/admin/news"        class="btn-admin-primary"><i class="bi bi-plus-circle"></i> Add News Article</a>
+        <a href="/admin/stories"     class="btn-admin-primary"><i class="bi bi-plus-circle"></i> Add a Story</a>
+        <a href="/admin/volunteers"  class="btn-admin-outline"><i class="bi bi-people"></i> Review Volunteers</a>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row g-4">
+
+      <!-- Recent Volunteers -->
+      <div class="col-lg-6">
+        <div class="admin-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="admin-card-title">Recent Volunteers</h5>
+            <a href="/admin/volunteers" class="btn-admin-outline" style="padding:6px 14px; font-size:.8rem;">View All</a>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Name</th><th>Joined</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                {% if recent_volunteers %}
+                  {% for v in recent_volunteers %}
+                  <tr>
+                    <td>
+                      <div style="font-weight:600; color:#1a2e20;">{{ v.full_name }}</div>
+                      <div style="font-size:.8rem; color:#6c7b70;">{{ v.email }}</div>
+                    </td>
+                    <td style="color:#6c7b70; font-size:.84rem;">{{ v.created_at | default('—') }}</td>
+                    <td>
+                      {% if v.is_active %}
+                        <span class="badge-active">Active</span>
+                      {% else %}
+                        <span class="badge-pending">Pending</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr><td colspan="3">
+                    <div class="admin-empty"><i class="bi bi-people"></i><h6>No volunteers yet</h6></div>
+                  </td></tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Donations -->
+      <div class="col-lg-6">
+        <div class="admin-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="admin-card-title">Recent Donations</h5>
+            <a href="/admin/donations" class="btn-admin-outline" style="padding:6px 14px; font-size:.8rem;">View All</a>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr><th>Donor</th><th>Amount</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                {% if recent_payments %}
+                  {% for p in recent_payments %}
+                  <tr>
+                    <td>
+                      <div style="font-weight:600; color:#1a2e20;">{{ p.user_name | default('Anonymous') }}</div>
+                      <div style="font-size:.8rem; color:#6c7b70;">{{ p.payment_date | default('—') }}</div>
+                    </td>
+                    <td style="font-weight:700; color:#1f6f4a;">${{ p.amount }}</td>
+                    <td>
+                      {% if p.payment_status == 'completed' %}
+                        <span class="badge-active">Completed</span>
+                      {% elif p.payment_status == 'pending' %}
+                        <span class="badge-pending">Pending</span>
+                      {% else %}
+                        <span class="badge-inactive">{{ p.payment_status | title }}</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr><td colspan="3">
+                    <div class="admin-empty"><i class="bi bi-heart"></i><h6>No donations yet</h6></div>
+                  </td></tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

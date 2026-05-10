@@ -1,0 +1,193 @@
+{% set hide_public_nav = true %}
+{% set active_page = 'news' %}
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+  {% include 'admin-sidebar.html' %}
+
+  <div class="admin-main">
+
+    <div class="admin-page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <div class="eyebrow">Content Management</div>
+        <h2>News</h2>
+        <p>Publish news articles, announcements, and community updates.</p>
+      </div>
+      <button class="btn-admin-primary" data-bs-toggle="modal" data-bs-target="#addNewsModal">
+        <i class="bi bi-plus-lg"></i> Add News Article
+      </button>
+    </div>
+
+    <div class="admin-card mb-4" style="padding:16px 24px;">
+      <div class="d-flex flex-wrap gap-3 align-items-center">
+        <div class="search-wrap flex-grow-1" style="max-width:360px;">
+          <i class="bi bi-search"></i>
+          <input type="text" class="admin-search form-control" placeholder="Search articles…" oninput="filterTable('newsBody', this.value)" />
+        </div>
+        <select class="form-select" style="max-width:200px; border:1.5px solid #d8e8d8; border-radius:10px; font-size:.88rem;" onchange="filterByCategory(this.value)">
+          <option value="all">All Categories</option>
+          <option value="community">Community</option>
+          <option value="events">Events</option>
+          <option value="announcement">Announcements</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr><th>#</th><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="newsBody">
+            {% if news_articles %}
+              {% for article in news_articles %}
+              <tr data-category="{{ article.category | lower }}">
+                <td style="color:#6c7b70; font-size:.82rem;">{{ loop.index }}</td>
+                <td>
+                  <div style="font-weight:600; color:#1a2e20;">{{ article.title }}</div>
+                  <div style="font-size:.8rem; color:#6c7b70; max-width:380px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ article.excerpt | default('') }}</div>
+                </td>
+                <td><span class="badge-active" style="font-size:.72rem;">{{ article.category | title }}</span></td>
+                <td style="color:#6c7b70; font-size:.84rem; white-space:nowrap;">{{ article.date | default('—') }}</td>
+                <td>
+                  <div class="d-flex gap-2">
+                    {# ── FIX: .to_dict() converts the SQLAlchemy object to a plain JSON-safe dict ── #}
+                    <button class="btn-edit" onclick="openEditNews({{ article | tojson }})"><i class="bi bi-pencil"></i> Edit</button>
+                    <form method="POST" action="/admin/news/{{ article.id }}/delete" onsubmit="return confirmDelete('this article')">
+                      <button type="submit" class="btn-delete"><i class="bi bi-trash"></i> Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr><td colspan="5">
+                <div class="admin-empty"><i class="bi bi-newspaper"></i><h6>No news articles yet</h6><p style="font-size:.85rem;">Click "Add News Article" to publish your first article.</p></div>
+              </td></tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ADD NEWS MODAL -->
+<div class="modal fade admin-modal" id="addNewsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-plus-circle me-2" style="color:#1f6f4a;"></i>Add News Article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" action="/admin/news/add" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Article Title *</label>
+              <input type="text" name="title" class="form-control" placeholder="e.g. WMAA Partners with New Community Organisation" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Category *</label>
+              <select name="category" class="form-select" required>
+                <option value="community">Community</option>
+                <option value="events">Events</option>
+                <option value="announcement">Announcement</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Publication Date *</label>
+              <input type="date" name="date" class="form-control" required />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Short Summary <span style="color:#6c7b70; font-weight:400;">(shown on the news card)</span></label>
+              <textarea name="excerpt" class="form-control" rows="2" placeholder="A 1–2 sentence summary…" maxlength="200"></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Full Article Content</label>
+              <textarea name="full_content" class="form-control" rows="7" placeholder="Write the full article here…"></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Article Image</label>
+              <div class="img-upload-box" id="addNewsImgBox" onclick="document.getElementById('addNewsImgInput').click()">
+                <i class="bi bi-image"></i><span>Click to upload an image</span>
+                <small style="color:#a0b4a0;">JPG, PNG — max 5MB</small>
+              </div>
+              <input type="file" id="addNewsImgInput" name="image" accept="image/*" style="display:none;" onchange="previewImg(this,'addNewsImgBox')" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-admin-outline" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn-admin-primary"><i class="bi bi-check-lg"></i> Publish Article</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT NEWS MODAL -->
+<div class="modal fade admin-modal" id="editNewsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-pencil-square me-2" style="color:#1f6f4a;"></i>Edit Article</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" id="editNewsForm" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Article Title *</label>
+              <input type="text" name="title" id="editNewsTitle" class="form-control" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Category *</label>
+              <select name="category" id="editNewsCategory" class="form-select" required>
+                <option value="community">Community</option>
+                <option value="events">Events</option>
+                <option value="announcement">Announcement</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Publication Date *</label>
+              <input type="date" name="date" id="editNewsDate" class="form-control" required />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Short Summary</label>
+              <textarea name="excerpt" id="editNewsExcerpt" class="form-control" rows="2" maxlength="200"></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Full Article Content</label>
+              <textarea name="full_content" id="editNewsContent" class="form-control" rows="7"></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Replace Image (optional)</label>
+              <div class="img-upload-box" id="editNewsImgBox" onclick="document.getElementById('editNewsImgInput').click()">
+                <i class="bi bi-image"></i><span>Click to upload a new image</span>
+                <small style="color:#a0b4a0;">Leave blank to keep current image</small>
+              </div>
+              <input type="file" id="editNewsImgInput" name="image" accept="image/*" style="display:none;" onchange="previewImg(this,'editNewsImgBox')" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-admin-outline" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn-admin-primary"><i class="bi bi-check-lg"></i> Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

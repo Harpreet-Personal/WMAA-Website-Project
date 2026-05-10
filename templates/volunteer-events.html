@@ -176,102 +176,47 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
-        <div class="dashboard-card">
-          <div class="event-icon"><i class="bi bi-basket"></i></div>
-          <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
-          <h5>Community Food Drive</h5>
-          <div class="event-meta">
-            <span><i class="bi bi-calendar-event"></i>12 April 2026</span>
-            <span><i class="bi bi-clock"></i>9:00 AM – 1:00 PM</span>
-            <span><i class="bi bi-geo-alt"></i>Perth Community Centre</span>
-          </div>
-          <p>Help prepare and distribute food packs to community members.</p>
-          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
-          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
+  {% if events %}
+    {% for event in events %}
+    <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
+      <div class="dashboard-card">
+        <div class="event-icon">
+          <i class="bi bi-calendar-event"></i>
         </div>
-      </div>
-
-      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
-        <div class="dashboard-card">
-          <div class="event-icon"><i class="bi bi-people"></i></div>
-          <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
-          <h5>Cultural Support Workshop</h5>
-          <div class="event-meta">
-            <span><i class="bi bi-calendar-event"></i>18 April 2026</span>
-            <span><i class="bi bi-clock"></i>2:00 PM – 5:00 PM</span>
-            <span><i class="bi bi-geo-alt"></i>Northbridge Hall</span>
-          </div>
-          <p>Assist with setup, registration, and attendee support.</p>
-          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
-          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
+        <span class="availability-badge pending-slot">
+          <i class="bi bi-info-circle"></i> Check your availability
+        </span>
+        <h5>{{ event.title }}</h5>
+        <div class="event-meta">
+          {% if event.date %}
+            <span><i class="bi bi-calendar-event"></i>{{ event.date }}</span>
+          {% endif %}
+          {% if event.time %}
+            <span><i class="bi bi-clock"></i>{{ event.time }}</span>
+          {% endif %}
+          {% if event.location %}
+            <span><i class="bi bi-geo-alt"></i>{{ event.location }}</span>
+          {% endif %}
         </div>
-      </div>
-
-      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
-        <div class="dashboard-card">
-          <div class="event-icon"><i class="bi bi-box-seam"></i></div>
-          <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
-          <h5>Donation Sorting Day</h5>
-          <div class="event-meta">
-            <span><i class="bi bi-calendar-event"></i>24 April 2026</span>
-            <span><i class="bi bi-clock"></i>10:00 AM – 2:00 PM</span>
-            <span><i class="bi bi-geo-alt"></i>WMAA Office</span>
-          </div>
-          <p>Sort donated items and prepare them for distribution.</p>
-          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
-          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
-        <div class="dashboard-card">
-          <div class="event-icon"><i class="bi bi-megaphone"></i></div>
-          <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
-          <h5>Community Outreach Visit</h5>
-          <div class="event-meta">
-            <span><i class="bi bi-calendar-event"></i>30 April 2026</span>
-            <span><i class="bi bi-clock"></i>9:00 AM – 3:00 PM</span>
-            <span><i class="bi bi-geo-alt"></i>Perth CBD Outreach Centre</span>
-          </div>
-          <p>Support outreach activities and provide information to CALD community members.</p>
-          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
-          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
-        <div class="dashboard-card">
-          <div class="event-icon"><i class="bi bi-cup-hot"></i></div>
-          <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
-          <h5>Morning Tea Support</h5>
-          <div class="event-meta">
-            <span><i class="bi bi-calendar-event"></i>4 May 2026</span>
-            <span><i class="bi bi-clock"></i>10:00 AM – 12:00 PM</span>
-            <span><i class="bi bi-geo-alt"></i>WMAA Community Hall</span>
-          </div>
-          <p>Help welcome attendees, arrange refreshments, and support event coordination.</p>
-          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
-          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
-        <div class="dashboard-card">
-          <div class="event-icon"><i class="bi bi-translate"></i></div>
-          <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
-          <h5>Language Support Session</h5>
-          <div class="event-meta">
-            <span><i class="bi bi-calendar-event"></i>9 May 2026</span>
-            <span><i class="bi bi-clock"></i>6:00 PM – 8:00 PM</span>
-            <span><i class="bi bi-laptop"></i>Online</span>
-          </div>
-          <p>Assist community members by providing basic language and digital support.</p>
-          <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
-          <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
-        </div>
+        {% if event.description %}
+          <p>{{ event.description }}</p>
+        {% endif %}
+        <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">
+          Register Interest
+        </button>
+        <p class="interest-message">
+          <i class="bi bi-check-circle me-1"></i>Interest registered for this event.
+        </p>
       </div>
     </div>
+    {% endfor %}
+  {% else %}
+    <div class="col-12 text-center py-5" style="color:#6c7b70;">
+      <i class="bi bi-calendar-x" style="font-size:2.5rem; display:block; margin-bottom:12px;"></i>
+      <p>No upcoming volunteer events at this time. Check back soon.</p>
+    </div>
+  {% endif %}
+</div>
   </div>
 </div>
 <script>

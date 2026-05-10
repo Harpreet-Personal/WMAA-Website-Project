@@ -1,0 +1,49 @@
+{#
+  SHARED ADMIN SIDEBAR — {% include 'admin-sidebar.html' %} in every admin template.
+  BACKEND: pass admin_name (str) and active_page (str) to every admin render_template call.
+  active_page values: 'dashboard' | 'home-editor' | 'events' | 'news' |
+                      'stories'   | 'services'    | 'volunteers' | 'donations'
+#}
+<div class="admin-sidebar">
+  <div class="admin-sidebar-header">
+  <img src="{{ url_for('static', filename='images/wmaa-logo.png') }}" alt="WMAA" style="background:white; border-radius:10px; padding:6px; height:80px; width:auto;" />
+  <div class="admin-sidebar-admin-name" style="font-size:1rem; font-weight:700; color:#fff;">{{ admin_name | default('Administrator') }}</div>
+  <span class="admin-pill-badge" style="font-size:.75rem; padding:4px 12px;">Admin Panel</span>
+</div>
+
+  <div class="admin-nav-section">
+    <div class="admin-nav-section-label">Overview</div>
+    <a href="/admin/dashboard" class="admin-sidebar-link {% if active_page == 'dashboard' %}active{% endif %}">
+      <i class="bi bi-grid-1x2-fill"></i> Dashboard
+    </a>
+  </div>
+
+  <div class="admin-nav-section">
+    <div class="admin-nav-section-label">Website Content</div>
+    <a href="/admin/events" class="admin-sidebar-link {% if active_page == 'events' %}active{% endif %}">
+      <i class="bi bi-calendar-event-fill"></i> Events
+    </a>
+    <a href="/admin/news" class="admin-sidebar-link {% if active_page == 'news' %}active{% endif %}">
+      <i class="bi bi-newspaper"></i> News
+    </a>
+    <a href="/admin/stories" class="admin-sidebar-link {% if active_page == 'stories' %}active{% endif %}">
+      <i class="bi bi-book-fill"></i> Stories
+    </a>
+  </div>
+
+  <div class="admin-nav-section">
+    <div class="admin-nav-section-label">People</div>
+    <a href="/admin/volunteers" class="admin-sidebar-link {% if active_page == 'volunteers' %}active{% endif %}">
+      <i class="bi bi-people-fill"></i> Volunteers
+    </a>
+    <a href="/admin/donations" class="admin-sidebar-link {% if active_page == 'donations' %}active{% endif %}">
+      <i class="bi bi-heart-fill"></i> Donations
+    </a>
+  </div>
+
+  <div class="admin-sidebar-footer">
+    <a href="/admin/logout" class="admin-sidebar-link logout-link">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </a>
+  </div>
+</div>

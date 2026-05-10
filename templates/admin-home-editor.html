@@ -1,0 +1,154 @@
+{% set hide_public_nav = true %}
+{% set active_page = 'home-editor' %}
+{% extends "base.html" %}
+{# BACKEND: GET /admin/home-editor → pass home_content (dict), admin_name
+   POST /admin/home-editor/save → save all fields, redirect back with success=True #}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="admin-wrap">
+  {% include 'admin-sidebar.html' %}
+
+  <div class="admin-main">
+
+    <div class="admin-page-header">
+      <div class="eyebrow">Content Management</div>
+      <h2>Home Page Editor</h2>
+      <p>Edit the text and images on the main page of your website. Click Save when you're done.</p>
+    </div>
+
+    {% if success %}
+    <div class="alert alert-success d-flex align-items-center gap-2 mb-4" style="border-radius:14px;">
+      <i class="bi bi-check-circle-fill"></i> Changes saved successfully! Your website has been updated.
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/admin/home-editor/save" enctype="multipart/form-data">
+
+      <!-- Hero Section -->
+      <div class="admin-card">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div style="width:40px; height:40px; background:#e8f5ee; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#1f6f4a; font-size:1.1rem; flex-shrink:0;">
+            <i class="bi bi-stars"></i>
+          </div>
+          <div>
+            <div class="admin-card-title">Hero Section</div>
+            <div style="font-size:.82rem; color:#6c7b70;">The first thing visitors see at the top of your home page</div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Main Heading * <span style="color:#6c7b70; font-weight:400;">— shown in large text on the hero image</span></label>
+            <textarea name="hero_heading" class="form-control" rows="2" placeholder="e.g. Responding With Compassion, Leading With Purpose">{{ home_content.hero_heading | default('') }}</textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Subtext <span style="color:#6c7b70; font-weight:400;">— a short supporting sentence below the heading</span></label>
+            <textarea name="hero_sub" class="form-control" rows="2" placeholder="e.g. Partner with WMAA to expand our reach and impact…">{{ home_content.hero_sub | default('') }}</textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Primary Button Text</label>
+            <input type="text" name="hero_btn_primary_text" class="form-control" placeholder="e.g. Learn More" value="{{ home_content.hero_btn_primary_text | default('Learn More') }}" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Secondary Button Text</label>
+            <input type="text" name="hero_btn_secondary_text" class="form-control" placeholder="e.g. Donate Now" value="{{ home_content.hero_btn_secondary_text | default('Donate Now') }}" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Hero Background Image <span style="color:#6c7b70; font-weight:400;">— the large background photo on the home page banner</span></label>
+            {% if home_content.hero_image_url %}
+            <div style="margin-bottom:8px;">
+              <img src="{{ home_content.hero_image_url }}" alt="Current hero" style="height:80px; border-radius:10px; object-fit:cover;" />
+              <span style="font-size:.8rem; color:#6c7b70; margin-left:10px;">Current image</span>
+            </div>
+            {% endif %}
+            <div class="img-upload-box" id="heroImgBox" onclick="document.getElementById('heroImgInput').click()">
+              <i class="bi bi-image"></i>
+              <span>Click to upload a new hero image</span>
+              <small style="color:#a0b4a0;">High-quality landscape photo — min 1400px wide</small>
+            </div>
+            <input type="file" id="heroImgInput" name="hero_image" accept="image/*" style="display:none;" onchange="previewImg(this,'heroImgBox')" />
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="admin-card">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div style="width:40px; height:40px; background:#e8f5ee; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#1f6f4a; font-size:1.1rem; flex-shrink:0;">
+            <i class="bi bi-info-circle"></i>
+          </div>
+          <div>
+            <div class="admin-card-title">About WMAA Section</div>
+            <div style="font-size:.82rem; color:#6c7b70;">The "Who We Are" section below the hero</div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">About Heading</label>
+            <input type="text" name="about_heading" class="form-control" placeholder="e.g. About WMAA" value="{{ home_content.about_heading | default('About WMAA') }}" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">About Body Text</label>
+            <textarea name="about_body" class="form-control" rows="4" placeholder="Describe WMAA's mission and who you help…">{{ home_content.about_body | default('') }}</textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Vision Box Text <span style="color:#6c7b70; font-weight:400;">— the highlighted green box with "Our Vision"</span></label>
+            <textarea name="vision_text" class="form-control" rows="3" placeholder="e.g. To build a resilient, connected, and empowered multicultural community…">{{ home_content.vision_text | default('') }}</textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">About Section Photo <span style="color:#6c7b70; font-weight:400;">— the community image on the left side</span></label>
+            {% if home_content.about_image_url %}
+            <div style="margin-bottom:8px;">
+              <img src="{{ home_content.about_image_url }}" alt="Current about" style="height:80px; border-radius:10px; object-fit:cover;" />
+              <span style="font-size:.8rem; color:#6c7b70; margin-left:10px;">Current image</span>
+            </div>
+            {% endif %}
+            <div class="img-upload-box" id="aboutImgBox" onclick="document.getElementById('aboutImgInput').click()">
+              <i class="bi bi-image"></i><span>Click to upload a photo</span>
+            </div>
+            <input type="file" id="aboutImgInput" name="about_image" accept="image/*" style="display:none;" onchange="previewImg(this,'aboutImgBox')" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Donate Strip -->
+      <div class="admin-card">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div style="width:40px; height:40px; background:#e8f5ee; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#1f6f4a; font-size:1.1rem; flex-shrink:0;">
+            <i class="bi bi-heart-fill"></i>
+          </div>
+          <div>
+            <div class="admin-card-title">Donation Call-to-Action Strip</div>
+            <div style="font-size:.82rem; color:#6c7b70;">The green banner prompting visitors to donate</div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label">Strip Heading</label>
+            <input type="text" name="donate_strip_heading" class="form-control" placeholder="e.g. Support Our Mission" value="{{ home_content.donate_strip_heading | default('Support Our Mission') }}" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Strip Body Text</label>
+            <textarea name="donate_strip_body" class="form-control" rows="2" placeholder="e.g. Your donation helps us provide emergency support…">{{ home_content.donate_strip_body | default('') }}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-3">
+        <a href="/" target="_blank" class="btn-admin-outline"><i class="bi bi-eye"></i> Preview Website</a>
+        <button type="submit" class="btn-admin-primary" style="padding:12px 32px; font-size:.95rem;">
+          <i class="bi bi-check-lg"></i> Save All Changes
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}
