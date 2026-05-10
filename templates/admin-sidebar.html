@@ -6,10 +6,10 @@
 #}
 <div class="admin-sidebar">
   <div class="admin-sidebar-header">
-    <img src="{{ url_for('static', filename='images/wmaa-logo.png') }}" alt="WMAA" />
-    <div class="admin-sidebar-admin-name">{{ admin_name | default('Administrator') }}</div>
-    <span class="admin-pill-badge">Admin Panel</span>
-  </div>
+  <img src="{{ url_for('static', filename='images/wmaa-logo.png') }}" alt="WMAA" style="background:white; border-radius:10px; padding:6px; height:80px; width:auto;" />
+  <div class="admin-sidebar-admin-name" style="font-size:1rem; font-weight:700; color:#fff;">{{ admin_name | default('Administrator') }}</div>
+  <span class="admin-pill-badge" style="font-size:.75rem; padding:4px 12px;">Admin Panel</span>
+</div>
 
   <div class="admin-nav-section">
     <div class="admin-nav-section-label">Overview</div>

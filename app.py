@@ -132,7 +132,11 @@ def events():
 
 @app.route("/news")
 def news():
-    articles = NewsArticle.query.order_by(NewsArticle.created_at.desc()).all()
+    from datetime import date
+    today    = date.today().isoformat()
+    articles = NewsArticle.query.filter(
+        NewsArticle.date <= today
+    ).order_by(NewsArticle.created_at.desc()).all()
     return render_template("news.html", news_articles=articles)
 
 

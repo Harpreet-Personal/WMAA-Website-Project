@@ -11,15 +11,13 @@
 
 <section class="section-padding bg-light">
   <div class="container">
-    <div class="row justify-content-center text-center mb-5">
+    <div class="row justify-content-center text-center mb-3">
       <div class="col-lg-7" data-animate="fade-up">
-        <p class="section-eyebrow">{{ _('Upcoming Events') }}</p>
         <h2 class="section-heading">{{ _('Join Us & Make a Difference') }}</h2>
         <p class="section-body">{{ _('Attend our fundraising events to support WMAA\'s mission and connect with the multicultural community across Western Australia.') }}</p>
       </div>
     </div>
 
-    <!-- ── UPCOMING EVENTS (from DB) ───────────────────────────────────────── -->
     <h4 class="mb-4 fw-semibold" style="color:var(--clr-primary)">{{ _('Upcoming Events') }}</h4>
 
     {% if upcoming_events %}
@@ -87,8 +85,10 @@
               <img src="{{ event.image_url }}" alt="{{ event.title }}"
                    style="width:100%; height:160px; object-fit:cover;" />
             {% else %}
-              <div class="news-img-placeholder"></div>
-            {% endif %}
+  <div style="width:100%; height:160px; background:#f0f4f1; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+    <i class="bi bi-calendar-event" style="font-size:2.5rem; color:#c8ddc8;"></i>
+  </div>
+{% endif %}
 
             <div class="news-body">
               <span class="news-tag past">{{ _('Past Event') }}</span>
