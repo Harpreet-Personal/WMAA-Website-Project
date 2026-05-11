@@ -367,7 +367,7 @@ def volunteer_profile():
 def logout():
     logout_user()
     session.clear()
-    return redirect(url_for("volunteer"))
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
