@@ -122,6 +122,13 @@ def login():
     email = request.form.get("email", "").strip()
     password = request.form.get("password", "")
 
+    if not email or not password:
+        return render_template(
+            "volunteer.html",
+            error="Email and password are required.",
+            show_signup=False
+        )
+
     user = User.query.filter_by(email=email).first()
 
     if not user or not user.check_password(password):
@@ -301,8 +308,14 @@ def reset_password(token):
         )
 
     if request.method == "POST":
-        password = request.form.get("password", "")
-        confirm_password = request.form.get("confirm_password", "")
+        password = request.form.get("password", "").strip()
+        confirm_password = request.form.get("confirm_password", "").strip()
+        
+        if not password or not confirm_password:
+            return render_template(
+                "reset-password.html",
+                error="Password fields cannot be empty."
+            )
 
         if password != confirm_password:
             return render_template(
