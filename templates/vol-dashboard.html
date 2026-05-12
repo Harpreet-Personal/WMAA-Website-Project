@@ -155,32 +155,25 @@
       <div class="col-md-3">
         <div class="dashboard-card text-center">
           <div class="dashboard-icon"><i class="bi bi-clock-history"></i></div>
-          <h4 class="dashboard-stat-number">24</h4>
+          <h4 class="dashboard-stat-number" id="hours-volunteered">0</h4>
           <p class="text-muted mb-0">Hours Volunteered</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="dashboard-card text-center">
           <div class="dashboard-icon"><i class="bi bi-calendar-check"></i></div>
-          <h4 class="dashboard-stat-number">8</h4>
+          <h4 class="dashboard-stat-number" id="events-attended">0</h4>
           <p class="text-muted mb-0">Events Attended</p>
         </div>
       </div>
       <div class="col-md-3">
         <div class="dashboard-card text-center">
           <div class="dashboard-icon"><i class="bi bi-clock-history"></i></div>
-          <h4 class="dashboard-stat-number">5</h4>
+          <h4 class="dashboard-stat-number" id="tasks-completed">0</h4>
           <p class="text-muted mb-0">Hours Pending</p>
         </div>
       </div>
-      <div class="col-md-3">
-        <div class="dashboard-card text-center">
-          <div class="dashboard-icon"><i class="bi bi-people"></i></div>
-          <h4 class="dashboard-stat-number">12</h4>
-          <p class="text-muted mb-0">People Helped</p>
-        </div>
-      </div>
-    </div>
+      
 
     <!-- Quick Actions & Activity -->
     <div class="row g-3 compact-section">
@@ -256,4 +249,30 @@
   </div>
 </div>
 
+<script>
+  async function loadDashboardStatistics() {
+      try {
+          const response = await fetch("/api/volunteer/dashboard-stats/1");
+  
+          const result = await response.json();
+  
+          if (result.success) {
+              document.getElementById("hours-volunteered").innerText =
+                  result.data.hours_volunteered;
+  
+              document.getElementById("events-attended").innerText =
+                  result.data.events_attended;
+  
+              document.getElementById("tasks-completed").innerText =
+                  result.data.tasks_completed;
+          }
+  
+      } catch (error) {
+          console.error("Failed to load dashboard statistics:", error);
+      }
+  }
+  
+  loadDashboardStatistics();
+  </script>
+  
 {% endblock %}
