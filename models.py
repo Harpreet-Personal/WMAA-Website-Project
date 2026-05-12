@@ -68,6 +68,13 @@ class User(UserMixin, db.Model):
     cascade="all, delete-orphan"
     )
 
+    volunteer_availability = db.relationship(
+    "VolunteerAvailability",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
 
     def set_password(self, password):
         # Hashes the plain-text password and stores it — called during signup
@@ -261,3 +268,39 @@ class VolunteerHours(db.Model):
 
     def __repr__(self):
         return f"<VolunteerHours {self.hours_completed} hrs>"
+
+class VolunteerAvailability(db.Model):
+    """
+    Stores volunteer availability preferences and scheduling slots.
+    """
+
+    __tablename__ = "volunteer_availability"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    available_date = db.Column(db.Date, nullable=False)
+
+    start_time = db.Column(db.Time, nullable=False)
+
+    end_time = db.Column(db.Time, nullable=False)
+
+    estimated_hours = db.Column(db.Float, nullable=True)
+
+    shift_type = db.Column(db.String(100), nullable=True)
+
+    notes = db.Column(db.Text, nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<VolunteerAvailability {self.available_date}>"
