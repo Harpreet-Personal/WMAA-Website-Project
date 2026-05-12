@@ -1,82 +1,96 @@
 <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-    <div class="container">
-      
-      <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home') }}">
-        <img 
-          src="{{ url_for('static', filename='images/wmaa-logo.png') }}" 
-          alt="WMAA"
-          height="55"
-          style="background:white; padding:6px 10px; border-radius:10px;"
-        >
-        <div class="brand-wrap">
-          <span class="brand-text">WMAA</span>
-          <span class="brand-fullname">WA Multicultural Assistance Alliance</span>
-        </div>
-      </a>
-  
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navMenu">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-  
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home') }}">{{ _('Home') }}</a>
+  <div class="container">
+
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('home') }}">
+      <img
+        src="{{ url_for('static', filename='images/wmaa-logo.png') }}"
+        alt="WMAA"
+        height="55"
+        style="background:white; padding:6px 10px; border-radius:10px;"
+      >
+      <div class="brand-wrap">
+        <span class="brand-text">WMAA</span>
+        <span class="brand-fullname">WA Multicultural Assistance Alliance</span>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('home') }}">{{ _('Home') }}</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('about') }}">{{ _('About Us') }}</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{{ url_for('services') }}" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
+            {{ _('Services') }}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('services') }}#crisis">{{ _('Crisis Response') }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('services') }}#mediation">{{ _('Cultural Mediation') }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('services') }}#housing">{{ _('Housing Referrals') }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('services') }}#fraud">{{ _('Fraud Awareness') }}</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('services') }}#health">{{ _('Health Advocacy') }}</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="{{ url_for('services') }}">{{ _('All Services') }}</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('events') }}">{{ _('Events') }}</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('news') }}">{{ _('News') }}</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a>
+        </li>
+
+        <!-- Language Dropdown -->
+        <li class="nav-item dropdown ms-lg-2">
+          <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
+            <span>🌐</span>
+            <span>{{ current_language_name }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{{ url_for('set_language', lang='en') }}">English</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('set_language', lang='zh_Hans_CN') }}">中文</a></li>
+          </ul>
+        </li>
+
+        {% if current_user.is_authenticated %}
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-volunteer" href="{{ url_for('dashboard') }}">{{ _('Dashboard') }}</a>
           </li>
-  
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('about') }}">{{ _('About Us') }}</a>
+
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-donate" href="{{ url_for('logout') }}">{{ _('Logout') }}</a>
           </li>
-  
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="{{ url_for('services') }}" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
-              {{ _('Services') }}
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ url_for('services') }}#crisis">{{ _('Crisis Response') }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('services') }}#mediation">{{ _('Cultural Mediation') }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('services') }}#housing">{{ _('Housing Referrals') }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('services') }}#fraud">{{ _('Fraud Awareness') }}</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('services') }}#health">{{ _('Health Advocacy') }}</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="{{ url_for('services') }}">{{ _('All Services') }}</a></li>
-            </ul>
+        {% else %}
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-volunteer" href="{{ url_for('volunteer') }}">{{ _('Login / Signup') }}</a>
           </li>
-  
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('stories') }}">{{ _('Our Stories') }}</a>
-          </li>
-  
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('events') }}">{{ _('Events') }}</a>
-          </li>
-  
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('news') }}">{{ _('News') }}</a>
-          </li>
-  
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('contact') }}">{{ _('Contact Us') }}</a>
-          </li>
-  
-          <!-- Language Dropdown -->
-          <li class="nav-item dropdown ms-lg-2">
-            <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
-              <span>🌐</span>
-              <span>{{ current_language_name }}</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="{{ url_for('set_language', lang='en') }}">English</a></li>
-              <li><a class="dropdown-item" href="{{ url_for('set_language', lang='zh_Hans_CN') }}">中文</a></li>
-            </ul>
-          </li>
-          <li class="nav-item ms-lg-2"><a class="btn btn-volunteer" href="{{ url_for('volunteer') }}">{{ _('Login / Signup') }}</a></li>
+
           <li class="nav-item ms-lg-2">
             <a class="btn btn-donate" href="{{ url_for('donate') }}">{{ _('Donate') }}</a>
           </li>
-  
-        </ul>
-      </div>
+        {% endif %}
+
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
