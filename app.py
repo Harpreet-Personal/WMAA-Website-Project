@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 from services.volunteer_stats_service import get_dashboard_statistics
 from services.volunteer_schedule_service import get_volunteer_schedule
+from services.volunteer_hours_service import get_volunteer_hours
 
 # Flask core imports
 from flask import Flask, render_template, session, redirect, request, url_for, jsonify
@@ -13,7 +14,7 @@ from flask_migrate import Migrate
 from flask_babel import Babel, gettext as _
 
 # Flask-Login: manages user session after login
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 
 # Flask-Mail: sends OTP verification emails to users
 from flask_mail import Mail, Message
@@ -67,7 +68,7 @@ login_manager.login_view = "volunteer"
 @login_manager.user_loader
 def load_user(user_id):
     # Tells Flask-Login how to reload the user object from the session
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 # Create all database tables on startup if they don't already exist
 #with app.app_context():
@@ -131,7 +132,30 @@ def set_language(lang):
 def volunteer():
     # Renders the combined login/signup page (volunteer portal)
     return render_template("volunteer.html")
+@app.route("/login", methods=["POST"])
+def login():
+    """
+    Handles volunteer login.
+    """
 
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "")
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not user.check_password(password):
+        return render_template(
+            "volunteer.html",
+            error="Invalid email or password."
+        )
+
+    login_user(user)
+
+    session["user_name"] = user.full_name
+    session["user_role"] = user.role
+    session["user_email"] = user.email
+
+    return redirect(url_for("dashboard"))
 # ── Signup Route ─────────────────────────────────────────────────────────────
 # Handles volunteer registration with email OTP verification.
 # User data is temporarily stored in session until OTP is confirmed.
@@ -238,44 +262,49 @@ def forgot_password():
     return render_template("forgot-password.html")
 
 @app.route("/vol-dashboard")
+@login_required
 def dashboard():
     user = {
-
-        "name": session.get("user_name", "Volunteer"),
-
-        "role": session.get("user_role", "volunteer")
-
+        "name": current_user.full_name,
+        "role": current_user.role
     }
-
     return render_template("vol-dashboard.html", user=user)
 
 @app.route("/volunteer-schedule")
+@login_required
 def volunteer_schedule():
     return render_template("volunteer-schedule.html")
 
 @app.route("/volunteer-tasks")
+@login_required
 def volunteer_tasks():
     return render_template("volunteer-tasks.html")
 
 @app.route("/volunteer-events")
+@login_required
 def volunteer_events():
     return render_template("volunteer-events.html")
 
 @app.route("/volunteer-profile")
+@login_required
 def volunteer_profile():
     user = {
-        "name": session.get("user_name", "Volunteer"),
-        "role": session.get("user_role", "volunteer"),
-        "email": session.get("user_email", "volunteer@email.com")
+        "name": current_user.full_name,
+        "role": current_user.role,
+        "email": current_user.email,
+        "phone": current_user.phone_number,
+        "availability": current_user.availability
     }
     return render_template("volunteer-profile.html", user=user)
 
 @app.route("/logout")
 def logout():
+    logout_user()
     session.clear()
     return redirect(url_for("volunteer"))
-
+    
 @app.route("/api/volunteer/dashboard-stats/<int:volunteer_id>", methods=["GET"])
+@login_required
 def volunteer_dashboard_stats(volunteer_id):
     """
     Returns dashboard statistics for a volunteer.
@@ -289,6 +318,7 @@ def volunteer_dashboard_stats(volunteer_id):
     }, 200
 
 @app.route("/api/volunteer/schedule/<int:volunteer_id>", methods=["GET"])
+@login_required
 def volunteer_schedule_api(volunteer_id):
     """
     Returns volunteer schedule data.
@@ -302,6 +332,7 @@ def volunteer_schedule_api(volunteer_id):
     }, 200
 
 @app.route("/api/volunteer/availability/<int:volunteer_id>", methods=["GET"])
+@login_required
 def volunteer_availability_api(volunteer_id):
     """
     Returns volunteer availability data.
@@ -330,6 +361,7 @@ def volunteer_availability_api(volunteer_id):
     }, 200
 
 @app.route("/api/volunteer/availability", methods=["POST"])
+@login_required
 def save_volunteer_availability():
     """
     Saves volunteer availability to database.
@@ -339,7 +371,7 @@ def save_volunteer_availability():
         data = request.get_json()
 
         availability = VolunteerAvailability(
-            volunteer_id=1,
+            volunteer_id=current_user.id,
             available_date=datetime.strptime(
                 data["available_date"],
                 "%Y-%m-%d"
@@ -374,6 +406,7 @@ def save_volunteer_availability():
         }), 500
 
 @app.route("/api/volunteer/register-interest", methods=["POST"])
+@login_required
 def register_interest():
     """
     Stores volunteer interest for an event.
@@ -385,7 +418,7 @@ def register_interest():
     event_date = data.get("event_date")
 
     existing_interest = VolunteerEventInterest.query.filter_by(
-        volunteer_id=1,
+        volunteer_id=current_user.id,
         event_name=event_name,
         event_date=datetime.strptime(event_date, "%Y-%m-%d").date()
     ).first()
@@ -397,7 +430,7 @@ def register_interest():
         }, 400
 
     new_interest = VolunteerEventInterest(
-        volunteer_id=1,
+        volunteer_id=current_user.id,
         event_name=event_name,
         event_date=datetime.strptime(event_date, "%Y-%m-%d").date()
     )
@@ -409,7 +442,21 @@ def register_interest():
         "success": True,
         "message": "Interest registered successfully"
     }, 201
-    
+
+@app.route("/api/volunteer/hours", methods=["GET"])
+@login_required
+def volunteer_hours_api():
+    """
+    Returns volunteer hours data.
+    """
+
+    data = get_volunteer_hours(current_user.id)
+
+    return {
+        "success": True,
+        "data": data
+    }, 200 
+
 if __name__ == "__main__":
     app.run(debug=True)
 
