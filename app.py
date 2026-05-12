@@ -301,6 +301,34 @@ def volunteer_schedule_api(volunteer_id):
         "data": schedules
     }, 200
 
+@app.route("/api/volunteer/availability/<int:volunteer_id>", methods=["GET"])
+def volunteer_availability_api(volunteer_id):
+    """
+    Returns volunteer availability data.
+    """
+
+    availability = VolunteerAvailability.query.filter_by(
+        volunteer_id=volunteer_id
+    ).order_by(
+        VolunteerAvailability.available_date.desc()
+    ).all()
+
+    data = []
+
+    for item in availability:
+        data.append({
+            "id": item.id,
+            "available_date": item.available_date.strftime("%d %b %Y"),
+            "start_time": item.start_time.strftime("%I:%M %p"),
+            "end_time": item.end_time.strftime("%I:%M %p"),
+            "estimated_hours": item.estimated_hours
+        })
+
+    return {
+        "success": True,
+        "data": data
+    }, 200
+
 @app.route("/api/volunteer/availability", methods=["POST"])
 def save_volunteer_availability():
     """
@@ -345,6 +373,43 @@ def save_volunteer_availability():
             "message": str(e)
         }), 500
 
+@app.route("/api/volunteer/register-interest", methods=["POST"])
+def register_interest():
+    """
+    Stores volunteer interest for an event.
+    """
+
+    data = request.get_json()
+
+    event_name = data.get("event_name")
+    event_date = data.get("event_date")
+
+    existing_interest = VolunteerEventInterest.query.filter_by(
+        volunteer_id=1,
+        event_name=event_name,
+        event_date=datetime.strptime(event_date, "%Y-%m-%d").date()
+    ).first()
+
+    if existing_interest:
+        return {
+            "success": False,
+            "message": "Interest already registered"
+        }, 400
+
+    new_interest = VolunteerEventInterest(
+        volunteer_id=1,
+        event_name=event_name,
+        event_date=datetime.strptime(event_date, "%Y-%m-%d").date()
+    )
+
+    db.session.add(new_interest)
+    db.session.commit()
+
+    return {
+        "success": True,
+        "message": "Interest registered successfully"
+    }, 201
+    
 if __name__ == "__main__":
     app.run(debug=True)
 

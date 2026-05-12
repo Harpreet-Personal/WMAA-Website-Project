@@ -356,3 +356,32 @@ class VolunteerAttendance(db.Model):
 
     def __repr__(self):
         return f"<VolunteerAttendance {self.attendance_status}>"
+
+
+class VolunteerEventInterest(db.Model):
+    """
+    Stores volunteer interest registrations for events.
+    """
+
+    __tablename__ = "volunteer_event_interests"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    event_name = db.Column(db.String(255), nullable=False)
+
+    event_date = db.Column(db.Date, nullable=False)
+
+    registered_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<VolunteerEventInterest {self.event_name}>"

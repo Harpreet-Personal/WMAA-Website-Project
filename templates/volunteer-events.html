@@ -78,6 +78,8 @@
   border: none;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   transition: transform .2s ease, box-shadow .2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-card:hover {
@@ -140,6 +142,16 @@
   font-size: .85rem;
   margin-top: 10px;
 }
+
+.register-interest-btn {
+  margin-top: auto;
+}
+
+.event-spots {
+  font-size: .82rem;
+  color: #6c7b70;
+  margin-bottom: 12px;
+}
 </style>
 
 <div class="d-flex">
@@ -176,7 +188,7 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Available" data-date="2026-04-12" data-start="09:00" data-end="13:00" data-event="Community Food Drive">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-basket"></i></div>
           <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
@@ -187,12 +199,13 @@
             <span><i class="bi bi-geo-alt"></i>Perth Community Centre</span>
           </div>
           <p>Help prepare and distribute food packs to community members.</p>
+          <p class="event-spots"><i class="bi bi-people me-1"></i>8 volunteer spots remaining</p>
           <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
           <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Available" data-date="2026-04-18" data-start="14:00" data-end="17:00" data-event="Cultural Support Workshop">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-people"></i></div>
           <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
@@ -203,12 +216,13 @@
             <span><i class="bi bi-geo-alt"></i>Northbridge Hall</span>
           </div>
           <p>Assist with setup, registration, and attendee support.</p>
+          <p class="event-spots"><i class="bi bi-people me-1"></i>5 volunteer spots remaining</p>
           <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
           <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Pending" data-date="2026-04-24" data-start="10:00" data-end="14:00" data-event="Donation Sorting Day">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-box-seam"></i></div>
           <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
@@ -219,12 +233,13 @@
             <span><i class="bi bi-geo-alt"></i>WMAA Office</span>
           </div>
           <p>Sort donated items and prepare them for distribution.</p>
+          <p class="event-spots"><i class="bi bi-people me-1"></i>10 volunteer spots remaining</p>
           <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
           <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Pending" data-date="2026-04-30" data-start="09:00" data-end="15:00" data-event="Community Outreach Visit">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-megaphone"></i></div>
           <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
@@ -235,12 +250,13 @@
             <span><i class="bi bi-geo-alt"></i>Perth CBD Outreach Centre</span>
           </div>
           <p>Support outreach activities and provide information to CALD community members.</p>
+          <p class="event-spots"><i class="bi bi-people me-1"></i>6 volunteer spots remaining</p>
           <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
           <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4 event-card" data-status="Available">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Available" data-date="2026-05-04" data-start="10:00" data-end="12:00" data-event="Morning Tea Support">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-cup-hot"></i></div>
           <span class="availability-badge available-slot"><i class="bi bi-check-circle"></i>You are available for this slot</span>
@@ -251,12 +267,13 @@
             <span><i class="bi bi-geo-alt"></i>WMAA Community Hall</span>
           </div>
           <p>Help welcome attendees, arrange refreshments, and support event coordination.</p>
+          <p class="event-spots"><i class="bi bi-people me-1"></i>4 volunteer spots remaining</p>
           <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
           <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
       </div>
 
-      <div class="col-md-6 col-xl-4 event-card" data-status="Pending">
+      <div class="col-md-6 col-xl-4 event-card" data-status="Pending" data-date="2026-05-09" data-start="18:00" data-end="20:00" data-event="Language Support Session">
         <div class="dashboard-card">
           <div class="event-icon"><i class="bi bi-translate"></i></div>
           <span class="availability-badge pending-slot"><i class="bi bi-info-circle"></i>Check your availability</span>
@@ -267,6 +284,7 @@
             <span><i class="bi bi-laptop"></i>Online</span>
           </div>
           <p>Assist community members by providing basic language and digital support.</p>
+          <p class="event-spots"><i class="bi bi-people me-1"></i>12 volunteer spots remaining</p>
           <button type="button" class="btn btn-primary-green btn-sm register-interest-btn">Register Interest</button>
           <p class="interest-message"><i class="bi bi-check-circle me-1"></i>Interest registered for this event.</p>
         </div>
@@ -275,17 +293,105 @@
   </div>
 </div>
 <script>
-  document.querySelectorAll('.register-interest-btn').forEach(button => {
-    button.addEventListener('click', () => {
-      button.textContent = 'Interest Registered';
-      button.classList.remove('btn-primary-green');
-      button.classList.add('btn-outline-success');
-      button.disabled = true;
+  async function syncAvailabilityBadges() {
+    try {
+        const response = await fetch('/api/volunteer/availability/1');
 
-      const message = button.nextElementSibling;
-      if (message) {
-        message.style.display = 'block';
-      }
+        const result = await response.json();
+
+        if (!result.success) {
+            return;
+        }
+
+        const availabilityData = result.data;
+
+        document.querySelectorAll('.event-card').forEach(card => {
+            const eventDate = card.dataset.date;
+
+            const matchedAvailability = availabilityData.find(item => {
+                const formattedDate = new Date(item.available_date)
+                    .toISOString()
+                    .split('T')[0];
+
+                return formattedDate === eventDate;
+            });
+
+            const badge = card.querySelector('.availability-badge');
+
+            if (matchedAvailability) {
+                card.dataset.status = 'Available';
+
+                badge.classList.remove('pending-slot');
+                badge.classList.add('available-slot');
+
+                badge.innerHTML = `
+                    <i class="bi bi-check-circle"></i>
+                    Availability Match
+                `;
+            } else {
+                card.dataset.status = 'Pending';
+
+                badge.classList.remove('available-slot');
+                badge.classList.add('pending-slot');
+
+                badge.innerHTML = `
+                    <i class="bi bi-info-circle"></i>
+                    Check your availability
+                `;
+            }
+        });
+
+    } catch (error) {
+        console.error('Failed to sync availability badges:', error);
+    }
+}
+
+  document.querySelectorAll('.register-interest-btn').forEach(button => {
+    button.addEventListener('click', async () => {
+
+        const card = button.closest('.event-card');
+
+        const eventName = card.dataset.event;
+        const eventDate = card.dataset.date;
+
+        try {
+
+            const response = await fetch('/api/volunteer/register-interest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    event_name: eventName,
+                    event_date: eventDate
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+
+                button.textContent = 'Interest Registered';
+
+                button.classList.remove('btn-primary-green');
+                button.classList.add('btn-outline-success');
+
+                button.disabled = true;
+
+                const message = button.nextElementSibling;
+
+                if (message) {
+                    message.style.display = 'block';
+                }
+
+            } else {
+                alert(result.message);
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert('Failed to register interest');
+        }
     });
   });
 
@@ -300,5 +406,6 @@
       });
     });
   });
+  syncAvailabilityBadges();
 </script>
 {% endblock %}

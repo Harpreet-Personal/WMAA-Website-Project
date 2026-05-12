@@ -122,7 +122,16 @@
 }
 
 .compact-section {
-  margin-bottom: 16px !important;
+  margin-bottom: 14px !important;
+}
+
+.quick-actions-card,
+.snapshot-card {
+  height: 100%;
+}
+
+.dashboard-row-align {
+  align-items: stretch;
 }
 </style>
 
@@ -173,14 +182,21 @@
           <p class="text-muted mb-0">Hours Pending</p>
         </div>
       </div>
-      
+      <div class="col-md-3">
+        <div class="dashboard-card text-center">
+          <div class="dashboard-icon"><i class="bi bi-calendar2-check"></i></div>
+          <h4 class="dashboard-stat-number" id="available-hours">0</h4>
+          <p class="text-muted mb-0">Available Hours</p>
+        </div>
+      </div>
+    </div>
 
     <!-- Quick Actions & Activity -->
-    <div class="row g-3 compact-section">
+    <div class="row g-3 compact-section dashboard-row-align">
 
       <!-- Quick Actions -->
       <div class="col-md-6">
-        <div class="dashboard-card">
+        <div class="dashboard-card quick-actions-card h-100">
           <h5 class="mb-3">Quick Actions</h5>
 
           <div class="d-grid gap-3">
@@ -201,7 +217,7 @@
 
       <!-- Recent Activity -->
       <div class="col-md-6">
-        <div class="dashboard-card">
+        <div class="dashboard-card snapshot-card h-100">
           <h5 class="mb-3">Volunteer Snapshot</h5>
 
           <div class="activity-item mb-3">
@@ -221,13 +237,18 @@
             <p class="mb-0 fw-semibold">5 volunteer hours waiting for review</p>
             <small class="text-muted">View details in My Hours.</small>
           </div>
+
+          <div class="mt-4 pt-2 border-top">
+            <small class="text-muted d-block mb-1">Saved Availability</small>
+            <p class="mb-0 fw-semibold text-success">2 upcoming availability slots added</p>
+          </div>
         </div>
       </div>
 
     </div>
 
     <!-- Recent Hours -->
-    <div class="dashboard-card compact-section">
+    <div class="dashboard-card compact-section mt-0">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <h5 class="mb-0">Recent Hours</h5>
         <a href="/volunteer-tasks" class="btn btn-sm btn-outline-success">View All</a>
@@ -265,6 +286,9 @@
   
               document.getElementById("tasks-completed").innerText =
                   result.data.tasks_completed;
+
+              document.getElementById("available-hours").innerText =
+                  result.data.available_hours || 0;
           }
   
       } catch (error) {
