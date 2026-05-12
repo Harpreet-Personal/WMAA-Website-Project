@@ -1,7 +1,7 @@
 import os
 import random
 from datetime import datetime, timezone
-
+from services.volunteer_stats_service import get_dashboard_statistics
 
 # Flask core imports
 from flask import Flask, render_template, session, redirect, request, url_for
@@ -273,5 +273,20 @@ def logout():
     session.clear()
     return redirect(url_for("volunteer"))
 
+@app.route("/api/volunteer/dashboard-stats/<int:volunteer_id>", methods=["GET"])
+def volunteer_dashboard_stats(volunteer_id):
+    """
+    Returns dashboard statistics for a volunteer.
+    """
+
+    stats = get_dashboard_statistics(volunteer_id)
+
+    return {
+        "success": True,
+        "data": stats
+    }, 200
+    
 if __name__ == "__main__":
     app.run(debug=True)
+
+
