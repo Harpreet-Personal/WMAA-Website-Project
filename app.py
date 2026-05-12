@@ -17,7 +17,7 @@ from flask_login import LoginManager
 from flask_mail import Mail, Message
 
 # Import database instance and User model from models.py
-from models import db, User
+from models import *
 
 app = Flask(__name__)
 
@@ -68,8 +68,8 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Create all database tables on startup if they don't already exist
-with app.app_context():
-    db.create_all()
+#with app.app_context():
+#    db.create_all()
 
 # ── Context Processor: inject language info into all templates ───────────────
 @app.context_processor

@@ -48,11 +48,26 @@ class User(UserMixin, db.Model):
     payments = db.relationship("Payment", backref="user", lazy=True, cascade="all, delete-orphan")
 
     volunteer_profile = db.relationship(
-    "VolunteerProfile",
-    backref="user",
-    uselist=False,
+        "VolunteerProfile",
+        backref="user",
+        uselist=False,
+        cascade="all, delete-orphan"
+    )
+
+    volunteer_schedules = db.relationship(
+    "VolunteerSchedule",
+    backref="volunteer",
+    lazy=True,
     cascade="all, delete-orphan"
-)
+    )
+
+    volunteer_hours = db.relationship(
+    "VolunteerHours",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
 
     def set_password(self, password):
         # Hashes the plain-text password and stores it — called during signup
@@ -166,3 +181,83 @@ class VolunteerProfile(db.Model):
 
     def __repr__(self):
         return f"<VolunteerProfile {self.full_name}>"
+    
+
+class VolunteerSchedule(db.Model):
+    """
+    Stores volunteer schedules, shifts, and event assignments.
+    """
+
+    __tablename__ = "volunteer_schedules"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    event_name = db.Column(db.String(150), nullable=False)
+
+    event_date = db.Column(db.Date, nullable=False)
+
+    start_time = db.Column(db.Time, nullable=False)
+
+    end_time = db.Column(db.Time, nullable=False)
+
+    location = db.Column(db.String(255), nullable=True)
+
+    notes = db.Column(db.Text, nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<VolunteerSchedule {self.event_name}>"
+
+class VolunteerHours(db.Model):
+    """
+    Tracks volunteer completed hours for dashboard statistics.
+    """
+
+    __tablename__ = "volunteer_hours"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    schedule_id = db.Column(
+        db.Integer,
+        db.ForeignKey("volunteer_schedules.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    hours_completed = db.Column(db.Float, nullable=False)
+
+    approval_status = db.Column(
+        db.String(50),
+        nullable=False,
+        default="pending"
+    )
+
+    submitted_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    schedule = db.relationship(
+        "VolunteerSchedule",
+        backref="hour_entries"
+    )
+
+    def __repr__(self):
+        return f"<VolunteerHours {self.hours_completed} hrs>"
