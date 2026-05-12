@@ -1,6 +1,7 @@
 import os
 import random
 from datetime import datetime, timezone
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 
 from flask import Flask, render_template, session, redirect, request, url_for
 from flask_babel import Babel, gettext as _
@@ -36,6 +37,7 @@ def get_locale():
 babel = Babel(app, locale_selector=get_locale)
 db.init_app(app)
 mail = Mail(app)
+serializer = URLSafeTimedSerializer(app.secret_key)
 
 login_manager = LoginManager(app)
 login_manager.login_view = "volunteer"
@@ -119,6 +121,13 @@ def volunteer():
 def login():
     email = request.form.get("email", "").strip()
     password = request.form.get("password", "")
+
+    if not email or not password:
+        return render_template(
+            "volunteer.html",
+            error="Email and password are required.",
+            show_signup=False
+        )
 
     user = User.query.filter_by(email=email).first()
 
@@ -234,9 +243,95 @@ def verify_otp():
     return render_template("verify-otp.html")
 
 
-@app.route("/forgot-password")
+@app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
+    if request.method == "POST":
+        email = request.form.get("email", "").strip()
+        user = User.query.filter_by(email=email).first()
+
+        generic_message = "If an account with that email exists, a password reset link has been sent."
+
+        if user:
+            token = serializer.dumps(user.email, salt="password-reset-salt")
+            reset_link = url_for("reset_password", token=token, _external=True)
+
+            msg = Message(
+                subject="WMAA — Password Reset Request",
+                sender=app.config["MAIL_USERNAME"],
+                recipients=[user.email]
+            )
+            msg.body = f"""Hi {user.full_name},
+
+We received a request to reset your WMAA account password.
+
+Click the link below to reset your password:
+{reset_link}
+
+This link will expire in 30 minutes.
+
+If you did not request this, you can ignore this email.
+
+WMAA Team
+"""
+            mail.send(msg)
+
+        return render_template("forgot-password.html", success=generic_message)
+
     return render_template("forgot-password.html")
+
+
+@app.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    try:
+        email = serializer.loads(
+            token,
+            salt="password-reset-salt",
+            max_age=1800
+        )
+    except SignatureExpired:
+        return render_template(
+            "forgot-password.html",
+            error="This password reset link has expired. Please request a new one."
+        )
+    except BadSignature:
+        return render_template(
+            "forgot-password.html",
+            error="Invalid password reset link. Please request a new one."
+        )
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return render_template(
+            "forgot-password.html",
+            error="Invalid password reset link. Please request a new one."
+        )
+
+    if request.method == "POST":
+        password = request.form.get("password", "").strip()
+        confirm_password = request.form.get("confirm_password", "").strip()
+        
+        if not password or not confirm_password:
+            return render_template(
+                "reset-password.html",
+                error="Password fields cannot be empty."
+            )
+
+        if password != confirm_password:
+            return render_template(
+                "reset-password.html",
+                error="Passwords do not match."
+            )
+
+        user.set_password(password)
+        db.session.commit()
+
+        return render_template(
+            "volunteer.html",
+            success="Password reset successful. You can now log in."
+        )
+
+    return render_template("reset-password.html")
 
 
 @app.route("/vol-dashboard")
