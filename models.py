@@ -75,6 +75,13 @@ class User(UserMixin, db.Model):
     cascade="all, delete-orphan"
     )
 
+    volunteer_attendance = db.relationship(
+    "VolunteerAttendance",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
 
     def set_password(self, password):
         # Hashes the plain-text password and stores it — called during signup
@@ -304,3 +311,48 @@ class VolunteerAvailability(db.Model):
 
     def __repr__(self):
         return f"<VolunteerAvailability {self.available_date}>"
+
+class VolunteerAttendance(db.Model):
+    """
+    Tracks volunteer attendance for events and scheduled shifts.
+    """
+
+    __tablename__ = "volunteer_attendance"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    schedule_id = db.Column(
+        db.Integer,
+        db.ForeignKey("volunteer_schedules.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    check_in_time = db.Column(db.DateTime, nullable=True)
+
+    check_out_time = db.Column(db.DateTime, nullable=True)
+
+    attendance_status = db.Column(
+        db.String(50),
+        nullable=False,
+        default="pending"
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    schedule = db.relationship(
+        "VolunteerSchedule",
+        backref="attendance_records"
+    )
+
+    def __repr__(self):
+        return f"<VolunteerAttendance {self.attendance_status}>"
