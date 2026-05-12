@@ -1,6 +1,7 @@
 import os
 import random
 from datetime import datetime, timezone
+import traceback
 
 from services.volunteer_stats_service import get_dashboard_statistics
 from services.volunteer_schedule_service import get_volunteer_schedule
@@ -390,15 +391,28 @@ def save_volunteer_availability():
         )
 
         db.session.add(availability)
+        db.session.flush()
+
+        volunteer_hours = VolunteerHours(
+            volunteer_id=current_user.id,
+            schedule_id=availability.id,
+            hours_completed=float(data["estimated_hours"]),
+            approval_status="Pending"
+        )
+
+        db.session.add(volunteer_hours)
         db.session.commit()
 
         return jsonify({
             "success": True,
-            "message": "Availability saved successfully."
+            "message": "Availability saved and pending volunteer hours created"
         }), 201
 
     except Exception as e:
         db.session.rollback()
+
+        print("SAVE AVAILABILITY ERROR:")
+        traceback.print_exc()
 
         return jsonify({
             "success": False,

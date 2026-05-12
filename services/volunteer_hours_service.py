@@ -1,12 +1,9 @@
-from models import VolunteerHours
 from sqlalchemy import func
 from models import db
+from models import VolunteerHours, VolunteerAvailability
 
 
 def get_volunteer_hours(volunteer_id):
-    """
-    Returns volunteer hours records and summary statistics.
-    """
 
     records = VolunteerHours.query.filter_by(
         volunteer_id=volunteer_id
@@ -14,36 +11,46 @@ def get_volunteer_hours(volunteer_id):
         VolunteerHours.submitted_at.desc()
     ).all()
 
-    approved_hours = db.session.query(
-        func.coalesce(func.sum(VolunteerHours.hours_completed), 0)
-    ).filter(
-        VolunteerHours.volunteer_id == volunteer_id,
-        VolunteerHours.approval_status == "Approved"
-    ).scalar()
-
-    pending_hours = db.session.query(
-        func.coalesce(func.sum(VolunteerHours.hours_completed), 0)
-    ).filter(
-        VolunteerHours.volunteer_id == volunteer_id,
-        VolunteerHours.approval_status == "Pending"
-    ).scalar()
-
-    activities_logged = len(records)
-
-    formatted_records = []
+    hours_data = []
 
     for record in records:
-        formatted_records.append({
+
+        availability = VolunteerAvailability.query.get(
+            record.schedule_id
+        )
+
+        hours_data.append({
             "id": record.id,
-            "activity": record.activity_description,
+
+            "date": (
+                availability.available_date.strftime("%d %b %Y")
+                if availability and availability.available_date
+                else "-"
+            ),
+
+            "activity": (
+                availability.shift_type
+                if availability and availability.shift_type
+                else "Availability Submission"
+            ),
+
+            "location": "Volunteer Availability",
+
+            "start": (
+                availability.start_time.strftime("%I:%M %p")
+                if availability and availability.start_time
+                else "-"
+            ),
+
+            "end": (
+                availability.end_time.strftime("%I:%M %p")
+                if availability and availability.end_time
+                else "-"
+            ),
+
             "hours": record.hours_completed,
-            "status": record.approval_status,
-            "submitted_at": record.submitted_at.strftime("%d %b %Y")
+
+            "status": record.approval_status
         })
 
-    return {
-        "approved_hours": approved_hours,
-        "pending_hours": pending_hours,
-        "activities_logged": activities_logged,
-        "records": formatted_records
-    }
+    return hours_data
