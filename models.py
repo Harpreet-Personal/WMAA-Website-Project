@@ -47,6 +47,42 @@ class User(UserMixin, db.Model):
     # One user can have many payments; deleting a user cascades to their payments
     payments = db.relationship("Payment", backref="user", lazy=True, cascade="all, delete-orphan")
 
+    volunteer_profile = db.relationship(
+        "VolunteerProfile",
+        backref="user",
+        uselist=False,
+        cascade="all, delete-orphan"
+    )
+
+    volunteer_schedules = db.relationship(
+    "VolunteerSchedule",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
+    volunteer_hours = db.relationship(
+    "VolunteerHours",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
+    volunteer_availability = db.relationship(
+    "VolunteerAvailability",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
+    volunteer_attendance = db.relationship(
+    "VolunteerAttendance",
+    backref="volunteer",
+    lazy=True,
+    cascade="all, delete-orphan"
+    )
+
+
     def set_password(self, password):
         # Hashes the plain-text password and stores it — called during signup
         self.password_hash = generate_password_hash(password)
@@ -108,3 +144,244 @@ class Payment(db.Model):
 
     def __repr__(self):
         return f"<Payment {self.payment_id} - {self.payment_status}>"
+
+class VolunteerProfile(db.Model):
+    """
+    Stores volunteer-specific profile information.
+    Linked to the User model.
+    """
+
+    __tablename__ = "volunteer_profiles"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True
+    )
+
+    full_name = db.Column(db.String(150), nullable=False)
+
+    email = db.Column(db.String(120), nullable=False)
+
+    phone_number = db.Column(db.String(20), nullable=False)
+
+    area_of_interest = db.Column(db.String(100), nullable=True)
+
+    availability = db.Column(db.String(255), nullable=True)
+
+    emergency_contact = db.Column(db.String(150), nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False
+    )
+
+    @validates("phone_number")
+    def validate_phone(self, key, value):
+        if not re.match(r"^\+?[\d\s-]{7,20}$", value):
+            raise ValueError("Invalid phone number format")
+        return value
+
+    def __repr__(self):
+        return f"<VolunteerProfile {self.full_name}>"
+    
+
+class VolunteerSchedule(db.Model):
+    """
+    Stores volunteer schedules, shifts, and event assignments.
+    """
+
+    __tablename__ = "volunteer_schedules"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    event_name = db.Column(db.String(150), nullable=False)
+
+    event_date = db.Column(db.Date, nullable=False)
+
+    start_time = db.Column(db.Time, nullable=False)
+
+    end_time = db.Column(db.Time, nullable=False)
+
+    location = db.Column(db.String(255), nullable=True)
+
+    notes = db.Column(db.Text, nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<VolunteerSchedule {self.event_name}>"
+
+class VolunteerHours(db.Model):
+    """
+    Tracks volunteer completed hours for dashboard statistics.
+    """
+
+    __tablename__ = "volunteer_hours"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    schedule_id = db.Column(
+        db.Integer,
+        db.ForeignKey("volunteer_schedules.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    hours_completed = db.Column(db.Float, nullable=False)
+
+    approval_status = db.Column(
+        db.String(50),
+        nullable=False,
+        default="pending"
+    )
+
+    submitted_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    schedule = db.relationship(
+        "VolunteerSchedule",
+        backref="hour_entries"
+    )
+
+    def __repr__(self):
+        return f"<VolunteerHours {self.hours_completed} hrs>"
+
+class VolunteerAvailability(db.Model):
+    """
+    Stores volunteer availability preferences and scheduling slots.
+    """
+
+    __tablename__ = "volunteer_availability"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    available_date = db.Column(db.Date, nullable=False)
+
+    start_time = db.Column(db.Time, nullable=False)
+
+    end_time = db.Column(db.Time, nullable=False)
+
+    estimated_hours = db.Column(db.Float, nullable=True)
+
+    shift_type = db.Column(db.String(100), nullable=True)
+
+    notes = db.Column(db.Text, nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<VolunteerAvailability {self.available_date}>"
+
+class VolunteerAttendance(db.Model):
+    """
+    Tracks volunteer attendance for events and scheduled shifts.
+    """
+
+    __tablename__ = "volunteer_attendance"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    schedule_id = db.Column(
+        db.Integer,
+        db.ForeignKey("volunteer_schedules.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    check_in_time = db.Column(db.DateTime, nullable=True)
+
+    check_out_time = db.Column(db.DateTime, nullable=True)
+
+    attendance_status = db.Column(
+        db.String(50),
+        nullable=False,
+        default="pending"
+    )
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    schedule = db.relationship(
+        "VolunteerSchedule",
+        backref="attendance_records"
+    )
+
+    def __repr__(self):
+        return f"<VolunteerAttendance {self.attendance_status}>"
+
+
+class VolunteerEventInterest(db.Model):
+    """
+    Stores volunteer interest registrations for events.
+    """
+
+    __tablename__ = "volunteer_event_interests"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    volunteer_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False
+    )
+
+    event_name = db.Column(db.String(255), nullable=False)
+
+    event_date = db.Column(db.Date, nullable=False)
+
+    registered_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<VolunteerEventInterest {self.event_name}>"

@@ -1,21 +1,27 @@
 import os
 import random
 from datetime import datetime, timezone
+import traceback
+
+from services.volunteer_stats_service import get_dashboard_statistics
+from services.volunteer_schedule_service import get_volunteer_schedule
+from services.volunteer_hours_service import get_volunteer_hours
 
 # Flask core imports
-from flask import Flask, render_template, session, redirect, request, url_for
+from flask import Flask, render_template, session, redirect, request, url_for, jsonify
+from flask_migrate import Migrate
 
 # Flask-Babel: handles multi-language support (English + Simplified Chinese)
 from flask_babel import Babel, gettext as _
 
 # Flask-Login: manages user session after login
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 
 # Flask-Mail: sends OTP verification emails to users
 from flask_mail import Mail, Message
 
 # Import database instance and User model from models.py
-from models import db, User
+from models import *
 
 app = Flask(__name__)
 
@@ -52,6 +58,7 @@ def get_locale():
 # Initialise extensions
 babel = Babel(app, locale_selector=get_locale)
 db.init_app(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
 
 # ── Flask-Login Setup ────────────────────────────────────────────────────────
@@ -62,11 +69,11 @@ login_manager.login_view = "volunteer"
 @login_manager.user_loader
 def load_user(user_id):
     # Tells Flask-Login how to reload the user object from the session
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 # Create all database tables on startup if they don't already exist
-with app.app_context():
-    db.create_all()
+#with app.app_context():
+#    db.create_all()
 
 # ── Context Processor: inject language info into all templates ───────────────
 @app.context_processor
@@ -126,7 +133,30 @@ def set_language(lang):
 def volunteer():
     # Renders the combined login/signup page (volunteer portal)
     return render_template("volunteer.html")
+@app.route("/login", methods=["POST"])
+def login():
+    """
+    Handles volunteer login.
+    """
 
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "")
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not user.check_password(password):
+        return render_template(
+            "volunteer.html",
+            error="Invalid email or password."
+        )
+
+    login_user(user)
+
+    session["user_name"] = user.full_name
+    session["user_role"] = user.role
+    session["user_email"] = user.email
+
+    return redirect(url_for("dashboard"))
 # ── Signup Route ─────────────────────────────────────────────────────────────
 # Handles volunteer registration with email OTP verification.
 # User data is temporarily stored in session until OTP is confirmed.
@@ -233,42 +263,215 @@ def forgot_password():
     return render_template("forgot-password.html")
 
 @app.route("/vol-dashboard")
+@login_required
 def dashboard():
     user = {
-
-        "name": session.get("user_name", "Volunteer"),
-
-        "role": session.get("user_role", "volunteer")
-
+        "name": current_user.full_name,
+        "role": current_user.role
     }
-
     return render_template("vol-dashboard.html", user=user)
 
 @app.route("/volunteer-schedule")
+@login_required
 def volunteer_schedule():
     return render_template("volunteer-schedule.html")
 
 @app.route("/volunteer-tasks")
+@login_required
 def volunteer_tasks():
     return render_template("volunteer-tasks.html")
 
 @app.route("/volunteer-events")
+@login_required
 def volunteer_events():
     return render_template("volunteer-events.html")
 
 @app.route("/volunteer-profile")
+@login_required
 def volunteer_profile():
     user = {
-        "name": session.get("user_name", "Volunteer"),
-        "role": session.get("user_role", "volunteer"),
-        "email": session.get("user_email", "volunteer@email.com")
+        "name": current_user.full_name,
+        "role": current_user.role,
+        "email": current_user.email,
+        "phone": current_user.phone_number,
+        "availability": current_user.availability
     }
     return render_template("volunteer-profile.html", user=user)
 
 @app.route("/logout")
 def logout():
+    logout_user()
     session.clear()
     return redirect(url_for("volunteer"))
+    
+@app.route("/api/volunteer/dashboard-stats/<int:volunteer_id>", methods=["GET"])
+@login_required
+def volunteer_dashboard_stats(volunteer_id):
+    """
+    Returns dashboard statistics for a volunteer.
+    """
+
+    stats = get_dashboard_statistics(volunteer_id)
+
+    return {
+        "success": True,
+        "data": stats
+    }, 200
+
+@app.route("/api/volunteer/schedule/<int:volunteer_id>", methods=["GET"])
+@login_required
+def volunteer_schedule_api(volunteer_id):
+    """
+    Returns volunteer schedule data.
+    """
+
+    schedules = get_volunteer_schedule(volunteer_id)
+
+    return {
+        "success": True,
+        "data": schedules
+    }, 200
+
+@app.route("/api/volunteer/availability/<int:volunteer_id>", methods=["GET"])
+@login_required
+def volunteer_availability_api(volunteer_id):
+    """
+    Returns volunteer availability data.
+    """
+
+    availability = VolunteerAvailability.query.filter_by(
+        volunteer_id=volunteer_id
+    ).order_by(
+        VolunteerAvailability.available_date.desc()
+    ).all()
+
+    data = []
+
+    for item in availability:
+        data.append({
+            "id": item.id,
+            "available_date": item.available_date.strftime("%d %b %Y"),
+            "start_time": item.start_time.strftime("%I:%M %p"),
+            "end_time": item.end_time.strftime("%I:%M %p"),
+            "estimated_hours": item.estimated_hours
+        })
+
+    return {
+        "success": True,
+        "data": data
+    }, 200
+
+@app.route("/api/volunteer/availability", methods=["POST"])
+@login_required
+def save_volunteer_availability():
+    """
+    Saves volunteer availability to database.
+    """
+
+    try:
+        data = request.get_json()
+
+        availability = VolunteerAvailability(
+            volunteer_id=current_user.id,
+            available_date=datetime.strptime(
+                data["available_date"],
+                "%Y-%m-%d"
+            ).date(),
+            start_time=datetime.strptime(
+                data["start_time"],
+                "%H:%M"
+            ).time(),
+            end_time=datetime.strptime(
+                data["end_time"],
+                "%H:%M"
+            ).time(),
+            estimated_hours=float(data["estimated_hours"]),
+            notes=data.get("notes", ""),
+            shift_type=data.get("shift_type", "General")
+        )
+
+        db.session.add(availability)
+        db.session.flush()
+
+        volunteer_hours = VolunteerHours(
+            volunteer_id=current_user.id,
+            schedule_id=availability.id,
+            hours_completed=float(data["estimated_hours"]),
+            approval_status="Pending"
+        )
+
+        db.session.add(volunteer_hours)
+        db.session.commit()
+
+        return jsonify({
+            "success": True,
+            "message": "Availability saved and pending volunteer hours created"
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+
+        print("SAVE AVAILABILITY ERROR:")
+        traceback.print_exc()
+
+        return jsonify({
+            "success": False,
+            "message": str(e)
+        }), 500
+
+@app.route("/api/volunteer/register-interest", methods=["POST"])
+@login_required
+def register_interest():
+    """
+    Stores volunteer interest for an event.
+    """
+
+    data = request.get_json()
+
+    event_name = data.get("event_name")
+    event_date = data.get("event_date")
+
+    existing_interest = VolunteerEventInterest.query.filter_by(
+        volunteer_id=current_user.id,
+        event_name=event_name,
+        event_date=datetime.strptime(event_date, "%Y-%m-%d").date()
+    ).first()
+
+    if existing_interest:
+        return {
+            "success": False,
+            "message": "Interest already registered"
+        }, 400
+
+    new_interest = VolunteerEventInterest(
+        volunteer_id=current_user.id,
+        event_name=event_name,
+        event_date=datetime.strptime(event_date, "%Y-%m-%d").date()
+    )
+
+    db.session.add(new_interest)
+    db.session.commit()
+
+    return {
+        "success": True,
+        "message": "Interest registered successfully"
+    }, 201
+
+@app.route("/api/volunteer/hours", methods=["GET"])
+@login_required
+def volunteer_hours_api():
+    """
+    Returns volunteer hours data.
+    """
+
+    data = get_volunteer_hours(current_user.id)
+
+    return {
+        "success": True,
+        "data": data
+    }, 200 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
