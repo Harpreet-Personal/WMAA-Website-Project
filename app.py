@@ -1,9 +1,11 @@
 import os
 import random
 from datetime import datetime, timezone
+from services.volunteer_stats_service import get_dashboard_statistics
 
 # Flask core imports
 from flask import Flask, render_template, session, redirect, request, url_for
+from flask_migrate import Migrate
 
 # Flask-Babel: handles multi-language support (English + Simplified Chinese)
 from flask_babel import Babel, gettext as _
@@ -15,7 +17,7 @@ from flask_login import LoginManager
 from flask_mail import Mail, Message
 
 # Import database instance and User model from models.py
-from models import db, User
+from models import *
 
 app = Flask(__name__)
 
@@ -52,6 +54,7 @@ def get_locale():
 # Initialise extensions
 babel = Babel(app, locale_selector=get_locale)
 db.init_app(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
 
 # ── Flask-Login Setup ────────────────────────────────────────────────────────
@@ -65,8 +68,8 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Create all database tables on startup if they don't already exist
-with app.app_context():
-    db.create_all()
+#with app.app_context():
+#    db.create_all()
 
 # ── Context Processor: inject language info into all templates ───────────────
 @app.context_processor
@@ -270,5 +273,20 @@ def logout():
     session.clear()
     return redirect(url_for("volunteer"))
 
+@app.route("/api/volunteer/dashboard-stats/<int:volunteer_id>", methods=["GET"])
+def volunteer_dashboard_stats(volunteer_id):
+    """
+    Returns dashboard statistics for a volunteer.
+    """
+
+    stats = get_dashboard_statistics(volunteer_id)
+
+    return {
+        "success": True,
+        "data": stats
+    }, 200
+    
 if __name__ == "__main__":
     app.run(debug=True)
+
+
