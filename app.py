@@ -2,8 +2,10 @@ import os
 import random
 from datetime import datetime, timezone
 
+
 # Flask core imports
 from flask import Flask, render_template, session, redirect, request, url_for
+from flask_migrate import Migrate
 
 # Flask-Babel: handles multi-language support (English + Simplified Chinese)
 from flask_babel import Babel, gettext as _
@@ -52,6 +54,7 @@ def get_locale():
 # Initialise extensions
 babel = Babel(app, locale_selector=get_locale)
 db.init_app(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
 
 # ── Flask-Login Setup ────────────────────────────────────────────────────────

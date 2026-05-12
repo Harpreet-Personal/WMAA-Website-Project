@@ -47,6 +47,13 @@ class User(UserMixin, db.Model):
     # One user can have many payments; deleting a user cascades to their payments
     payments = db.relationship("Payment", backref="user", lazy=True, cascade="all, delete-orphan")
 
+    volunteer_profile = db.relationship(
+    "VolunteerProfile",
+    backref="user",
+    uselist=False,
+    cascade="all, delete-orphan"
+)
+
     def set_password(self, password):
         # Hashes the plain-text password and stores it — called during signup
         self.password_hash = generate_password_hash(password)
@@ -108,3 +115,54 @@ class Payment(db.Model):
 
     def __repr__(self):
         return f"<Payment {self.payment_id} - {self.payment_status}>"
+
+class VolunteerProfile(db.Model):
+    """
+    Stores volunteer-specific profile information.
+    Linked to the User model.
+    """
+
+    __tablename__ = "volunteer_profiles"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True
+    )
+
+    full_name = db.Column(db.String(150), nullable=False)
+
+    email = db.Column(db.String(120), nullable=False)
+
+    phone_number = db.Column(db.String(20), nullable=False)
+
+    area_of_interest = db.Column(db.String(100), nullable=True)
+
+    availability = db.Column(db.String(255), nullable=True)
+
+    emergency_contact = db.Column(db.String(150), nullable=True)
+
+    created_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        nullable=False
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False
+    )
+
+    @validates("phone_number")
+    def validate_phone(self, key, value):
+        if not re.match(r"^\+?[\d\s-]{7,20}$", value):
+            raise ValueError("Invalid phone number format")
+        return value
+
+    def __repr__(self):
+        return f"<VolunteerProfile {self.full_name}>"
