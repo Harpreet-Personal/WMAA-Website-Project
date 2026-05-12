@@ -1,10 +1,12 @@
 import os
 import random
 from datetime import datetime, timezone
+
 from services.volunteer_stats_service import get_dashboard_statistics
+from services.volunteer_schedule_service import get_volunteer_schedule
 
 # Flask core imports
-from flask import Flask, render_template, session, redirect, request, url_for
+from flask import Flask, render_template, session, redirect, request, url_for, jsonify
 from flask_migrate import Migrate
 
 # Flask-Babel: handles multi-language support (English + Simplified Chinese)
@@ -285,7 +287,64 @@ def volunteer_dashboard_stats(volunteer_id):
         "success": True,
         "data": stats
     }, 200
-    
+
+@app.route("/api/volunteer/schedule/<int:volunteer_id>", methods=["GET"])
+def volunteer_schedule_api(volunteer_id):
+    """
+    Returns volunteer schedule data.
+    """
+
+    schedules = get_volunteer_schedule(volunteer_id)
+
+    return {
+        "success": True,
+        "data": schedules
+    }, 200
+
+@app.route("/api/volunteer/availability", methods=["POST"])
+def save_volunteer_availability():
+    """
+    Saves volunteer availability to database.
+    """
+
+    try:
+        data = request.get_json()
+
+        availability = VolunteerAvailability(
+            volunteer_id=1,
+            available_date=datetime.strptime(
+                data["available_date"],
+                "%Y-%m-%d"
+            ).date(),
+            start_time=datetime.strptime(
+                data["start_time"],
+                "%H:%M"
+            ).time(),
+            end_time=datetime.strptime(
+                data["end_time"],
+                "%H:%M"
+            ).time(),
+            estimated_hours=float(data["estimated_hours"]),
+            notes=data.get("notes", ""),
+            shift_type=data.get("shift_type", "General")
+        )
+
+        db.session.add(availability)
+        db.session.commit()
+
+        return jsonify({
+            "success": True,
+            "message": "Availability saved successfully."
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+
+        return jsonify({
+            "success": False,
+            "message": str(e)
+        }), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
 

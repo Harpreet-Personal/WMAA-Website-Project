@@ -208,7 +208,7 @@ input, textarea {
 
 .schedule-layout {
   display: grid;
-  grid-template-columns: 1.35fr .9fr;
+  grid-template-columns: 1.5fr .85fr;
   gap: 24px;
   align-items: start;
 }
@@ -256,65 +256,9 @@ input, textarea {
     </div>
 
     <div class="schedule-layout">
-      <div>
-        <div class="dashboard-card">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="mb-0">April Availability Calendar</h5>
-            <span class="month-badge">April 2026</span>
-          </div>
-
-          <div class="calendar-grid mb-2">
-            <div class="calendar-weekday">Mon</div>
-            <div class="calendar-weekday">Tue</div>
-            <div class="calendar-weekday">Wed</div>
-            <div class="calendar-weekday">Thu</div>
-            <div class="calendar-weekday">Fri</div>
-            <div class="calendar-weekday">Sat</div>
-            <div class="calendar-weekday">Sun</div>
-          </div>
-
-          <div class="calendar-grid">
-            <div class="calendar-day"><strong>1</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>2</strong><br><small class="calendar-time">9am–1pm</small></div>
-            <div class="calendar-day"><strong>3</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>4</strong><br><small class="calendar-time">2pm–5pm</small></div>
-            <div class="calendar-day"><strong>5</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>6</strong><br><small class="calendar-time">10am–2pm</small></div>
-            <div class="calendar-day"><strong>7</strong></div>
-            <div class="calendar-day"><strong>8</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>9</strong><br><small class="calendar-time">12pm–4pm</small></div>
-            <div class="calendar-day"><strong>10</strong></div>
-            <div class="calendar-day"><strong>11</strong></div>
-            <div class="calendar-day"><strong>12</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>13</strong><br><small class="calendar-time">7am–3pm</small></div>
-            <div class="calendar-day"><strong>14</strong></div>
-            <div class="calendar-day"><strong>15</strong></div>
-            <div class="calendar-day"><strong>16</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>17</strong><br><small class="calendar-time">3pm–8pm</small></div>
-            <div class="calendar-day"><strong>18</strong></div>
-            <div class="calendar-day"><strong>19</strong></div>
-            <div class="calendar-day"><strong>20</strong></div>
-            <div class="calendar-day"><strong>21</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>22</strong><br><small class="calendar-time">9am–5pm</small></div>
-            <div class="calendar-day"><strong>23</strong></div>
-            <div class="calendar-day"><strong>24</strong></div>
-            <div class="calendar-day"><strong>25</strong></div>
-            <div class="calendar-day available"><i class="bi bi-check-circle-fill calendar-status"></i><strong>26</strong><br><small class="calendar-time">10am–2pm</small></div>
-            <div class="calendar-day"><strong>27</strong></div>
-            <div class="calendar-day"><strong>28</strong></div>
-            <div class="calendar-day"><strong>29</strong></div>
-            <div class="calendar-day"><strong>30</strong></div>
-          </div>
-
-          <p class="text-muted mt-3 mb-0">
-            <i class="bi bi-info-circle me-1"></i>Green dates show selected availability.
-          </p>
-        </div>
-      </div>
-
       <div class="schedule-side-stack">
-        <div class="dashboard-card">
-          <h5 class="mb-3" style="font-weight:600;">Add Availability</h5>
+        <div class="dashboard-card" style="padding:32px;">
+          <h4 class="mb-4" style="font-weight:700; color:#1f6f4a;">Add Availability</h4>
 
           <form id="availabilityForm">
             <div class="mb-3">
@@ -371,6 +315,23 @@ input, textarea {
           </a>
         </div>
       </div>
+
+      <div>
+        <div>
+          <div class="dashboard-card" style="padding:20px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Upcoming Volunteer Shifts</h5>
+              <span class="month-badge">Live Schedule</span>
+            </div>
+
+            <div id="upcomingShiftsContainer">
+              <div class="text-muted">
+                Loading volunteer shifts...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -408,9 +369,114 @@ input, textarea {
   startInput.addEventListener('change', calculateHours);
   endInput.addEventListener('change', calculateHours);
 
-  document.getElementById('saveAvailabilityBtn').addEventListener('click', () => {
-    calculateHours();
-    message.style.display = 'block';
-  });
+
+
+  async function loadVolunteerShifts() {
+      try {
+          const response = await fetch("/api/volunteer/schedule/1");
+
+          const result = await response.json();
+
+          const container = document.getElementById("upcomingShiftsContainer");
+
+          if (!result.data || result.data.length === 0) {
+              container.innerHTML = `
+                  <div class="text-muted">
+                      No upcoming volunteer shifts available.
+                  </div>
+              `;
+              return;
+          }
+
+          container.innerHTML = "";
+
+          result.data.forEach(event => {
+              container.innerHTML += `
+                  <div class="dashboard-card mb-3" style="background:#f8faf9; border:1px solid #e8f5ee; box-shadow:none;">
+                      <div class="d-flex justify-content-between align-items-start">
+                          <div>
+                              <h6 style="font-weight:700; margin-bottom:6px; color:#1f6f4a;">
+                                  ${event.event_name}
+                              </h6>
+
+                              <p class="mb-1 text-muted">
+                                  <i class="bi bi-calendar-event me-1"></i>
+                                  ${event.event_date}
+                              </p>
+
+                              <p class="mb-1 text-muted">
+                                  <i class="bi bi-clock me-1"></i>
+                                  ${event.start_time} - ${event.end_time}
+                              </p>
+
+                              <p class="mb-0 text-muted">
+                                  <i class="bi bi-geo-alt me-1"></i>
+                                  ${event.location || 'Location not provided'}
+                              </p>
+                          </div>
+
+                          <span class="badge bg-success">
+                              Scheduled
+                          </span>
+                      </div>
+                  </div>
+              `;
+          });
+
+      } catch (error) {
+          console.error("Failed to load volunteer shifts:", error);
+      }
+  }
+
+  loadVolunteerShifts();
+
+  document.getElementById('saveAvailabilityBtn').addEventListener('click', async () => {
+
+calculateHours();
+
+try {
+
+    const response = await fetch("/api/volunteer/availability", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            available_date: dateInput.value,
+            start_time: startInput.value,
+            end_time: endInput.value,
+            estimated_hours: hoursInput.value,
+            notes: document.querySelector("textarea").value,
+            shift_type: "General"
+        })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+
+        message.innerHTML =
+            "Availability saved successfully.";
+
+        message.style.display = "block";
+
+    } else {
+
+        message.innerHTML =
+            "Failed to save availability.";
+
+        message.style.display = "block";
+    }
+
+} catch (error) {
+
+    console.error(error);
+
+    message.innerHTML =
+        "Server error while saving availability.";
+
+    message.style.display = "block";
+}
+});
 </script>
 {% endblock %}
