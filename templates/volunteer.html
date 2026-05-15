@@ -236,6 +236,125 @@
 
     var defaultTab = document.getElementById('defaultTab').dataset.tab;
     showTab(defaultTab);
-  </script>
 
+    function showError(input, message) {
+      clearError(input);
+      input.classList.add('is-invalid');
+      const div = document.createElement('div');
+      div.className = 'val-error';
+      div.style.cssText = 'color:red;font-size:0.82rem;margin-top:4px;';
+      div.textContent = message;
+      input.parentNode.appendChild(div);
+    }
+
+    function clearError(input) {
+      input.classList.remove('is-invalid');
+      const e = input.parentNode.querySelector('.val-error');
+      if (e) e.remove();
+    }
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isValidPassword(pw) {
+      return pw.length >= 8 && /[0-9]/.test(pw) && /[^a-zA-Z0-9]/.test(pw);
+    }
+
+    // LOGIN VALIDATION
+    document.querySelector('#loginForm form').addEventListener('submit', function(e) {
+      let valid = true;
+      const email = this.querySelector('input[name="email"]');
+      const pass  = this.querySelector('input[name="password"]');
+      clearError(email); clearError(pass);
+      if (!email.value.trim()) { showError(email, 'Email address is required.'); valid = false; }
+      else if (!isValidEmail(email.value.trim())) { showError(email, 'Please enter a valid email address.'); valid = false; }
+      if (!pass.value) { showError(pass, 'Password is required.'); valid = false; }
+      if (!valid) e.preventDefault();
+    });
+
+    // SIGNUP VALIDATION
+    document.querySelector('#signupForm form').addEventListener('submit', function(e) {
+      let valid = true;
+      const fn    = this.querySelector('input[name="first_name"]');
+      const ln    = this.querySelector('input[name="last_name"]');
+      const email = this.querySelector('input[name="email"]');
+      const phone = this.querySelector('input[name="phone"]');
+      const pass  = this.querySelector('input[name="password"]');
+      const conf  = this.querySelector('input[name="confirm_password"]');
+      const terms = document.getElementById('agreeTerms');
+
+      [fn, ln, email, phone, pass, conf].forEach(clearError);
+
+      if (!fn.value.trim()) { showError(fn, 'First name is required.'); valid = false; }
+      if (!ln.value.trim()) { showError(ln, 'Last name is required.'); valid = false; }
+      if (!email.value.trim()) { showError(email, 'Email address is required.'); valid = false; }
+      else if (!isValidEmail(email.value.trim())) { showError(email, 'Please enter a valid email address.'); valid = false; }
+      if (phone.value.trim()) {
+        if (!/^[\d\s]+$/.test(phone.value.trim())) { showError(phone, 'Phone must contain digits only.'); valid = false; }
+        else if (phone.value.replace(/\s/g,'').length < 10) { showError(phone, 'Phone must be at least 10 digits.'); valid = false; }
+      }
+      if (!pass.value) { showError(pass, 'Password is required.'); valid = false; }
+      else if (!isValidPassword(pass.value)) { showError(pass, 'Password must be 8+ characters with a number and special character.'); valid = false; }
+      if (!conf.value) { showError(conf, 'Please confirm your password.'); valid = false; }
+      else if (conf.value !== pass.value) { showError(conf, 'Passwords do not match.'); valid = false; }
+      if (!terms.checked) {
+        let te = terms.closest('.col-12').querySelector('.terms-error');
+        if (!te) {
+          te = document.createElement('div');
+          te.className = 'terms-error';
+          te.style.cssText = 'color:red;font-size:0.82rem;margin-top:4px;';
+          te.textContent = 'You must agree to the Terms & Conditions.';
+          terms.closest('.col-12').appendChild(te);
+        }
+        valid = false;
+      } else {
+        const te = terms.closest('.col-12').querySelector('.terms-error');
+        if (te) te.remove();
+      }
+      if (!valid) e.preventDefault();
+    });
+
+    // Real-time validation as user types
+    document.querySelector('#loginForm input[name="email"]').addEventListener('input', function() {
+      clearError(this);
+      if (this.value.trim() && !isValidEmail(this.value.trim())) {
+        showError(this, 'Please enter a valid email address.');
+      }
+    });
+
+    document.querySelectorAll('#signupForm input').forEach(input => {
+      input.addEventListener('input', function() {
+        clearError(this);
+        const name = this.getAttribute('name');
+
+        if (name === 'first_name' && !this.value.trim()) {
+          showError(this, 'First name is required.');
+        }
+        if (name === 'last_name' && !this.value.trim()) {
+          showError(this, 'Last name is required.');
+        }
+        if (name === 'email') {
+          if (!this.value.trim()) showError(this, 'Email address is required.');
+          else if (!isValidEmail(this.value.trim())) showError(this, 'Please enter a valid email address.');
+        }
+        if (name === 'phone' && this.value.trim()) {
+          if (!/^[\d\s]+$/.test(this.value.trim())) showError(this, 'Phone must contain digits only.');
+          else if (this.value.replace(/\s/g,'').length < 10) showError(this, 'Phone must be at least 10 digits.');
+        }
+        if (name === 'password' && this.value) {
+          if (!isValidPassword(this.value)) showError(this, 'Password must be 8+ characters with a number and special character.');
+        }
+        if (name === 'confirm_password' && this.value) {
+          const pass = document.querySelector('#signupForm input[name="password"]').value;
+          if (this.value !== pass) showError(this, 'Passwords do not match.');
+        }
+      });
+    });
+
+    // Block non-digits in phone field
+    document.querySelector('input[name="phone"]').addEventListener('keypress', function(e) {
+      if (!/[\d\s]/.test(e.key)) e.preventDefault();
+    });
+  </script>
 {% endblock %}
